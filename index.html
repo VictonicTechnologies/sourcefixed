@@ -236,6 +236,7 @@
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            
                             <div class="pay-ke">
                                 <h4>Get Tips Instantly</h4>
                                 <ul class="list-group list-group-flush mb-3">
@@ -244,7 +245,6 @@
                                     <li class="list-group-item">Enter amount <strong id="pay-modal-amount-ke">KSh 0</strong>, click "OK"</li>
                                     <li class="list-group-item">Enter your PIN Number, click OK</li>
                                 </ul>
-                                <!-- New M-PESA Message Verification Form -->
                                 <div class="mt-4 p-3 rounded" style="background-color: var(--bg);">
                                     <h5 class="text-warning">Verify Your Payment</h5>
                                     <label for="mpesa-message-input" class="form-label" style="font-size: 0.9rem;">Paste your full M-Pesa confirmation message here:</label>
@@ -266,7 +266,7 @@
                                     <li class="list-group-item">Enter: your MTN PIN to confirm the transaction.</li>
                                 </ul>
                                 <h4 class="network-title">UGANDA AIRTEL Subscribers</h4>
-                                <ul class="list-group list-group-flush">
+                                <ul class="list-group list-group-flush mb-3">
                                     <li class="list-group-item">Dial : <strong>*185#</strong> from your Airtel Uganda line</li>
                                     <li class="list-group-item">Select : the "Send Money" option</li>
                                     <li class="list-group-item">Choose: "International Transfer" from the menu.</li>
@@ -275,6 +275,12 @@
                                     <li class="list-group-item">Enter : Amount <strong id="pay-modal-amount-ug-airtel">UGX 0</strong></li>
                                     <li class="list-group-item">Reason for Transfer: To Buy Sure Tips</li>
                                 </ul>
+                                <!-- Uganda WhatsApp Forward Instruction -->
+                                <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
+                                    <h5 class="text-warning">Step 2: Confirm Your Payment</h5>
+                                    <p style="font-size: 0.9rem;">After sending the money, please forward your Mobile Money confirmation message to our WhatsApp to receive your tips immediately.</p>
+                                    <a href="https://wa.me/254713804279?text=Hello,%20I%20have%20paid%20for%20Uganda%20tips.%20Here%20is%20my%20message:%20" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
+                                </div>
                             </div>
                             
                             <div class="pay-tz" style="display:none;">
@@ -293,6 +299,7 @@
                                     <a href="https://wa.me/254713804279?text=Hello,%20I%20have%20paid%20for%20Tanzania%20tips.%20Here%20is%20my%20message:%20" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
                                 </div>
                             </div>
+
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -311,7 +318,7 @@
         const API_BASE = 'https://www.footyscorelive.com';
         let currentCountry = 'ke';
         let payModal = null;
-        let expectedKesAmount = 0; // State for MPesa validation
+        let expectedKesAmount = 0; 
 
         const UGX_PER_KES = 18.7;
         const TZS_PER_KES = 13.4;
@@ -338,7 +345,7 @@
                 });
             });
 
-            // M-Pesa Message Verification Logic
+            // M-Pesa Message Verification Logic (Kenya)
             $('#verify-mpesa-btn').click(function() {
                 const msg = $('#mpesa-message-input').val().trim();
                 const $result = $('#mpesa-verification-result');
@@ -348,7 +355,7 @@
                     return;
                 }
 
-                // 1. Format Check: Must start with typical alphanumeric code and contain 'confirmed'
+                // 1. Format Check
                 const codeMatch = msg.match(/^[A-Z0-9]{10}/i);
                 if (!codeMatch || !msg.toLowerCase().includes('confirmed')) {
                     $result.text('Invalid M-Pesa message format.').css('color', 'var(--red)');
@@ -361,7 +368,7 @@
                     return;
                 }
 
-                // 3. Amount Check: e.g. Ksh1,000.00
+                // 3. Amount Check
                 const amountMatch = msg.match(/Ksh\s*([\d,]+\.\d{2})/i);
                 if (!amountMatch) {
                     $result.text('Could not detect amount in message. Ensure it is complete.').css('color', 'var(--red)');
@@ -374,7 +381,7 @@
                     return;
                 }
 
-                // 4. Date Check: Verify it is from today (supports formats like 18/9/26, 18/09/2026)
+                // 4. Date Check
                 const today = new Date();
                 const d = today.getDate();
                 const m = today.getMonth() + 1;
@@ -383,7 +390,6 @@
                 const dStr = d < 10 ? `0?${d}` : d;
                 const mStr = m < 10 ? `0?${m}` : m;
                 
-                // Matches DD/MM/YY or DD/MM/YYYY
                 const dateRegex = new RegExp(`${dStr}/${mStr}/(?:20)?${yy}`, 'i');
                 
                 if (!dateRegex.test(msg)) {
@@ -391,9 +397,7 @@
                     return;
                 }
 
-                // Success
                 $result.text('Payment Verified Successfully! Accessing your tips...').css('color', 'var(--green)');
-                // NOTE: Here you would typically initiate the unlock workflow or API call to finalize activation.
             });
         });
 
@@ -401,7 +405,6 @@
             currentCountry = countryCode;
             $('#country-screen').hide();
             $('#main-app').fadeIn();
-
             loadAPIData();
         }
 
@@ -414,25 +417,20 @@
             fetchHistory();
         }
 
-        // Fetches free tip from api-football, falls back to original basic route
         async function fetchFreeTip() {
             try {
                 const today = new Date().toISOString().split('T')[0];
-                // Replace this key with your active API-Sports/Football key
                 const apiFootballKey = 'YOUR_API_KEY_HERE'; 
                 
-                // Only attempt if key is configured
                 if (apiFootballKey !== 'YOUR_API_KEY_HERE') {
                     const headers = { "x-apisports-key": apiFootballKey };
                     
-                    // Fetch today's fixtures
                     const fixturesRes = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}&status=NS`, { headers });
                     const fixturesData = await fixturesRes.json();
                     
                     if (fixturesData.response && fixturesData.response.length > 0) {
-                        const fixtureId = fixturesData.response[0].fixture.id; // Taking first match for efficiency
+                        const fixtureId = fixturesData.response[0].fixture.id;
                         
-                        // Fetch prediction for high confidence team
                         const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${fixtureId}`, { headers });
                         const predData = await predRes.json();
                         
@@ -440,7 +438,6 @@
                             const pred = predData.response[0].predictions;
                             const teams = predData.response[0].teams;
                             
-                            // Calculate which team is higher confidence
                             const homePercent = parseInt(pred.percent.home.replace('%',''));
                             const awayPercent = parseInt(pred.percent.away.replace('%',''));
                             const highConfidence = Math.max(homePercent, awayPercent);
@@ -453,7 +450,6 @@
                     }
                 }
                 
-                // Fallback to custom backend if API-Football fails or key is missing
                 const res = await fetch(`${API_BASE}/api/tips.php?type=basic`);
                 const data = await res.json();
                 if (!data || data.length === 0) {
@@ -486,78 +482,55 @@
             }
         }
 
-        function kesFromUsd(usdAmount) {
-            return Math.round(usdAmount * USD_TO_KES);
-        }
-
+        function kesFromUsd(usdAmount) { return Math.round(usdAmount * USD_TO_KES); }
         function formatAllCurrencies(kes) {
             const ugx = Math.round(kes * UGX_PER_KES);
             const tzs = Math.round(kes * TZS_PER_KES);
             return { kes, ugx, tzs };
         }
-
         function priceLabelFor(country, amounts) {
             if (country === 'ug') return `UGX ${amounts.ugx.toLocaleString()}`;
             if (country === 'tz') return `TZS ${amounts.tzs.toLocaleString()}`;
             return `KSh ${amounts.kes.toLocaleString()}`;
         }
-
         function renderPackages(packages) {
             const container = $('#packages-container');
             container.empty();
-            packages.forEach(pkg => {
-                container.append(buildPackageCard(pkg));
-            });
+            packages.forEach(pkg => container.append(buildPackageCard(pkg)));
         }
 
         const COUNTRY_FLAGS = {
-            'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
-            'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷',
-            'portugal': '🇵🇹', 'netherlands': '🇳🇱', 'belgium': '🇧🇪',
-            'turkey': '🇹🇷', 'greece': '🇬🇷', 'denmark': '🇩🇰', 'sweden': '🇸🇪',
-            'norway': '🇳🇴', 'brazil': '🇧🇷', 'argentina': '🇦🇷', 'mexico': '🇲🇽',
-            'usa': '🇺🇸', 'saudi arabia': '🇸🇦', 'japan': '🇯🇵', 'south korea': '🇰🇷',
-            'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'ghana': '🇬🇭',
-            'egypt': '🇪🇬', 'morocco': '🇲🇦', 'europe': '🇪🇺', 'world': '🌍'
+            'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷',
+            'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'europe': '🇪🇺', 'world': '🌍'
         };
-        
-        function flagFor(country) {
-            return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️';
-        }
+        function flagFor(country) { return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️'; }
 
         function bookmakerColorFor(name) {
             const n = (name || '').toLowerCase();
-            if (n.includes('mega'))   return '#E53935';
+            if (n.includes('mega')) return '#E53935';
             if (n.includes('betika')) return '#1565C0';
             return '#00704A';
         }
 
         function accentColorFor(pkgId) {
             const id = pkgId.toLowerCase();
-            if (id === 'draw1')  return 'var(--draw1)';
-            if (id === 'draw2')  return 'var(--draw2)';
-            if (id === 'draw3')  return 'var(--draw3)';
-            if (id === 'odds2')  return 'var(--odds2)';
-            if (id === 'odds5')  return 'var(--odds5)';
-            if (id === 'odds10') return 'var(--odds10)';
+            if (id.includes('draw')) return 'var(--draw1)';
+            if (id.includes('odds')) return 'var(--odds5)';
             if (id.includes('correct') || id.includes('jackpot')) return 'var(--gold)';
             return 'var(--green)';
         }
 
         function buildPackageCard(pkg) {
-            const isJackpot = pkg.type === 'jackpot'
-                || (pkg.price && pkg.price.jackpots && pkg.price.jackpots.length > 0);
+            const isJackpot = pkg.type === 'jackpot' || (pkg.price && pkg.price.jackpots && pkg.price.jackpots.length > 0);
             const tableId = `tips-table-${pkg.id}`;
             const accent = accentColorFor(pkg.id);
-
-            let priceHtml = '';
-            let buyButtonHtml = '';
+            let priceHtml = '', buyButtonHtml = '';
 
             if (isJackpot) {
                 if (currentCountry !== 'ke') return '';
                 const jackpots = (pkg.price && pkg.price.jackpots) || [];
                 if (jackpots.length === 0) {
-                    priceHtml = '<p class="card-text">No jackpot on sale right now — check back soon.</p>';
+                    priceHtml = '<p class="card-text">No jackpot on sale right now.</p>';
                 } else {
                     let rows = '';
                     jackpots.forEach(j => {
@@ -582,7 +555,6 @@
             }
 
             const badge = pkg.isMostPopular ? '<div class="pkg-badge">MOST POPULAR</div>' : '';
-
             return `
                 <section class="card" data-pkg-id="${pkg.id}">
                     <div class="card-header" style="background:${accent}; color:#0F1218;">${escapeHtml(pkg.title)}</div>
@@ -609,7 +581,6 @@
             $('#pay-modal-amount-ug-airtel').text(`UGX ${amounts.ugx.toLocaleString()}`);
             $('#pay-modal-amount-tz').text(`TZS ${amounts.tzs.toLocaleString()}`);
             
-            // Reset validation states
             $('#mpesa-message-input').val('');
             $('#mpesa-verification-result').text('');
             
@@ -630,9 +601,7 @@
                 const data = await res.json();
                 const $table = findTableForCategory(type);
                 if ($table.length) renderFlatTable(data,$table, false);
-            } catch (err) {
-                console.error(`Error fetching ${type} tips:`, err);
-            }
+            } catch (err) { console.error(`Error fetching ${type} tips:`, err); }
         }
 
         async function fetchDrawTips() {
@@ -648,25 +617,14 @@
                     
                     if ($table.length) {
                         let tableData = data.slice(0, tierCount);
-                        
                         while (tableData.length < tierCount) {
-                            // Assign realistic odds so they do not show empty
                             const realisticOdds = (Math.random() * (3.50 - 3.10) + 3.10).toFixed(2);
-                            tableData.push({
-                                isLocked: true, 
-                                teamA: '', 
-                                teamB: '', 
-                                tip: 'Draw', 
-                                odds: realisticOdds
-                            });
+                            tableData.push({ isLocked: true, teamA: '', teamB: '', tip: 'Draw', odds: realisticOdds });
                         }
-                        
                         renderFlatTable(tableData, $table, true);
                     }
                 });
-            } catch (err) {
-                console.error('Error fetching draw tips:', err);
-            }
+            } catch (err) { console.error('Error fetching draw tips:', err); }
         }
 
         async function fetchOddsTips() {
@@ -677,9 +635,7 @@
                     const $table =$(`section[data-pkg-id="odds${groupSize}"] table`);
                     if ($table.length) renderFlatTable(groups[groupSize],$table, false);
                 });
-            } catch (err) {
-                console.error('Error fetching odds tips:', err);
-            }
+            } catch (err) { console.error('Error fetching odds tips:', err); }
         }
 
         function findTableForCategory(type) {
@@ -698,21 +654,18 @@
 
             data.forEach(item => {
                 const teamsBlank = !item.teamA && !item.teamB;
-
                 if (isDrawTable && teamsBlank) {
                     tbody.append(`
                         <tr>
                             <td class="draw-hidden-match">🔒 Hidden match</td>
                             <td style="color:#00e600; font-weight:bold;">${escapeHtml(item.tip || 'Draw')}</td>
                             <td>${item.odds ? parseFloat(item.odds).toFixed(2) : '-'}</td>
-                        </tr>
-                    `);
+                        </tr>`);
                     return;
                 }
 
                 const tipDisplay = item.isLocked || !item.tip
-                    ? '<span class="tip-locked">🔒 Unlock to view</span>'
-                    : escapeHtml(item.tip);
+                    ? '<span class="tip-locked">🔒 Unlock to view</span>' : escapeHtml(item.tip);
                 const oddsDisplay = (!item.isLocked && item.odds) ? parseFloat(item.odds).toFixed(2) : '-';
 
                 tbody.append(`
@@ -720,8 +673,7 @@
                         <td>${escapeHtml(item.teamA)} VS ${escapeHtml(item.teamB)}</td>
                         <td style="font-weight:bold;">${tipDisplay}</td>
                         <td>${oddsDisplay}</td>
-                    </tr>
-                `);
+                    </tr>`);
             });
         }
 
@@ -731,7 +683,6 @@
                 const data = await res.json();
                 renderHistory(data);
             } catch (err) {
-                console.error("Error fetching history:", err);
                 $('#history-container').html('<p class="text-center text-danger">Failed to load history.</p>');
             }
         }
@@ -746,49 +697,35 @@
             }
 
             data.forEach(day => {
-                const date = day.date;
-                const categories = day.categories;
-
-                for (const catName in categories) {
-                    const matches = categories[catName];
-                    let totalOdds = 1.0;
-
-                    let tableRows = '';
+                for (const catName in day.categories) {
+                    const matches = day.categories[catName];
+                    let totalOdds = 1.0, tableRows = '';
+                    
                     matches.forEach(m => {
                         const scoreDisplay = m.score ? ` (${m.score})` : '';
                         const resultColor = m.result === 'WON' ? '#00C853' : (m.result === 'LOST' ? '#D32F2F' : '#FFD700');
-                        if (m.odds && !isNaN(m.odds)) {
-                            totalOdds *= parseFloat(m.odds);
-                        }
-
-                        const flag = m.country ? `${flagFor(m.country)} ` : '';
+                        if (m.odds && !isNaN(m.odds)) totalOdds *= parseFloat(m.odds);
 
                         tableRows += `
                             <tr>
-                                <td>${flag}${escapeHtml(m.teamA)} VS ${escapeHtml(m.teamB)}</td>
+                                <td>${flagFor(m.country)} ${escapeHtml(m.teamA)} VS ${escapeHtml(m.teamB)}</td>
                                 <td>${escapeHtml(m.prediction)}${scoreDisplay}</td>
                                 <td>${m.odds || '-'}</td>
                                 <td style="color:${resultColor}; font-weight:bold;">${m.result}</td>
-                            </tr>
-                        `;
+                            </tr>`;
                     });
 
-                    const cardHtml = `
+                    container.append(`
                         <div class="card mb-3">
-                            <div class="card-header">${escapeHtml(date)} - ${escapeHtml(catName)}</div>
+                            <div class="card-header">${escapeHtml(day.date)} - ${escapeHtml(catName)}</div>
                             <div class="card-body">
                                 <table class="table">
-                                    <thead>
-                                        <tr><th>Team</th><th>Tip</th><th>Odds</th><th>Status</th></tr>
-                                    </thead>
+                                    <thead><tr><th>Team</th><th>Tip</th><th>Odds</th><th>Status</th></tr></thead>
                                     <tbody>${tableRows}</tbody>
                                 </table>
                                 <p class="card-text" style="color:#FFD700;">Total Odds: ${totalOdds > 1 ? totalOdds.toFixed(2) : '-'}</p>
-                                <img src="https://images.unsplash.com/photo-pvAOQFDjKSE?auto=format&fit=crop&w=800&q=80" alt="Winning Icon" width="48" height="20" loading="lazy">
                             </div>
-                        </div>
-                    `;
-                    container.append(cardHtml);
+                        </div>`);
                 }
             });
         }
