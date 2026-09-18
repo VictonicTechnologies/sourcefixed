@@ -60,8 +60,21 @@
         #splash-screen h1 {
             font-family: 'Paytone One', sans-serif;
             color: var(--green);
-            font-size: 3rem;
+            /* clamp() scales the text to the viewport instead of a fixed 3rem,
+               which on a narrow phone (~360-400px) forced "VICTONIC SPORTS"
+               to wrap mid-word or overflow, throwing off centering. Floor
+               1.6rem, ceiling 3rem, scales smoothly with 8vw in between. */
+            font-size: clamp(1.6rem, 8vw, 3rem);
+            text-align: center;
+            width: 100%;
+            padding: 0 16px;
+            margin: 0;
+            box-sizing: border-box;
             animation: pulse 1.5s infinite;
+        }
+        #splash-screen p {
+            text-align: center;
+            padding: 0 16px;
         }
 
         #country-screen {
@@ -425,7 +438,17 @@
         }
 
         function buildPackageCard(pkg) {
-            const isJackpot = pkg.price && pkg.price.jackpots && pkg.price.jackpots.length > 0;
+            // Read the server's OWN classification (pkg.type === 'jackpot')
+            // rather than inferring it from jackpots.length > 0. That array
+            // can legitimately be EMPTY even for a genuine jackpot package —
+            // packages.php skips any bookmaker whose price is set to 0 in
+            // Admin -> Settings — so length-based detection could silently
+            // fall through to the regular-subscription branch, which then
+            // tries to read price.prices (also empty for a jackpot package),
+            // producing a broken "KSh 0" card with nothing in it. That looked
+            // identical to jackpot having vanished entirely.
+            const isJackpot = pkg.type === 'jackpot'
+                || (pkg.price && pkg.price.jackpots && pkg.price.jackpots.length > 0);
             const tableId = `tips-table-${pkg.id}`;
             const accent = accentColorFor(pkg.id);
 
@@ -435,17 +458,25 @@
             if (isJackpot) {
                 // Kenya-only product — mirrors the app's VipTab jackpot filter.
                 if (currentCountry !== 'ke') return '';
-                let rows = '';
-                pkg.price.jackpots.forEach(j => {
-                    rows += `
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span>${escapeHtml(j.bookmaker)}</span>
-                            <button class="btn btn-sm btn-custom" onclick="openPaymentModal('${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
-                                KSh ${Math.round(j.amount * USD_TO_KES).toLocaleString()}
-                            </button>
-                        </div>`;
-                });
-                priceHtml = rows;
+                const jackpots = (pkg.price && pkg.price.jackpots) || [];
+                if (jackpots.length === 0) {
+                    // Genuinely nothing priced right now (every bookmaker set
+                    // to 0 in Admin) — a real state, not a bug, but should say
+                    // so plainly rather than render a silently empty card.
+                    priceHtml = '<p class="card-text">No jackpot on sale right now — check back soon.</p>';
+                } else {
+                    let rows = '';
+                    jackpots.forEach(j => {
+                        rows += `
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>${escapeHtml(j.bookmaker)}</span>
+                                <button class="btn btn-sm btn-custom" onclick="openPaymentModal('${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
+                                    KSh ${Math.round(j.amount * USD_TO_KES).toLocaleString()}
+                                </button>
+                            </div>`;
+                    });
+                    priceHtml = rows;
+                }
             } else {
                 const tier = (pkg.price.prices || []).find(p => p.duration === 'DAILY') || (pkg.price.prices || [])[0];
                 const kes = tier ? kesFromUsd(tier.amount) : 0;
@@ -527,7 +558,17 @@
                 // visible difference between what a KES 200 and a KES 600
                 // package actually contain.
                 $('section[data-pkg-id^="draw"]').each(function() {
-                    const pkgId = $(this).data('pkg-id') || '';
+                    // .attr(), not .data() — jQuery's .data() reads through an
+                    // internal cache keyed by camelCase, and a hyphenated key
+                    // like 'pkg-id' passed as a string is not guaranteed to
+                    // resolve to the data-pkg-id attribute in every jQuery
+                    // version. When it silently returned undefined here, the
+                    // fallback chain below defaulted to the FULL unsliced list
+                    // for every tier — draw3 looked right by coincidence (it
+                    // wants all of them anyway), while draw1 and draw2 also
+                    // showed all 3 instead of 1 and 2. .attr() reads the raw
+                    // HTML attribute directly with no such ambiguity.
+                    const pkgId = $(this).attr('data-pkg-id') || '';
                     const tierCount = parseInt(pkgId.replace('draw', ''), 10) || data.length;
                     const $table = $(this).find('table');
                     if ($table.length) renderFlatTable(data.slice(0, tierCount), $table, true);
