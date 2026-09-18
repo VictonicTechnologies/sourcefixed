@@ -318,7 +318,10 @@
         let currentCountry = 'ke';
         let payModal = null;
         let expectedKesAmount = 0; 
-        let isPremiumUnlocked = false;
+        
+        // Track unlocked packages specifically
+        let unlockedPackages = []; 
+        let currentPayingPackageId = null; 
 
         const UGX_PER_KES = 18.7;
         const TZS_PER_KES = 13.4;
@@ -345,7 +348,7 @@
                 });
             });
 
-            // M-Pesa Message Verification Logic (Kenya)
+            // M-Pesa Message Verification Logic
             $('#verify-mpesa-btn').click(function() {
                 const msg = $('#mpesa-message-input').val().trim();
                 const $result = $('#mpesa-verification-result');
@@ -355,7 +358,7 @@
                     return;
                 }
 
-                // 1. Format & One-Time Use Check
+                // Format & One-Time Use Check
                 const codeMatch = msg.match(/^[A-Z0-9]{10}/i);
                 if (!codeMatch || !msg.toLowerCase().includes('confirmed')) {
                     $result.text('Invalid M-Pesa message format.').css('color', 'var(--red)');
@@ -369,13 +372,13 @@
                     return;
                 }
 
-                // 2. Till Name Check
+                // Till Name Check
                 if (!msg.toLowerCase().includes('statarea systems')) {
                     $result.text('Invalid Till Name. Please ensure you paid to Statarea Systems.').css('color', 'var(--red)');
                     return;
                 }
 
-                // 3. Amount Check
+                // Amount Check
                 const amountMatch = msg.match(/Ksh\s*([\d,]+\.\d{2})/i);
                 if (!amountMatch) {
                     $result.text('Could not detect amount in message. Ensure it is complete.').css('color', 'var(--red)');
@@ -388,7 +391,7 @@
                     return;
                 }
 
-                // 4. Date Check
+                // Date Check
                 const today = new Date();
                 const d = today.getDate();
                 const m = today.getMonth() + 1;
@@ -410,17 +413,22 @@
 
                 $result.text('Payment Verified Successfully! Accessing your tips...').css('color', 'var(--green)');
                 
-                // Trigger the unlock sequence
+                // Unlock ONLY the current paying package
                 setTimeout(() => {
-                    isPremiumUnlocked = true;
+                    if (currentPayingPackageId && !unlockedPackages.includes(currentPayingPackageId)) {
+                        unlockedPackages.push(currentPayingPackageId);
+                    }
                     payModal.hide();
                     
+                    // Show loaders for the specific table (or all tables as a refresh)
                     $('.table tbody').html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
                     loadAPIData();
                     
-                    $('html, body').animate({
-                        scrollTop: $("#packages-container").offset().top - 20
-                    }, 500);
+                    // Scroll to the targeted package if possible
+                    const $targetSection =$(`section[data-pkg-id="${currentPayingPackageId}"]`);
+                    if ($targetSection.length) {
+                        $('html, body').animate({ scrollTop:$targetSection.offset().top - 20 }, 500);
+                    }
                 }, 1500);
             });
         });
@@ -434,7 +442,7 @@
 
         async function loadAPIData() {
             await loadPackages();
-            fetchFlatTips('correct', 'Correct Score');
+            fetchFlatTips('correct', 'correctscore');
             fetchFreeTip();
             fetchDrawTips();
             fetchOddsTips();
@@ -457,10 +465,9 @@
 
             try {
                 const today = new Date().toISOString().split('T')[0];
-                const apiFootballKey = 'YOUR_API_KEY_HERE';
+                const apiFootballKey = '062c7d918d3e2b59a2d2947470490161';
 
-                // 1. Try API-Football
-                if (apiFootballKey && apiFootballKey !== 'YOUR_API_KEY_HERE') {
+                if (apiFootballKey && apiFootballKey !== '062c7d918d3e2b59a2d2947470490161') {
                     const headers = { "x-apisports-key": apiFootballKey };
                     const fixturesRes = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}`, { headers });
                     
@@ -502,7 +509,6 @@
                     }
                 }
 
-                // 2. Try Custom Backend
                 const res = await fetch(`${API_BASE}/api/tips.php?type=basic`);
                 if (res.ok) {
                     const data = await res.json();
@@ -575,7 +581,7 @@
         }
 
         function accentColorFor(pkgId) {
-            const id = pkgId.toLowerCase();
+            const id = (pkgId || '').toLowerCase();
             if (id.includes('draw')) return 'var(--draw1)';
             if (id.includes('odds')) return 'var(--odds5)';
             if (id.includes('correct') || id.includes('jackpot')) return 'var(--gold)';
@@ -597,11 +603,12 @@
                     let rows = '';
                     jackpots.forEach(j => {
                         const bkColor = bookmakerColorFor(j.bookmaker);
+                        const jackpotPkgId = `jackpot-${j.bookmaker.replace(/\s+/g, '-').toLowerCase()}`;
                         rows += `
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span style="color:${bkColor}; font-weight:bold;">${escapeHtml(j.bookmaker)}</span>
                                 <button class="btn btn-sm" style="background-color:${bkColor}; color:#ffffff; border:none;"
-                                        onclick="openPaymentModal('${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
+                                        onclick="openPaymentModal('${jackpotPkgId}', '${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
                                     KSh ${Math.round(j.amount * USD_TO_KES).toLocaleString()}
                                 </button>
                             </div>`;
@@ -613,7 +620,7 @@
                 const kes = tier ? kesFromUsd(tier.amount) : 0;
                 const amounts = formatAllCurrencies(kes);
                 priceHtml = `<h3 class="card-title">Price: <span class="pkg-price">${priceLabelFor(currentCountry, amounts)}</span></h3>`;
-                buyButtonHtml = `<button class="btn btn-custom" onclick="openPaymentModal('${escapeHtml(pkg.title)}', ${kes})">Buy Ticket Now</button>`;
+                buyButtonHtml = `<button class="btn btn-custom" onclick="openPaymentModal('${pkg.id}', '${escapeHtml(pkg.title)}', ${kes})">Buy Ticket Now</button>`;
             }
 
             const badge = pkg.isMostPopular ? '<div class="pkg-badge">MOST POPULAR</div>' : '';
@@ -634,7 +641,8 @@
             `;
         }
 
-        function openPaymentModal(title, kes) {
+        function openPaymentModal(pkgId, title, kes) {
+            currentPayingPackageId = pkgId; 
             expectedKesAmount = kes;
             const amounts = formatAllCurrencies(kes);
             $('#pay-modal-title').text(title);
@@ -657,19 +665,24 @@
             }[c]));
         }
 
-        async function fetchFlatTips(type, packageIdHint) {
+        // Add unlocked array to API fetch query
+        function getAuthQueryParam() {
+            return unlockedPackages.length > 0 ? `&unlocked=${encodeURIComponent(unlockedPackages.join(','))}` : '';
+        }
+
+        async function fetchFlatTips(type, pkgId) {
             try {
-                const authParam = isPremiumUnlocked ? '&unlocked=true' : '';
+                const authParam = getAuthQueryParam();
                 const res = await fetch(`${API_BASE}/api/tips.php?type=${type}${authParam}`);
                 const data = await res.json();
                 const $table = findTableForCategory(type);
-                if ($table.length) renderFlatTable(data,$table, false);
+                if ($table.length) renderFlatTable(data,$table, false, pkgId);
             } catch (err) { console.error(`Error fetching ${type} tips:`, err); }
         }
 
         async function fetchDrawTips() {
             try {
-                const authParam = isPremiumUnlocked ? '&unlocked=true' : '';
+                const authParam = getAuthQueryParam();
                 const res = await fetch(`${API_BASE}/api/tips.php?type=draws${authParam}`);
                 const data = await res.json();
 
@@ -685,7 +698,7 @@
                             const realisticOdds = (Math.random() * (3.50 - 3.10) + 3.10).toFixed(2);
                             tableData.push({ isLocked: true, teamA: '', teamB: '', tip: 'Draw', odds: realisticOdds });
                         }
-                        renderFlatTable(tableData, $table, true);
+                        renderFlatTable(tableData, $table, true, pkgId);
                     }
                 });
             } catch (err) { console.error('Error fetching draw tips:', err); }
@@ -693,12 +706,13 @@
 
         async function fetchOddsTips() {
             try {
-                const authParam = isPremiumUnlocked ? '&unlocked=true' : '';
+                const authParam = getAuthQueryParam();
                 const res = await fetch(`${API_BASE}/api/tips.php?type=odds${authParam}`);
                 const groups = await res.json();
                 Object.keys(groups).forEach(groupSize => {
-                    const $table =$(`section[data-pkg-id="odds${groupSize}"] table`);
-                    if ($table.length) renderFlatTable(groups[groupSize],$table, false);
+                    const pkgId = `odds${groupSize}`;
+                    const $table =$(`section[data-pkg-id="${pkgId}"] table`);
+                    if ($table.length) renderFlatTable(groups[groupSize],$table, false, pkgId);
                 });
             } catch (err) { console.error('Error fetching odds tips:', err); }
         }
@@ -708,7 +722,7 @@
             return $(`section[data-pkg-id="${type}"] table`);
         }
 
-        function renderFlatTable(data, $table, isDrawTable) {
+        function renderFlatTable(data, $table, isDrawTable, pkgId) {
             const tbody = $table.find('tbody');
             tbody.empty();
 
@@ -717,10 +731,12 @@
                 return;
             }
 
+            const isThisPackageUnlocked = unlockedPackages.includes(pkgId);
+
             data.forEach(item => {
                 const teamsBlank = !item.teamA && !item.teamB;
                 
-                if (isDrawTable && teamsBlank && !isPremiumUnlocked) {
+                if (isDrawTable && teamsBlank && !isThisPackageUnlocked) {
                     tbody.append(`
                         <tr>
                             <td class="draw-hidden-match">🔒 Hidden match</td>
@@ -730,7 +746,7 @@
                     return;
                 }
 
-                const forceLock = !isPremiumUnlocked && item.isLocked;
+                const forceLock = !isThisPackageUnlocked && item.isLocked;
                 
                 const tipDisplay = forceLock || !item.tip
                     ? '<span class="tip-locked">🔒 Unlock to view</span>' 
