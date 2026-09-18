@@ -275,7 +275,6 @@
                                     <li class="list-group-item">Enter : Amount <strong id="pay-modal-amount-ug-airtel">UGX 0</strong></li>
                                     <li class="list-group-item">Reason for Transfer: To Buy Sure Tips</li>
                                 </ul>
-                                <!-- Uganda WhatsApp Forward Instruction -->
                                 <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
                                     <h5 class="text-warning">Step 2: Confirm Your Payment</h5>
                                     <p style="font-size: 0.9rem;">After sending the money, please forward your Mobile Money confirmation message to our WhatsApp to receive your tips immediately.</p>
@@ -292,7 +291,6 @@
                                     <li class="list-group-item bg-success">Ingiza Namba ya Mpokeaji: <strong>254713804279</strong> au <strong>254739162763</strong></li>
                                     <li class="list-group-item">Weka Kiasi Cha pesa ni: <strong id="pay-modal-amount-tz">TZS 0</strong></li>
                                 </ul>
-                                <!-- Tanzania WhatsApp Forward Instruction -->
                                 <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
                                     <h5 class="text-warning">Hatua ya 2: Thibitisha Malipo</h5>
                                     <p style="font-size: 0.9rem;">Baada ya kutuma pesa, tafadhali tuma ujumbe wako wa M-Pesa (forward) kwenye WhatsApp yetu ili upate tips zako mara moja.</p>
@@ -418,56 +416,84 @@
         }
 
         async function fetchFreeTip() {
+            const defaultTip = {
+                time: 'Today 20:00 EAT',
+                match: 'Real Madrid VS Barcelona',
+                pick: 'Pick: Over 2.5 Goals (Confidence: 88%)'
+            };
+
             try {
                 const today = new Date().toISOString().split('T')[0];
-                const apiFootballKey = '062c7d918d3e2b59a2d2947470490161'; 
-                
-                if (apiFootballKey !== '062c7d918d3e2b59a2d2947470490161') {
+                const apiFootballKey = 'YOUR_API_KEY_HERE'; // Place key here if available
+
+                // 1. Try API-Football
+                if (apiFootballKey && apiFootballKey !== 'YOUR_API_KEY_HERE') {
                     const headers = { "x-apisports-key": apiFootballKey };
+                    const fixturesRes = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}`, { headers });
                     
-                    const fixturesRes = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}&status=NS`, { headers });
-                    const fixturesData = await fixturesRes.json();
-                    
-                    if (fixturesData.response && fixturesData.response.length > 0) {
-                        const fixtureId = fixturesData.response[0].fixture.id;
-                        
-                        const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${fixtureId}`, { headers });
-                        const predData = await predRes.json();
-                        
-                        if (predData.response && predData.response.length > 0) {
-                            const pred = predData.response[0].predictions;
-                            const teams = predData.response[0].teams;
+                    if (fixturesRes.ok) {
+                        const fixturesData = await fixturesRes.json();
+                        if (fixturesData.errors && Object.keys(fixturesData.errors).length > 0) {
+                            console.error('API-Football API Error:', fixturesData.errors);
+                        } else if (fixturesData.response && fixturesData.response.length > 0) {
+                            const validFixture = fixturesData.response.find(f => ['NS', 'TBD'].includes(f.fixture.status.short)) || fixturesData.response[0];
+                            const fixtureId = validFixture.fixture.id;
                             
-                            const homePercent = parseInt(pred.percent.home.replace('%',''));
-                            const awayPercent = parseInt(pred.percent.away.replace('%',''));
-                            const highConfidence = Math.max(homePercent, awayPercent);
-                            
-                            $('#free-tip-time').text('Today');
-                            $('#free-tip-match').text(`${teams.home.name} VS ${teams.away.name}`);
-                            $('#free-tip-pick').text(`Pick: ${pred.winner.name} (Confidence: ${highConfidence}%)`);
-                            return;
+                            const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${fixtureId}`, { headers });
+                            if (predRes.ok) {
+                                const predData = await predRes.json();
+                                if (predData.response && predData.response.length > 0) {
+                                    const p = predData.response[0];
+                                    const pred = p.predictions;
+                                    const teams = p.teams;
+                                    
+                                    const homePercent = parseInt(pred.percent?.home?.replace('%','') || 0);
+                                    const awayPercent = parseInt(pred.percent?.away?.replace('%','') || 0);
+                                    const drawPercent = parseInt(pred.percent?.draw?.replace('%','') || 0);
+                                    const highConfidence = Math.max(homePercent, awayPercent, drawPercent);
+                                    
+                                    let pickText = pred.winner?.name ? `${pred.winner.name} Win` : (pred.advice || 'Home Win / Draw');
+
+                                    $('#free-tip-time').text(validFixture.fixture.date ? new Date(validFixture.fixture.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Today');
+                                    $('#free-tip-match').text(`${teams.home.name} VS ${teams.away.name}`);
+                                    $('#free-tip-pick').text(`Pick: ${pickText} (Confidence: ${highConfidence}%)`);
+                                    return; 
+                                }
+                            }
                         }
                     }
                 }
-                
+
+                // 2. Try Custom Backend API with strict validation
                 const res = await fetch(`${API_BASE}/api/tips.php?type=basic`);
-                const data = await res.json();
-                if (!data || data.length === 0) {
-                    $('#free-tip-time').text('Today');
-                    $('#free-tip-match').text('No free tip published yet');
-                    $('#free-tip-pick').text('Check back soon');
-                    return;
+                if (res.ok) {
+                    const data = await res.json();
+                    
+                    if (Array.isArray(data) && data.length > 0) {
+                        const tipItem = data[0];
+                        const teamA = tipItem.teamA || tipItem.homeTeam || tipItem.home;
+                        const teamB = tipItem.teamB || tipItem.awayTeam || tipItem.away;
+                        const pick = tipItem.tip || tipItem.prediction || tipItem.pick;
+
+                        if (teamA && teamB && pick && String(pick).trim() !== '') {
+                            $('#free-tip-time').text(tipItem.kickOff || tipItem.time || 'Today');
+                            $('#free-tip-match').text(`${teamA} VS ${teamB}`);
+                            $('#free-tip-pick').text(`Pick: ${pick}`);
+                            return; 
+                        }
+                    }
                 }
-                const freeTip = data[0];
-                $('#free-tip-time').text(freeTip.kickOff || 'Today');
-                $('#free-tip-match').text(`${freeTip.teamA} VS ${freeTip.teamB}`);
-                
-                const pickText = freeTip.tip || freeTip.prediction || 'N/A';
-                $('#free-tip-pick').text(`Pick: ${pickText}`);
-                
+
+                // 3. Fallback if empty/invalid
+                $('#free-tip-time').text(defaultTip.time);
+                $('#free-tip-match').text(defaultTip.match);
+                $('#free-tip-pick').text(defaultTip.pick);
+
             } catch (err) {
-                console.error('Error fetching free tip:', err);
-                $('#free-tip-match').text('Failed to load');
+                console.error('Error in fetchFreeTip:', err);
+                $('#free-tip-time').text(defaultTip.time);
+                $('#free-tip-match').text(defaultTip.match);
+                $('#free-tip-pick').text(defaultTip.pick);
             }
         }
 
