@@ -204,9 +204,10 @@
                 <div class="card-header">Free Tip of the Day</div>
                 <div class="card-body">
                     <img class="card-img-top" src="https://images.unsplash.com/photo-w0O0lxbZp9A?auto=format&fit=crop&w=800&q=80" alt="Free Soccer Betting Tip Banner" loading="lazy">
+                    <p id="free-tip-league" class="card-text mt-3" style="font-weight: bold; color: var(--gold); font-size: 1.1rem;"></p>
                     <h2 class="card-title" id="free-tip-time">Loading...</h2>
                     <p class="card-text"><strong id="free-tip-match">...</strong></p>
-                    <p class="card-text" style="color: #0000FF;"><strong id="free-tip-pick">...</strong></p>
+                    <p class="card-text" style="color: #00C853;"><strong id="free-tip-pick">...</strong></p>
                 </div>
             </section>
 
@@ -440,8 +441,15 @@
             fetchHistory();
         }
 
+        const COUNTRY_FLAGS = {
+            'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷',
+            'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'europe': '🇪🇺', 'world': '🌍'
+        };
+        function flagFor(country) { return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️'; }
+
         async function fetchFreeTip() {
             const defaultTip = {
+                league: '🇪🇸 Spain - La Liga',
                 time: 'Today 20:00 EAT',
                 match: 'Real Madrid VS Barcelona',
                 pick: 'Pick: Over 2.5 Goals (Confidence: 88%)'
@@ -471,6 +479,7 @@
                                     const p = predData.response[0];
                                     const pred = p.predictions;
                                     const teams = p.teams;
+                                    const leagueData = validFixture.league;
                                     
                                     const homePercent = parseInt(pred.percent?.home?.replace('%','') || 0);
                                     const awayPercent = parseInt(pred.percent?.away?.replace('%','') || 0);
@@ -479,6 +488,10 @@
                                     
                                     let pickText = pred.winner?.name ? `${pred.winner.name} Win` : (pred.advice || 'Home Win / Draw');
 
+                                    const countryName = leagueData.country || 'World';
+                                    const leagueName = leagueData.name || 'League';
+                                    
+                                    $('#free-tip-league').text(`${flagFor(countryName)} ${countryName} - ${leagueName}`);
                                     $('#free-tip-time').text(validFixture.fixture.date ? new Date(validFixture.fixture.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Today');
                                     $('#free-tip-match').text(`${teams.home.name} VS ${teams.away.name}`);
                                     $('#free-tip-pick').text(`Pick: ${pickText} (Confidence: ${highConfidence}%)`);
@@ -498,8 +511,12 @@
                         const teamA = tipItem.teamA || tipItem.homeTeam || tipItem.home;
                         const teamB = tipItem.teamB || tipItem.awayTeam || tipItem.away;
                         const pick = tipItem.tip || tipItem.prediction || tipItem.pick;
+                        
+                        const cName = tipItem.country || 'World';
+                        const lName = tipItem.league || 'League Match';
 
                         if (teamA && teamB && pick && String(pick).trim() !== '') {
+                            $('#free-tip-league').text(`${flagFor(cName)} ${cName} - ${lName}`);
                             $('#free-tip-time').text(tipItem.kickOff || tipItem.time || 'Today');
                             $('#free-tip-match').text(`${teamA} VS ${teamB}`);
                             $('#free-tip-pick').text(`Pick: ${pick}`);
@@ -508,12 +525,14 @@
                     }
                 }
 
+                $('#free-tip-league').text(defaultTip.league);
                 $('#free-tip-time').text(defaultTip.time);
                 $('#free-tip-match').text(defaultTip.match);
                 $('#free-tip-pick').text(defaultTip.pick);
 
             } catch (err) {
                 console.error('Error in fetchFreeTip:', err);
+                $('#free-tip-league').text(defaultTip.league);
                 $('#free-tip-time').text(defaultTip.time);
                 $('#free-tip-match').text(defaultTip.match);
                 $('#free-tip-pick').text(defaultTip.pick);
@@ -547,12 +566,6 @@
             container.empty();
             packages.forEach(pkg => container.append(buildPackageCard(pkg)));
         }
-
-        const COUNTRY_FLAGS = {
-            'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷',
-            'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'europe': '🇪🇺', 'world': '🌍'
-        };
-        function flagFor(country) { return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️'; }
 
         function bookmakerColorFor(name) {
             const n = (name || '').toLowerCase();
@@ -646,7 +659,6 @@
 
         async function fetchFlatTips(type, packageIdHint) {
             try {
-                // If your backend needs a flag to output unlocked tips, append it here
                 const authParam = isPremiumUnlocked ? '&unlocked=true' : '';
                 const res = await fetch(`${API_BASE}/api/tips.php?type=${type}${authParam}`);
                 const data = await res.json();
