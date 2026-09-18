@@ -404,7 +404,10 @@
                 const freeTip = data[0];
                 $('#free-tip-time').text(freeTip.kickOff || 'Today');
                 $('#free-tip-match').text(`${freeTip.teamA} VS ${freeTip.teamB}`);
-                $('#free-tip-pick').text(`Pick: ${freeTip.tip}`);
+                
+                // Check for both .tip and .prediction to ensure the pick displays
+                const pickText = freeTip.tip || freeTip.prediction || 'N/A';
+                $('#free-tip-pick').text(`Pick: ${pickText}`);
             } catch (err) {
                 console.error('Error fetching free tip:', err);
                 $('#free-tip-match').text('Failed to load');
@@ -593,6 +596,10 @@
             $('#pay-modal-amount-ug-mtn').text(`UGX ${amounts.ugx.toLocaleString()}`);
             $('#pay-modal-amount-ug-airtel').text(`UGX ${amounts.ugx.toLocaleString()}`);
             $('#pay-modal-amount-tz').text(`TZS ${amounts.tzs.toLocaleString()}`);
+            
+            // Hide all payment divs, then show only the one for the current country
+            $('.pay-ke, .pay-ug, .pay-tz').hide();$(`.pay-${currentCountry}`).show();
+            
             payModal.show();
         }
 
@@ -614,7 +621,7 @@
                 const res = await fetch(`${API_BASE}/api/tips.php?type=${type}`);
                 const data = await res.json();
                 const $table = findTableForCategory(type);
-                if ($table.length) renderFlatTable(data, $table, false);
+                if ($table.length) renderFlatTable(data,$table, false);
             } catch (err) {
                 console.error(`Error fetching ${type} tips:`, err);
             }
@@ -631,29 +638,31 @@
         async function fetchDrawTips() {
             try {
                 const res = await fetch(`${API_BASE}/api/tips.php?type=draws`);
-                const data = await res.json();   // one ordered slate, shared by draw1/2/3
+                const data = await res.json();
 
-                // Slice to how many THIS tier actually grants — draw1 sees the
-                // first pick, draw2 the first two, draw3 all three. Previously
-                // the full list was rendered identically into every draw card,
-                // so a draw1 preview showed the same 3 rows as draw3 — no
-                // visible difference between what a KES 200 and a KES 600
-                // package actually contain.
                 $('section[data-pkg-id^="draw"]').each(function() {
-                    // .attr(), not .data() — jQuery's .data() reads through an
-                    // internal cache keyed by camelCase, and a hyphenated key
-                    // like 'pkg-id' passed as a string is not guaranteed to
-                    // resolve to the data-pkg-id attribute in every jQuery
-                    // version. When it silently returned undefined here, the
-                    // fallback chain below defaulted to the FULL unsliced list
-                    // for every tier — draw3 looked right by coincidence (it
-                    // wants all of them anyway), while draw1 and draw2 also
-                    // showed all 3 instead of 1 and 2. .attr() reads the raw
-                    // HTML attribute directly with no such ambiguity.
-                    const pkgId = $(this).attr('data-pkg-id') || '';
-                    const tierCount = parseInt(pkgId.replace('draw', ''), 10) || data.length;
-                    const $table = $(this).find('table');
-                    if ($table.length) renderFlatTable(data.slice(0, tierCount), $table, true);
+                    const pkgId = ($(this).attr('data-pkg-id') || '').toLowerCase();
+                    // Accurately extract the tier number (1, 2, or 3) from the package ID
+                    const match = pkgId.match(/\d+/);
+                    const tierCount = match ? parseInt(match[0], 10) : data.length;
+                    const $table =$(this).find('table');
+                    
+                    if ($table.length) {
+                        let tableData = data.slice(0, tierCount);
+                        
+                        // Pad the array with locked matches if the API returned fewer items than the package promises
+                        while (tableData.length < tierCount) {
+                            tableData.push({
+                                isLocked: true, 
+                                teamA: '', 
+                                teamB: '', 
+                                tip: 'Draw', 
+                                odds: null
+                            });
+                        }
+                        
+                        renderFlatTable(tableData, $table, true);
+                    }
                 });
             } catch (err) {
                 console.error('Error fetching draw tips:', err);
@@ -673,8 +682,8 @@
                 const res = await fetch(`${API_BASE}/api/tips.php?type=odds`);
                 const groups = await res.json();   // {"2": [...], "5": [...], "10": [...]}
                 Object.keys(groups).forEach(groupSize => {
-                    const $table = $(`section[data-pkg-id="odds${groupSize}"] table`);
-                    if ($table.length) renderFlatTable(groups[groupSize], $table, false);
+                    const $table =$(`section[data-pkg-id="odds${groupSize}"] table`);
+                    if ($table.length) renderFlatTable(groups[groupSize],$table, false);
                 });
             } catch (err) {
                 console.error('Error fetching odds tips:', err);
