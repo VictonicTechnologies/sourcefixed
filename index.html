@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="author" content="Victonic Sports">
-    <meta name="description" content="Oddspredicts offers sure soccer betting tips, including fixed matches, daily odds, and SportPesa jackpots. Subscribe for guaranteed wins!">
-    <meta name="keywords" content="soccer tips, fixed matches, betting tips, SportPesa jackpot, daily odds, sure bets, Victonic Sports">
+    <meta name="description" content="Victonic Sports offers sure soccer betting tips, daily odds accumulators, correct score predictions and SportPesa jackpot picks for Kenya, Uganda and Tanzania.">
+    <meta name="keywords" content="soccer tips, betting tips, SportPesa jackpot, daily odds, sure bets, Victonic Sports">
     <meta name="robots" content="index, follow">
-    <title>Oddspredicts | Sure Tips</title>
-    
+    <title>Victonic Sports | Sure Tips</title>
+
     <link rel="icon" type="image/gif" href="/tab.gif"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&family=Paytone+One&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Josefin Sans', sans-serif;
@@ -137,6 +137,16 @@
         .network-title { color: #ffaa00; margin-top: 15px; text-decoration: underline; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid #ff5733; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- Locked-row styling: same intent as the app's lock icon, but as
+             plain text so it works even when the row has no image to swap in --- */
+        .tip-locked { color: #999 !important; font-style: italic; }
+        .draw-hidden-match { color: #777; font-style: italic; }
+        .pkg-badge {
+            display: inline-block; font-size: 0.75rem; font-weight: bold;
+            background: rgba(255,255,255,0.12); color: #ffd166;
+            padding: 2px 10px; border-radius: 20px; margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
@@ -155,7 +165,7 @@
 
     <div id="main-app">
         <main class="container">
-            
+
             <section class="card">
                 <div class="card-header">Free Tip of the Day</div>
                 <div class="card-body">
@@ -166,58 +176,16 @@
                 </div>
             </section>
 
-            <section class="card">
-                <div class="card-header">VIP TIPS (CS, Fixed, High Odds)</div>
-                <div class="card-body">
-                    <h2 class="card-title" style="color:red;">High Odds</h2>
-                    <h3 class="card-title" style="color:#e0e01b;">Price: <span class="price-ke">KSh 1000</span><span class="price-ug" style="display:none;">UGX 18,720</span><span class="price-tz" style="display:none;">TZS 13,400</span></h3>
-                    <img class="card-img-top" src="https://images.unsplash.com/photo-fFa_e614P84?auto=format&fit=crop&w=800&q=80" alt="VIP Soccer Tips Icon" loading="lazy">
-                    <table class="table" id="vip-table">
-                        <thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead>
-                        <tbody><tr><td colspan="3"><div class="loader"></div></td></tr></tbody>
-                    </table>
-                    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#dr">Get Slip Now</button>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="card-header">BASIC TIPS (11 Odds)</div>
-                <div class="card-body">
-                    <h2 class="card-title" style="color:red;">Sure Odds</h2>
-                    <h3 class="card-title">Price: <span class="price-ke">KSh 150</span><span class="price-ug" style="display:none;">UGX 2,800</span><span class="price-tz" style="display:none;">TZS 2,010</span></h3>
-                    <img class="card-img-top" src="https://images.unsplash.com/photo-IsbIDM_iV8M?auto=format&fit=crop&w=800&q=80" alt="Basic Soccer Tips Icon" loading="lazy">
-                    <table class="table" id="basic-table">
-                        <thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead>
-                        <tbody><tr><td colspan="3"><div class="loader"></div></td></tr></tbody>
-                    </table>
-                    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#mozzart">Buy Ticket Now</button>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="card-header">2 DRAWS (10.5 Odds)</div>
-                <div class="card-body">
-                    <h3 class="card-title">Price: <span class="price-ke">KSh 100</span><span class="price-ug" style="display:none;">UGX 1,870</span><span class="price-tz" style="display:none;">TZS 1,340</span></h3>
-                    <img class="card-img-top" src="https://images.unsplash.com/photo-IsbIDM_iV8M?auto=format&fit=crop&w=800&q=80" alt="2 Draws Soccer Tips Icon" loading="lazy">
-                    <table class="table" id="draws-table">
-                        <thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead>
-                        <tbody><tr><td colspan="3"><div class="loader"></div></td></tr></tbody>
-                    </table>
-                    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#basictips">Buy Ticket Now</button>
-                </div>
-            </section>
-
-            <section class="card" id="jackpot-section">
-                <div class="card-header">SportPesa JackPot</div>
-                <div class="card-body">
-                    <h2 class="card-title">SportPesa Mega Jackpot</h2>
-                    <h3 class="card-title">Price: KSh 300</h3>
-                    <img class="card-img-top" src="https://images.unsplash.com/photo-A8bY9zE1BQU?auto=format&fit=crop&w=800&q=80" alt="SportPesa Jackpot Icon" loading="lazy">
-                    <p class="card-text">Guaranteed Bonus</p>
-                    <img class="card-img-top" src="https://images.unsplash.com/photo-TH4fII_mE_4?auto=format&fit=crop&w=800&q=80" alt="SportPesa Jackpot Banner" loading="lazy">
-                    <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#sp">Buy Ticket Now</button>
-                </div>
-            </section>
+            <!--
+                Package cards are rendered ENTIRELY by JS from api/packages.php
+                — the same endpoint the app and footyscorelive.com read. Admin
+                changes a price or adds a package once, and it appears here
+                automatically with no HTML edits needed. See buildPackageCard()
+                near the bottom of this file.
+            -->
+            <div id="packages-container">
+                <div class="loader"></div>
+            </div>
 
             <section class="past-tips">
                 <h1 class="text-center mb-4" style="color:#00e600;">Past Tips History</h1>
@@ -228,16 +196,27 @@
 
             <section class="text-center mt-4 mb-5">
                 <h3 style="color:white;">Contact Us</h3>
-                <a href="https://wa.me/254713804279?text=I'm%20interested%20in%20your%20fixed%20games%20today" rel="nofollow" class="btn btn-success m-1">WhatsApp</a>
+                <a href="https://wa.me/254713804279?text=I'm%20interested%20in%20your%20sure%20tips%20today" rel="nofollow" class="btn btn-success m-1">WhatsApp</a>
                 <a href="https://twitter.com/victonic_sports" rel="nofollow" class="btn btn-primary m-1">Twitter</a>
                 <a href="https://t.me/+GEkAL_4kqyJjNDc0" rel="nofollow" class="btn btn-info m-1">Telegram</a>
             </section>
 
-            <div class="modal fade payment-modal" id="dr" tabindex="-1" aria-hidden="true">
+            <!--
+                ONE reusable payment modal instead of a separate hardcoded
+                modal per package. Previously each of the 4 old packages had
+                its own full copy of this markup — unworkable for 8 real
+                packages. openPaymentModal() below fills in the title and
+                amount for whichever package's Buy button was clicked.
+
+                Payment mechanics themselves (Till number, phone numbers) are
+                UNCHANGED from the original file — only made reusable, not
+                replaced with anything automated.
+            -->
+            <div class="modal fade payment-modal" id="pay-modal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">VIP TIPS</h3>
+                            <h3 class="modal-title" id="pay-modal-title">Buy Tips</h3>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -246,7 +225,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Go to "Safaricom- Buy Goods & Services"</li>
                                     <li class="list-group-item bg-success">Enter Till No <strong>668526</strong> (Statarea Systems) <button class="copy-btn" data-till="668526">Copy</button></li>
-                                    <li class="list-group-item">Enter amount <strong>KSh 1000</strong>, click "OK"</li>
+                                    <li class="list-group-item">Enter amount <strong id="pay-modal-amount-ke">KSh 0</strong>, click "OK"</li>
                                     <li class="list-group-item">Enter your PIN Number, click OK</li>
                                 </ul>
                             </div>
@@ -258,7 +237,7 @@
                                     <li class="list-group-item">Chose: Option to send to "Other Network"</li>
                                     <li class="list-group-item">Select: The network (Safaricom M-PESA).</li>
                                     <li class="list-group-item bg-success">Enter Phone Number: <strong>254713804279</strong></li>
-                                    <li class="list-group-item">Enter: amount <strong>UGX 18,720</strong></li>
+                                    <li class="list-group-item">Enter: amount <strong id="pay-modal-amount-ug-mtn">UGX 0</strong></li>
                                     <li class="list-group-item">Enter: your MTN PIN to confirm the transaction.</li>
                                 </ul>
                                 <h4 class="network-title">UGANDA AIRTEL Subscribers</h4>
@@ -268,8 +247,8 @@
                                     <li class="list-group-item">Choose: "International Transfer" from the menu.</li>
                                     <li class="list-group-item">Select: KENYA as the destination country</li>
                                     <li class="list-group-item bg-success">Enter Phone Number: <strong>254739162763</strong></li>
-                                    <li class="list-group-item">Enter : Amount <strong>UGX 18,720</strong></li>
-                                    <li class="list-group-item">Reason for Transfer: To Buy FIXD odds</li>
+                                    <li class="list-group-item">Enter : Amount <strong id="pay-modal-amount-ug-airtel">UGX 0</strong></li>
+                                    <li class="list-group-item">Reason for Transfer: To Buy Sure Tips</li>
                                 </ul>
                             </div>
                             <div class="pay-tz" style="display:none;">
@@ -279,93 +258,7 @@
                                     <li class="list-group-item">Chagua Tuma Pesa : Ingia kwenye menyu na uchague "Tuma Pesa"</li>
                                     <li class="list-group-item">Chagua M-Pesa Kenya: Ingiza na uchague "Pesa za Kimataifa" au "Tuma Nje ya Nchi", kisha chagua M-Pesa KENYA</li>
                                     <li class="list-group-item bg-success">Ingiza Namba ya Mpokeaji: <strong>254713804279</strong> au <strong>254739162763</strong></li>
-                                    <li class="list-group-item">Weka Kiasi Cha pesa ni: <strong>TZS 13,400</strong></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade payment-modal" id="mozzart" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">Basic Tips</h3>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h4 class="text-light" style="color:#00e600;">Must Win Games <span style="color:#DC143C;">(100% Sure)</span></h4>
-                            <div class="pay-ke">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Go to "Safaricom- Buy Goods & Services"</li>
-                                    <li class="list-group-item bg-success">Enter Till No <strong>668526</strong> (Statarea Systems) <button class="copy-btn" data-till="668526">Copy</button></li>
-                                    <li class="list-group-item">Enter amount <strong>KSh 150</strong>, click "OK"</li>
-                                </ul>
-                            </div>
-                            <div class="pay-ug" style="display:none;">
-                                <p class="text-warning">Pay <strong>UGX 2,800</strong> using MTN or Airtel Uganda to Kenya M-Pesa.</p>
-                                <em>(Send to 254713804279 or 254739162763)</em><br><br>
-                            </div>
-                            <div class="pay-tz" style="display:none;">
-                                <p class="text-warning">Pay <strong>TZS 2,010</strong> via Vodacom Pesa za Kimataifa:</p>
-                                <em>(Send to 254713804279 or 254739162763)</em><br><br>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade payment-modal" id="basictips" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">Draws Tips</h3>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h4 class="text-light" style="color:#00e600;">Must Win Games (Draw)</h4>
-                            <div class="pay-ke">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Go to "Safaricom- Buy Goods & Services"</li>
-                                    <li class="list-group-item bg-success">Enter Till No <strong>668526</strong> (Statarea Systems) <button class="copy-btn" data-till="668526">Copy</button></li>
-                                    <li class="list-group-item">Enter amount <strong>KSh 100</strong>, click "OK"</li>
-                                </ul>
-                            </div>
-                            <div class="pay-ug" style="display:none;">
-                                <p class="text-warning">Pay <strong>UGX 1,870</strong> via mobile money to 254713804279 or 254739162763</p>
-                            </div>
-                            <div class="pay-tz" style="display:none;">
-                                <p class="text-warning">Pay <strong>TZS 1,340</strong> via Vodacom Pesa za Kimataifa to 254713804279 or 254739162763</p>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade payment-modal" id="sp" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">SportPesa Jackpot</h3>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="pay-ke">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Go to "Safaricom- Buy Goods & Services"</li>
-                                    <li class="list-group-item bg-success">Enter Till No <strong>668526</strong> (Statarea Systems) <button class="copy-btn" data-till="668526">Copy</button></li>
-                                    <li class="list-group-item">Enter amount <strong>KSh 300</strong>, click "OK"</li>
-                                    <li><h5 style="color:#DC143C; margin-top:10px;">KSh 300 SportPesa MEGA & MidWeek</h5></li>
+                                    <li class="list-group-item">Weka Kiasi Cha pesa ni: <strong id="pay-modal-amount-tz">TZS 0</strong></li>
                                 </ul>
                             </div>
                         </div>
@@ -381,10 +274,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <script>
+        const API_BASE = 'https://www.footyscorelive.com';
+        let currentCountry = 'ke';
+        let payModal = null;
+
+        // Approximate KES -> UGX / TZS multipliers, matching the ratios already
+        // implied by this site's ORIGINAL hardcoded prices (KSh1000 -> UGX18,720
+        // and KSh1000 -> TZS13,400, i.e. ~18.7 and ~13.4). api/packages.php only
+        // does KES/USD conversion server-side, so UGX/TZS is computed here —
+        // these are approximate and worth revisiting periodically against real
+        // forex rates rather than treated as exact.
+        const UGX_PER_KES = 18.7;
+        const TZS_PER_KES = 13.4;
+        const USD_TO_KES  = 130; // matches the fallback rate used elsewhere in this project
+
         $(document).ready(function() {
-            // Splash transition
+            payModal = new bootstrap.Modal(document.getElementById('pay-modal'));
+
             setTimeout(function() {
                 $('#splash-screen').css('opacity', '0');
                 setTimeout(function() {
@@ -393,7 +301,6 @@
                 }, 500);
             }, 1500);
 
-            // Copy to clipboard
             $('.copy-btn').click(function() {
                 const tillNumber = $(this).data('till');
                 navigator.clipboard.writeText(tillNumber).then(() => {
@@ -406,45 +313,215 @@
         });
 
         function selectCountry(countryCode) {
+            currentCountry = countryCode;
             $('#country-screen').hide();
             $('#main-app').fadeIn();
 
-            // Toggle Pricing and Payment instructions
-            $('.pay-ke, .pay-ug, .pay-tz, .price-ke, .price-ug, .price-tz').hide();
-            $(`.pay-${countryCode}, .price-${countryCode}`).show();
-
-            // Handle Jackpot Section specific to Kenya
-            if (countryCode === 'ke') {
-                $('#jackpot-section').show();
-            } else {
-                $('#jackpot-section').hide();
-            }
-
-            // Fetch the API data once the country is selected
             loadAPIData();
         }
 
         async function loadAPIData() {
-            // Setup fetch requests
-            fetchTips('premium', 'vip-table');
-            fetchTips('basic', 'basic-table');
-            fetchTips('draws', 'draws-table');
+            await loadPackages();
+            // 'correct', not 'premium' — the generator only ever writes to
+            // draws / correct / odds. The old 'premium' fetch pointed at a
+            // category nothing publishes to, so that table was always empty.
+            fetchFlatTips('correct', 'Correct Score');
+            fetchDrawTips();
+            fetchOddsTips();
             fetchHistory();
         }
 
-        async function fetchTips(type, tableId) {
+        // ─── Packages ────────────────────────────────────────────────────────
+        async function loadPackages() {
             try {
-                const res = await fetch(`https://www.footyscorelive.com/api/tips.php?type=${type}`);
-                const data = await res.json();
-                renderTipsTable(data, tableId);
+                const res = await fetch(`${API_BASE}/api/packages.php`);
+                const packages = await res.json();
+                renderPackages(packages);
             } catch (err) {
-                console.error(`Error fetching ${type} tips:`, err);
-                $(`#${tableId} tbody`).html('<tr><td colspan="3">Failed to load tips. Please try again later.</td></tr>');
+                console.error('Error loading packages:', err);
+                $('#packages-container').html('<p class="text-center text-danger">Failed to load packages.</p>');
             }
         }
 
-        function renderTipsTable(data, tableId) {
-            const tbody = $(`#${tableId} tbody`);
+        function kesFromUsd(usdAmount) {
+            return Math.round(usdAmount * USD_TO_KES);
+        }
+
+        function formatAllCurrencies(kes) {
+            const ugx = Math.round(kes * UGX_PER_KES);
+            const tzs = Math.round(kes * TZS_PER_KES);
+            return { kes, ugx, tzs };
+        }
+
+        function priceLabelFor(country, amounts) {
+            if (country === 'ug') return `UGX ${amounts.ugx.toLocaleString()}`;
+            if (country === 'tz') return `TZS ${amounts.tzs.toLocaleString()}`;
+            return `KSh ${amounts.kes.toLocaleString()}`;
+        }
+
+        /**
+         * One card per package returned by the API — draw1/2/3, odds2/5/10,
+         * correctscore, jackpot. Nothing here is hardcoded to a fixed list of
+         * 4 products, so a package added or renamed in Admin appears without
+         * any change to this file.
+         */
+        function renderPackages(packages) {
+            const container = $('#packages-container');
+            container.empty();
+
+            packages.forEach(pkg => {
+                container.append(buildPackageCard(pkg));
+            });
+
+            // Table bodies now exist in the DOM. loadAPIData() awaits this
+            // function before calling any of the tip-fetchers below, so
+            // ordering is already guaranteed without an event — an earlier
+            // version used a 'packages-rendered' event for this, but fired it
+            // synchronously from inside this same call chain, meaning any
+            // listener attached AFTER awaiting loadPackages() (which is
+            // exactly when the fetchers subscribed) would never see it. That
+            // silently broke odds and draws — this fixes it by removing the
+            // unnecessary indirection entirely.
+        }
+
+        function buildPackageCard(pkg) {
+            const isJackpot = pkg.price && pkg.price.jackpots && pkg.price.jackpots.length > 0;
+            const tableId = `tips-table-${pkg.id}`;
+
+            let priceHtml = '';
+            let buyButtonHtml = '';
+
+            if (isJackpot) {
+                // Kenya-only product — mirrors the app's VipTab jackpot filter.
+                if (currentCountry !== 'ke') return '';
+                let rows = '';
+                pkg.price.jackpots.forEach(j => {
+                    rows += `
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>${escapeHtml(j.bookmaker)}</span>
+                            <button class="btn btn-sm btn-custom" onclick="openPaymentModal('${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
+                                KSh ${Math.round(j.amount * USD_TO_KES).toLocaleString()}
+                            </button>
+                        </div>`;
+                });
+                priceHtml = rows;
+            } else {
+                const tier = (pkg.price.prices || []).find(p => p.duration === 'DAILY') || (pkg.price.prices || [])[0];
+                const kes = tier ? kesFromUsd(tier.amount) : 0;
+                const amounts = formatAllCurrencies(kes);
+                priceHtml = `<h3 class="card-title">Price: <span class="pkg-price">${priceLabelFor(currentCountry, amounts)}</span></h3>`;
+                buyButtonHtml = `<button class="btn btn-custom" onclick="openPaymentModal('${escapeHtml(pkg.title)}', ${kes})">Buy Ticket Now</button>`;
+            }
+
+            const badge = pkg.isMostPopular ? '<div class="pkg-badge">MOST POPULAR</div>' : '';
+
+            return `
+                <section class="card" data-pkg-id="${pkg.id}">
+                    <div class="card-header">${escapeHtml(pkg.title)}</div>
+                    <div class="card-body">
+                        ${badge}
+                        ${priceHtml}
+                        ${!isJackpot ? `
+                        <table class="table" id="${tableId}">
+                            <thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead>
+                            <tbody><tr><td colspan="3"><div class="loader"></div></td></tr></tbody>
+                        </table>` : ''}
+                        ${buyButtonHtml}
+                    </div>
+                </section>
+            `;
+        }
+
+        function openPaymentModal(title, kes) {
+            const amounts = formatAllCurrencies(kes);
+            $('#pay-modal-title').text(title);
+            $('#pay-modal-amount-ke').text(`KSh ${amounts.kes.toLocaleString()}`);
+            $('#pay-modal-amount-ug-mtn').text(`UGX ${amounts.ugx.toLocaleString()}`);
+            $('#pay-modal-amount-ug-airtel').text(`UGX ${amounts.ugx.toLocaleString()}`);
+            $('#pay-modal-amount-tz').text(`TZS ${amounts.tzs.toLocaleString()}`);
+            payModal.show();
+        }
+
+        function escapeHtml(str) {
+            return String(str ?? '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
+        // ─── Tips: normal categories (Correct Score) — prediction hidden ──────
+        //
+        // The server already blanks `tip` and `odds` for anyone it doesn't
+        // recognise as a paying subscriber (isLocked: true) — this site sends
+        // no phone/email, so every visitor gets the locked response, exactly
+        // as intended for a public preview. This function just needs to render
+        // that state clearly instead of showing an empty cell.
+        async function fetchFlatTips(type, packageIdHint) {
+            try {
+                const res = await fetch(`${API_BASE}/api/tips.php?type=${type}`);
+                const data = await res.json();
+                const $table = findTableForCategory(type);
+                if ($table.length) renderFlatTable(data, $table, false);
+            } catch (err) {
+                console.error(`Error fetching ${type} tips:`, err);
+            }
+        }
+
+        // ─── Tips: Draw packages — teams hidden, prediction SHOWN ─────────────
+        //
+        // Inverted from every other category, matching the app: the prediction
+        // for a draw pick is always "Draw" — hiding it would sell nothing — so
+        // the server hides the TEAMS instead and leaves the prediction visible.
+        // draw1/draw2/draw3 all read from the SAME 'draws' response; which
+        // package a visitor bought decides how many of the ordered picks are
+        // revealed (that slicing already happens server-side too).
+        async function fetchDrawTips() {
+            try {
+                const res = await fetch(`${API_BASE}/api/tips.php?type=draws`);
+                const data = await res.json();
+                $('section[data-pkg-id^="draw"]').each(function() {
+                    const $table = $(this).find('table');
+                    if ($table.length) renderFlatTable(data, $table, true);
+                });
+            } catch (err) {
+                console.error('Error fetching draw tips:', err);
+            }
+        }
+
+        // ─── Tips: Odds accumulators (2/5/10) — one grouped response ──────────
+        //
+        // tips.php?type=odds returns {"2":[...], "5":[...], "10":[...]} — a
+        // SINGLE object, not a flat array. The previous version of this file
+        // assumed every category returned an array and called .forEach on the
+        // result directly, which would throw for odds. Each group here maps to
+        // its own package card (odds2/odds5/odds10) by matching the numeric
+        // suffix in the package id.
+        async function fetchOddsTips() {
+            try {
+                const res = await fetch(`${API_BASE}/api/tips.php?type=odds`);
+                const groups = await res.json();   // {"2": [...], "5": [...], "10": [...]}
+                Object.keys(groups).forEach(groupSize => {
+                    const $table = $(`section[data-pkg-id="odds${groupSize}"] table`);
+                    if ($table.length) renderFlatTable(groups[groupSize], $table, false);
+                });
+            } catch (err) {
+                console.error('Error fetching odds tips:', err);
+            }
+        }
+
+        function findTableForCategory(type) {
+            if (type === 'correct') return $('section[data-pkg-id="correctscore"] table');
+            return $(`section[data-pkg-id="${type}"] table`);
+        }
+
+        /**
+         * @param isDrawTable  when true, a row with blank team names is
+         *   rendered as a locked-match placeholder rather than an empty
+         *   " VS " — this is the exact "blank vs" bug found and fixed on
+         *   history.php earlier, happening here for the same reason: the
+         *   server legitimately sends empty team names for a locked draw pick.
+         */
+        function renderFlatTable(data, $table, isDrawTable) {
+            const tbody = $table.find('tbody');
             tbody.empty();
 
             if (!data || data.length === 0) {
@@ -452,35 +529,50 @@
                 return;
             }
 
-            // Optional: If fetching basic tips, let's grab the first one for "Free Tip of the Day"
-            if (tableId === 'basic-table' && data.length > 0) {
+            // "Free Tip of the Day" is pulled from the first Correct Score
+            // entry when available, same behaviour as before.
+            if (!isDrawTable && data.length > 0 && $table.closest('[data-pkg-id="correctscore"]').length) {
                 const freeTip = data[0];
                 $('#free-tip-time').text(freeTip.kickOff || 'Today');
-                $('#free-tip-match').text(`${freeTip.teamA} VS ${freeTip.teamB}`);
-                $('#free-tip-pick').text(`Pick: ${freeTip.tip}`);
+                $('#free-tip-match').text(freeTip.teamA ? `${freeTip.teamA} VS ${freeTip.teamB}` : 'Locked match');
+                $('#free-tip-pick').text(freeTip.isLocked ? 'Pick: Unlock to view' : `Pick: ${freeTip.tip}`);
             }
 
             data.forEach(item => {
-                // Determine if we show the actual tip or a locked icon
-                const tipDisplay = item.isLocked 
-                    ? '<img src="https://images.unsplash.com/photo-C3gjLSgTKNw?auto=format&fit=crop&w=800&q=80" width="24" height="24" alt="Locked">'
-                    : item.tip;
-                    
-                const oddsDisplay = item.odds ? parseFloat(item.odds).toFixed(2) : '-';
+                const teamsBlank = !item.teamA && !item.teamB;
+
+                if (isDrawTable && teamsBlank) {
+                    // Teams hidden, prediction shown — the inverted case.
+                    tbody.append(`
+                        <tr>
+                            <td class="draw-hidden-match">🔒 Hidden match</td>
+                            <td style="color:#00e600; font-weight:bold;">${escapeHtml(item.tip || 'Draw')}</td>
+                            <td>${item.odds ? parseFloat(item.odds).toFixed(2) : '-'}</td>
+                        </tr>
+                    `);
+                    return;
+                }
+
+                // Normal case: teams visible, prediction hidden when locked.
+                const tipDisplay = item.isLocked || !item.tip
+                    ? '<span class="tip-locked">🔒 Unlock to view</span>'
+                    : escapeHtml(item.tip);
+                const oddsDisplay = (!item.isLocked && item.odds) ? parseFloat(item.odds).toFixed(2) : '-';
 
                 tbody.append(`
                     <tr>
-                        <td>${item.teamA} VS ${item.teamB}</td>
-                        <td style="color:#00e600; font-weight:bold;">${tipDisplay}</td>
+                        <td>${escapeHtml(item.teamA)} VS ${escapeHtml(item.teamB)}</td>
+                        <td style="font-weight:bold;">${tipDisplay}</td>
                         <td>${oddsDisplay}</td>
                     </tr>
                 `);
             });
         }
 
+        // ─── History (unchanged from the original file) ───────────────────────
         async function fetchHistory() {
             try {
-                const res = await fetch('https://www.footyscorelive.com/api/history.php');
+                const res = await fetch(`${API_BASE}/api/history.php`);
                 const data = await res.json();
                 renderHistory(data);
             } catch (err) {
@@ -501,11 +593,11 @@
             data.forEach(day => {
                 const date = day.date;
                 const categories = day.categories;
-                
+
                 for (const catName in categories) {
                     const matches = categories[catName];
                     let totalOdds = 1.0;
-                    
+
                     let tableRows = '';
                     matches.forEach(m => {
                         const scoreDisplay = m.score ? ` (${m.score})` : '';
@@ -513,11 +605,11 @@
                         if (m.odds && !isNaN(m.odds)) {
                             totalOdds *= parseFloat(m.odds);
                         }
-                        
+
                         tableRows += `
                             <tr>
-                                <td>${m.teamA} VS ${m.teamB}</td>
-                                <td>${m.prediction}${scoreDisplay}</td>
+                                <td>${escapeHtml(m.teamA)} VS ${escapeHtml(m.teamB)}</td>
+                                <td>${escapeHtml(m.prediction)}${scoreDisplay}</td>
                                 <td>${m.odds || '-'}</td>
                                 <td style="color:${resultColor}; font-weight:bold;">${m.result}</td>
                             </tr>
@@ -526,7 +618,7 @@
 
                     const cardHtml = `
                         <div class="card mb-3">
-                            <div class="card-header">${date} - ${catName}</div>
+                            <div class="card-header">${escapeHtml(date)} - ${escapeHtml(catName)}</div>
                             <div class="card-body">
                                 <table class="table">
                                     <thead>
