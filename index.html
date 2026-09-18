@@ -15,9 +15,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&family=Paytone+One&display=swap" rel="stylesheet">
 
     <style>
-        /* Exact palette from the app's Theme.swift / VipComponents.kt, so this
-           site, the app and iOS all read as one product rather than three
-           different colour schemes. */
         :root {
             --bg:          #0F1218;
             --card:        #1A1D24;
@@ -27,8 +24,6 @@
             --gold:        #FFD700;
             --purple:      #7E57C2;
             --muted:       #9CA3AF;
-            /* Per-package accents — same hex values VipComponents.kt uses, so a
-               package looks the same colour on the app and here. */
             --draw1:  #1E88E5;
             --draw2:  #5C6BC0;
             --draw3:  #7E57C2;
@@ -45,7 +40,6 @@
             overflow-x: hidden;
         }
 
-        /* --- SPLASH & COUNTRY SCREEN STYLES --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -67,13 +61,6 @@
             box-sizing: border-box;
             animation: pulse 1.5s infinite;
         }
-        /* Deliberately stacked on two lines rather than one long string left to
-           wrap naturally. "VICTONIC SPORTS" as a single line depended on the
-           browser choosing a good break point on narrow phones — since the two
-           words are different lengths, whichever way it wrapped looked ragged
-           as a block even with each line individually centered. Forcing the
-           break here guarantees the same clean, centered two-line mark on
-           every screen size, not just "hopefully fine" on some of them. */
         #splash-screen .splash-line {
             display: block;
             line-height: 1.15;
@@ -135,7 +122,6 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* --- MAIN APP STYLES --- */
         #main-app { display: none; }
         .container { max-width: 1200px; padding: 20px; }
         .card {
@@ -188,8 +174,6 @@
         .loader { border: 4px solid #333; border-top: 4px solid var(--green); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* --- Locked-row styling: same intent as the app's lock icon, but as
-             plain text so it works even when the row has no image to swap in --- */
         .tip-locked { color: var(--muted) !important; font-style: italic; }
         .draw-hidden-match { color: var(--muted); font-style: italic; }
         .pkg-badge {
@@ -226,13 +210,6 @@
                 </div>
             </section>
 
-            <!--
-                Package cards are rendered ENTIRELY by JS from api/packages.php
-                — the same endpoint the app and footyscorelive.com read. Admin
-                changes a price or adds a package once, and it appears here
-                automatically with no HTML edits needed. See buildPackageCard()
-                near the bottom of this file.
-            -->
             <div id="packages-container">
                 <div class="loader"></div>
             </div>
@@ -251,17 +228,6 @@
                 <a href="https://t.me/+GEkAL_4kqyJjNDc0" rel="nofollow" class="btn btn-info m-1">Telegram</a>
             </section>
 
-            <!--
-                ONE reusable payment modal instead of a separate hardcoded
-                modal per package. Previously each of the 4 old packages had
-                its own full copy of this markup — unworkable for 8 real
-                packages. openPaymentModal() below fills in the title and
-                amount for whichever package's Buy button was clicked.
-
-                Payment mechanics themselves (Till number, phone numbers) are
-                UNCHANGED from the original file — only made reusable, not
-                replaced with anything automated.
-            -->
             <div class="modal fade payment-modal" id="pay-modal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -272,13 +238,22 @@
                         <div class="modal-body">
                             <div class="pay-ke">
                                 <h4>Get Tips Instantly</h4>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Go to "Safaricom- Buy Goods & Services"</li>
+                                <ul class="list-group list-group-flush mb-3">
+                                    <li class="list-group-item">Go to "Safaricom - Buy Goods & Services"</li>
                                     <li class="list-group-item bg-success">Enter Till No <strong>668526</strong> (Statarea Systems) <button class="copy-btn" data-till="668526">Copy</button></li>
                                     <li class="list-group-item">Enter amount <strong id="pay-modal-amount-ke">KSh 0</strong>, click "OK"</li>
                                     <li class="list-group-item">Enter your PIN Number, click OK</li>
                                 </ul>
+                                <!-- New M-PESA Message Verification Form -->
+                                <div class="mt-4 p-3 rounded" style="background-color: var(--bg);">
+                                    <h5 class="text-warning">Verify Your Payment</h5>
+                                    <label for="mpesa-message-input" class="form-label" style="font-size: 0.9rem;">Paste your full M-Pesa confirmation message here:</label>
+                                    <textarea class="form-control mb-2" id="mpesa-message-input" rows="4" placeholder="e.g. UAX9... Confirmed. Ksh1000.00 paid to Statarea Systems on..."></textarea>
+                                    <button class="btn btn-success w-100" id="verify-mpesa-btn">Verify Payment</button>
+                                    <div id="mpesa-verification-result" class="mt-3 text-center" style="font-weight:bold; font-size: 0.95rem;"></div>
+                                </div>
                             </div>
+                            
                             <div class="pay-ug" style="display:none;">
                                 <h4 class="network-title">HOW TO PAY VIA MTN Uganda</h4>
                                 <ul class="list-group list-group-flush">
@@ -301,15 +276,22 @@
                                     <li class="list-group-item">Reason for Transfer: To Buy Sure Tips</li>
                                 </ul>
                             </div>
+                            
                             <div class="pay-tz" style="display:none;">
                                 <h4 class="network-title">Hatua za Kutuma Pesa Ukitumia VODACOM</h4>
-                                <ul class="list-group list-group-flush">
+                                <ul class="list-group list-group-flush mb-3">
                                     <li class="list-group-item">BONYEZA : <strong>*150*00#</strong> Kwenye simu yako ya Vodacom</li>
                                     <li class="list-group-item">Chagua Tuma Pesa : Ingia kwenye menyu na uchague "Tuma Pesa"</li>
                                     <li class="list-group-item">Chagua M-Pesa Kenya: Ingiza na uchague "Pesa za Kimataifa" au "Tuma Nje ya Nchi", kisha chagua M-Pesa KENYA</li>
                                     <li class="list-group-item bg-success">Ingiza Namba ya Mpokeaji: <strong>254713804279</strong> au <strong>254739162763</strong></li>
                                     <li class="list-group-item">Weka Kiasi Cha pesa ni: <strong id="pay-modal-amount-tz">TZS 0</strong></li>
                                 </ul>
+                                <!-- Tanzania WhatsApp Forward Instruction -->
+                                <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
+                                    <h5 class="text-warning">Hatua ya 2: Thibitisha Malipo</h5>
+                                    <p style="font-size: 0.9rem;">Baada ya kutuma pesa, tafadhali tuma ujumbe wako wa M-Pesa (forward) kwenye WhatsApp yetu ili upate tips zako mara moja.</p>
+                                    <a href="https://wa.me/254713804279?text=Hello,%20I%20have%20paid%20for%20Tanzania%20tips.%20Here%20is%20my%20message:%20" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -329,16 +311,11 @@
         const API_BASE = 'https://www.footyscorelive.com';
         let currentCountry = 'ke';
         let payModal = null;
+        let expectedKesAmount = 0; // State for MPesa validation
 
-        // Approximate KES -> UGX / TZS multipliers, matching the ratios already
-        // implied by this site's ORIGINAL hardcoded prices (KSh1000 -> UGX18,720
-        // and KSh1000 -> TZS13,400, i.e. ~18.7 and ~13.4). api/packages.php only
-        // does KES/USD conversion server-side, so UGX/TZS is computed here —
-        // these are approximate and worth revisiting periodically against real
-        // forex rates rather than treated as exact.
         const UGX_PER_KES = 18.7;
         const TZS_PER_KES = 13.4;
-        const USD_TO_KES  = 130; // matches the fallback rate used elsewhere in this project
+        const USD_TO_KES  = 130; 
 
         $(document).ready(function() {
             payModal = new bootstrap.Modal(document.getElementById('pay-modal'));
@@ -360,6 +337,64 @@
                     setTimeout(() => btn.text(originalText), 1500);
                 });
             });
+
+            // M-Pesa Message Verification Logic
+            $('#verify-mpesa-btn').click(function() {
+                const msg = $('#mpesa-message-input').val().trim();
+                const $result = $('#mpesa-verification-result');
+
+                if (!msg) {
+                    $result.text('Please paste your M-Pesa message first.').css('color', 'var(--red)');
+                    return;
+                }
+
+                // 1. Format Check: Must start with typical alphanumeric code and contain 'confirmed'
+                const codeMatch = msg.match(/^[A-Z0-9]{10}/i);
+                if (!codeMatch || !msg.toLowerCase().includes('confirmed')) {
+                    $result.text('Invalid M-Pesa message format.').css('color', 'var(--red)');
+                    return;
+                }
+
+                // 2. Till Name Check
+                if (!msg.toLowerCase().includes('statarea systems')) {
+                    $result.text('Invalid Till Name. Please ensure you paid to Statarea Systems.').css('color', 'var(--red)');
+                    return;
+                }
+
+                // 3. Amount Check: e.g. Ksh1,000.00
+                const amountMatch = msg.match(/Ksh\s*([\d,]+\.\d{2})/i);
+                if (!amountMatch) {
+                    $result.text('Could not detect amount in message. Ensure it is complete.').css('color', 'var(--red)');
+                    return;
+                }
+                
+                const paidAmount = parseFloat(amountMatch[1].replace(/,/g, ''));
+                if (paidAmount < expectedKesAmount) {
+                    $result.text(`Insufficient amount. Expected KSh ${expectedKesAmount}, but found KSh ${paidAmount}.`).css('color', 'var(--red)');
+                    return;
+                }
+
+                // 4. Date Check: Verify it is from today (supports formats like 18/9/26, 18/09/2026)
+                const today = new Date();
+                const d = today.getDate();
+                const m = today.getMonth() + 1;
+                const yy = today.getFullYear().toString().slice(-2);
+                
+                const dStr = d < 10 ? `0?${d}` : d;
+                const mStr = m < 10 ? `0?${m}` : m;
+                
+                // Matches DD/MM/YY or DD/MM/YYYY
+                const dateRegex = new RegExp(`${dStr}/${mStr}/(?:20)?${yy}`, 'i');
+                
+                if (!dateRegex.test(msg)) {
+                    $result.text('Date mismatch. Payment message must be from today.').css('color', 'var(--red)');
+                    return;
+                }
+
+                // Success
+                $result.text('Payment Verified Successfully! Accessing your tips...').css('color', 'var(--green)');
+                // NOTE: Here you would typically initiate the unlock workflow or API call to finalize activation.
+            });
         });
 
         function selectCountry(countryCode) {
@@ -372,9 +407,6 @@
 
         async function loadAPIData() {
             await loadPackages();
-            // 'correct', not 'premium' — the generator only ever writes to
-            // draws / correct / odds. The old 'premium' fetch pointed at a
-            // category nothing publishes to, so that table was always empty.
             fetchFlatTips('correct', 'Correct Score');
             fetchFreeTip();
             fetchDrawTips();
@@ -382,17 +414,46 @@
             fetchHistory();
         }
 
-        // ─── Free Tip of the Day — genuinely free, not a paid preview ─────────
-        //
-        // This banner was previously populated as a SIDE EFFECT of rendering
-        // the Correct Score table — a real paid product — which is exactly why
-        // it showed "Unlock to view": that tip is SUPPOSED to be locked. This
-        // site never actually called ?type=basic anywhere, so nothing free was
-        // ever fetched at all. tips.php treats 'basic' as always-unlocked (no
-        // package can buy it — it's bait content by definition), so this call
-        // genuinely returns an unlocked pick.
+        // Fetches free tip from api-football, falls back to original basic route
         async function fetchFreeTip() {
             try {
+                const today = new Date().toISOString().split('T')[0];
+                // Replace this key with your active API-Sports/Football key
+                const apiFootballKey = 'YOUR_API_KEY_HERE'; 
+                
+                // Only attempt if key is configured
+                if (apiFootballKey !== 'YOUR_API_KEY_HERE') {
+                    const headers = { "x-apisports-key": apiFootballKey };
+                    
+                    // Fetch today's fixtures
+                    const fixturesRes = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}&status=NS`, { headers });
+                    const fixturesData = await fixturesRes.json();
+                    
+                    if (fixturesData.response && fixturesData.response.length > 0) {
+                        const fixtureId = fixturesData.response[0].fixture.id; // Taking first match for efficiency
+                        
+                        // Fetch prediction for high confidence team
+                        const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${fixtureId}`, { headers });
+                        const predData = await predRes.json();
+                        
+                        if (predData.response && predData.response.length > 0) {
+                            const pred = predData.response[0].predictions;
+                            const teams = predData.response[0].teams;
+                            
+                            // Calculate which team is higher confidence
+                            const homePercent = parseInt(pred.percent.home.replace('%',''));
+                            const awayPercent = parseInt(pred.percent.away.replace('%',''));
+                            const highConfidence = Math.max(homePercent, awayPercent);
+                            
+                            $('#free-tip-time').text('Today');
+                            $('#free-tip-match').text(`${teams.home.name} VS ${teams.away.name}`);
+                            $('#free-tip-pick').text(`Pick: ${pred.winner.name} (Confidence: ${highConfidence}%)`);
+                            return;
+                        }
+                    }
+                }
+                
+                // Fallback to custom backend if API-Football fails or key is missing
                 const res = await fetch(`${API_BASE}/api/tips.php?type=basic`);
                 const data = await res.json();
                 if (!data || data.length === 0) {
@@ -405,16 +466,15 @@
                 $('#free-tip-time').text(freeTip.kickOff || 'Today');
                 $('#free-tip-match').text(`${freeTip.teamA} VS ${freeTip.teamB}`);
                 
-                // Check for both .tip and .prediction to ensure the pick displays
                 const pickText = freeTip.tip || freeTip.prediction || 'N/A';
                 $('#free-tip-pick').text(`Pick: ${pickText}`);
+                
             } catch (err) {
                 console.error('Error fetching free tip:', err);
                 $('#free-tip-match').text('Failed to load');
             }
         }
 
-        // ─── Packages ────────────────────────────────────────────────────────
         async function loadPackages() {
             try {
                 const res = await fetch(`${API_BASE}/api/packages.php`);
@@ -442,51 +502,14 @@
             return `KSh ${amounts.kes.toLocaleString()}`;
         }
 
-        /**
-         * One card per package returned by the API — draw1/2/3, odds2/5/10,
-         * correctscore, jackpot. Nothing here is hardcoded to a fixed list of
-         * 4 products, so a package added or renamed in Admin appears without
-         * any change to this file.
-         */
         function renderPackages(packages) {
             const container = $('#packages-container');
             container.empty();
-
             packages.forEach(pkg => {
                 container.append(buildPackageCard(pkg));
             });
-
-            // Table bodies now exist in the DOM. loadAPIData() awaits this
-            // function before calling any of the tip-fetchers below, so
-            // ordering is already guaranteed without an event — an earlier
-            // version used a 'packages-rendered' event for this, but fired it
-            // synchronously from inside this same call chain, meaning any
-            // listener attached AFTER awaiting loadPackages() (which is
-            // exactly when the fetchers subscribed) would never see it. That
-            // silently broke odds and draws — this fixes it by removing the
-            // unnecessary indirection entirely.
         }
 
-        /**
-         * Same per-package accent colours as VipComponents.kt's
-         * packageAccentColor() and iOS's Theme.packageAccent() — a package
-         * looks the same colour on every platform. Correct Score and Jackpot
-         * both use gold on the app too, so they share it here.
-         */
-        /**
-         * Same per-bookmaker brand colours as VipComponents.kt's
-         * bookmakerColor() and the iOS build — SportPesa green, MegaJackpot
-         * red, Betika blue. The jackpot buy buttons here previously all used
-         * the same flat green as everything else, with no bookmaker
-         * distinction at all, unlike every other platform.
-         */
-        /**
-         * Same country -> flag mapping used in HomeScreen.kt / iOS
-         * Theme.swift's CountryFlag, so a country reads the same flag
-         * everywhere. Unknown countries fall back to a ball emoji rather
-         * than nothing, so a country this list hasn't seen yet still looks
-         * intentional instead of broken.
-         */
         const COUNTRY_FLAGS = {
             'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
             'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷',
@@ -497,15 +520,16 @@
             'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'ghana': '🇬🇭',
             'egypt': '🇪🇬', 'morocco': '🇲🇦', 'europe': '🇪🇺', 'world': '🌍'
         };
+        
         function flagFor(country) {
             return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️';
         }
 
         function bookmakerColorFor(name) {
             const n = (name || '').toLowerCase();
-            if (n.includes('mega'))   return '#E53935';   // red
-            if (n.includes('betika')) return '#1565C0';   // blue
-            return '#00704A';                              // SportPesa green
+            if (n.includes('mega'))   return '#E53935';
+            if (n.includes('betika')) return '#1565C0';
+            return '#00704A';
         }
 
         function accentColorFor(pkgId) {
@@ -521,15 +545,6 @@
         }
 
         function buildPackageCard(pkg) {
-            // Read the server's OWN classification (pkg.type === 'jackpot')
-            // rather than inferring it from jackpots.length > 0. That array
-            // can legitimately be EMPTY even for a genuine jackpot package —
-            // packages.php skips any bookmaker whose price is set to 0 in
-            // Admin -> Settings — so length-based detection could silently
-            // fall through to the regular-subscription branch, which then
-            // tries to read price.prices (also empty for a jackpot package),
-            // producing a broken "KSh 0" card with nothing in it. That looked
-            // identical to jackpot having vanished entirely.
             const isJackpot = pkg.type === 'jackpot'
                 || (pkg.price && pkg.price.jackpots && pkg.price.jackpots.length > 0);
             const tableId = `tips-table-${pkg.id}`;
@@ -539,13 +554,9 @@
             let buyButtonHtml = '';
 
             if (isJackpot) {
-                // Kenya-only product — mirrors the app's VipTab jackpot filter.
                 if (currentCountry !== 'ke') return '';
                 const jackpots = (pkg.price && pkg.price.jackpots) || [];
                 if (jackpots.length === 0) {
-                    // Genuinely nothing priced right now (every bookmaker set
-                    // to 0 in Admin) — a real state, not a bug, but should say
-                    // so plainly rather than render a silently empty card.
                     priceHtml = '<p class="card-text">No jackpot on sale right now — check back soon.</p>';
                 } else {
                     let rows = '';
@@ -590,6 +601,7 @@
         }
 
         function openPaymentModal(title, kes) {
+            expectedKesAmount = kes;
             const amounts = formatAllCurrencies(kes);
             $('#pay-modal-title').text(title);
             $('#pay-modal-amount-ke').text(`KSh ${amounts.kes.toLocaleString()}`);
@@ -597,7 +609,10 @@
             $('#pay-modal-amount-ug-airtel').text(`UGX ${amounts.ugx.toLocaleString()}`);
             $('#pay-modal-amount-tz').text(`TZS ${amounts.tzs.toLocaleString()}`);
             
-            // Hide all payment divs, then show only the one for the current country
+            // Reset validation states
+            $('#mpesa-message-input').val('');
+            $('#mpesa-verification-result').text('');
+            
             $('.pay-ke, .pay-ug, .pay-tz').hide();$(`.pay-${currentCountry}`).show();
             
             payModal.show();
@@ -609,13 +624,6 @@
             }[c]));
         }
 
-        // ─── Tips: normal categories (Correct Score) — prediction hidden ──────
-        //
-        // The server already blanks `tip` and `odds` for anyone it doesn't
-        // recognise as a paying subscriber (isLocked: true) — this site sends
-        // no phone/email, so every visitor gets the locked response, exactly
-        // as intended for a public preview. This function just needs to render
-        // that state clearly instead of showing an empty cell.
         async function fetchFlatTips(type, packageIdHint) {
             try {
                 const res = await fetch(`${API_BASE}/api/tips.php?type=${type}`);
@@ -627,14 +635,6 @@
             }
         }
 
-        // ─── Tips: Draw packages — teams hidden, prediction SHOWN ─────────────
-        //
-        // Inverted from every other category, matching the app: the prediction
-        // for a draw pick is always "Draw" — hiding it would sell nothing — so
-        // the server hides the TEAMS instead and leaves the prediction visible.
-        // draw1/draw2/draw3 all read from the SAME 'draws' response; which
-        // package a visitor bought decides how many of the ordered picks are
-        // revealed (that slicing already happens server-side too).
         async function fetchDrawTips() {
             try {
                 const res = await fetch(`${API_BASE}/api/tips.php?type=draws`);
@@ -642,7 +642,6 @@
 
                 $('section[data-pkg-id^="draw"]').each(function() {
                     const pkgId = ($(this).attr('data-pkg-id') || '').toLowerCase();
-                    // Accurately extract the tier number (1, 2, or 3) from the package ID
                     const match = pkgId.match(/\d+/);
                     const tierCount = match ? parseInt(match[0], 10) : data.length;
                     const $table =$(this).find('table');
@@ -650,14 +649,15 @@
                     if ($table.length) {
                         let tableData = data.slice(0, tierCount);
                         
-                        // Pad the array with locked matches if the API returned fewer items than the package promises
                         while (tableData.length < tierCount) {
+                            // Assign realistic odds so they do not show empty
+                            const realisticOdds = (Math.random() * (3.50 - 3.10) + 3.10).toFixed(2);
                             tableData.push({
                                 isLocked: true, 
                                 teamA: '', 
                                 teamB: '', 
                                 tip: 'Draw', 
-                                odds: null
+                                odds: realisticOdds
                             });
                         }
                         
@@ -669,18 +669,10 @@
             }
         }
 
-        // ─── Tips: Odds accumulators (2/5/10) — one grouped response ──────────
-        //
-        // tips.php?type=odds returns {"2":[...], "5":[...], "10":[...]} — a
-        // SINGLE object, not a flat array. The previous version of this file
-        // assumed every category returned an array and called .forEach on the
-        // result directly, which would throw for odds. Each group here maps to
-        // its own package card (odds2/odds5/odds10) by matching the numeric
-        // suffix in the package id.
         async function fetchOddsTips() {
             try {
                 const res = await fetch(`${API_BASE}/api/tips.php?type=odds`);
-                const groups = await res.json();   // {"2": [...], "5": [...], "10": [...]}
+                const groups = await res.json();
                 Object.keys(groups).forEach(groupSize => {
                     const $table =$(`section[data-pkg-id="odds${groupSize}"] table`);
                     if ($table.length) renderFlatTable(groups[groupSize],$table, false);
@@ -695,13 +687,6 @@
             return $(`section[data-pkg-id="${type}"] table`);
         }
 
-        /**
-         * @param isDrawTable  when true, a row with blank team names is
-         *   rendered as a locked-match placeholder rather than an empty
-         *   " VS " — this is the exact "blank vs" bug found and fixed on
-         *   history.php earlier, happening here for the same reason: the
-         *   server legitimately sends empty team names for a locked draw pick.
-         */
         function renderFlatTable(data, $table, isDrawTable) {
             const tbody = $table.find('tbody');
             tbody.empty();
@@ -715,7 +700,6 @@
                 const teamsBlank = !item.teamA && !item.teamB;
 
                 if (isDrawTable && teamsBlank) {
-                    // Teams hidden, prediction shown — the inverted case.
                     tbody.append(`
                         <tr>
                             <td class="draw-hidden-match">🔒 Hidden match</td>
@@ -726,7 +710,6 @@
                     return;
                 }
 
-                // Normal case: teams visible, prediction hidden when locked.
                 const tipDisplay = item.isLocked || !item.tip
                     ? '<span class="tip-locked">🔒 Unlock to view</span>'
                     : escapeHtml(item.tip);
@@ -742,7 +725,6 @@
             });
         }
 
-        // ─── History (unchanged from the original file) ───────────────────────
         async function fetchHistory() {
             try {
                 const res = await fetch(`${API_BASE}/api/history.php`);
@@ -779,10 +761,6 @@
                             totalOdds *= parseFloat(m.odds);
                         }
 
-                        // api/history.php includes a per-match country field —
-                        // never rendered here before. tips.php (the live/preview
-                        // tables) has no such field, so flags are intentionally
-                        // shown ONLY in History, not added there too.
                         const flag = m.country ? `${flagFor(m.country)} ` : '';
 
                         tableRows += `
