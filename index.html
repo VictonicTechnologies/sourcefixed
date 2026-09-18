@@ -420,9 +420,9 @@
         async function fetchFreeTip() {
             try {
                 const today = new Date().toISOString().split('T')[0];
-                const apiFootballKey = 'YOUR_API_KEY_HERE'; 
+                const apiFootballKey = '062c7d918d3e2b59a2d2947470490161'; 
                 
-                if (apiFootballKey !== 'YOUR_API_KEY_HERE') {
+                if (apiFootballKey !== '062c7d918d3e2b59a2d2947470490161') {
                     const headers = { "x-apisports-key": apiFootballKey };
                     
                     const fixturesRes = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}&status=NS`, { headers });
