@@ -317,6 +317,7 @@
         let currentCountry = 'ke';
         let payModal = null;
         let expectedKesAmount = 0; 
+        let isPremiumUnlocked = false;
 
         const UGX_PER_KES = 18.7;
         const TZS_PER_KES = 13.4;
@@ -353,10 +354,17 @@
                     return;
                 }
 
-                // 1. Format Check
+                // 1. Format & One-Time Use Check
                 const codeMatch = msg.match(/^[A-Z0-9]{10}/i);
                 if (!codeMatch || !msg.toLowerCase().includes('confirmed')) {
                     $result.text('Invalid M-Pesa message format.').css('color', 'var(--red)');
+                    return;
+                }
+                
+                const mpesaCode = codeMatch[0].toUpperCase();
+                let usedCodes = JSON.parse(localStorage.getItem('usedMpesaCodes') || '[]');
+                if (usedCodes.includes(mpesaCode)) {
+                    $result.text('This M-Pesa code has already been used.').css('color', 'var(--red)');
                     return;
                 }
 
@@ -395,7 +403,24 @@
                     return;
                 }
 
+                // Success! Save the code to prevent reuse
+                usedCodes.push(mpesaCode);
+                localStorage.setItem('usedMpesaCodes', JSON.stringify(usedCodes));
+
                 $result.text('Payment Verified Successfully! Accessing your tips...').css('color', 'var(--green)');
+                
+                // Trigger the unlock sequence
+                setTimeout(() => {
+                    isPremiumUnlocked = true;
+                    payModal.hide();
+                    
+                    $('.table tbody').html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
+                    loadAPIData();
+                    
+                    $('html, body').animate({
+                        scrollTop: $("#packages-container").offset().top - 20
+                    }, 500);
+                }, 1500);
             });
         });
 
@@ -424,7 +449,7 @@
 
             try {
                 const today = new Date().toISOString().split('T')[0];
-                const apiFootballKey = 'YOUR_API_KEY_HERE'; // Place key here if available
+                const apiFootballKey = 'YOUR_API_KEY_HERE';
 
                 // 1. Try API-Football
                 if (apiFootballKey && apiFootballKey !== 'YOUR_API_KEY_HERE') {
@@ -434,7 +459,7 @@
                     if (fixturesRes.ok) {
                         const fixturesData = await fixturesRes.json();
                         if (fixturesData.errors && Object.keys(fixturesData.errors).length > 0) {
-                            console.error('API-Football API Error:', fixturesData.errors);
+                            console.error('API-Football Error:', fixturesData.errors);
                         } else if (fixturesData.response && fixturesData.response.length > 0) {
                             const validFixture = fixturesData.response.find(f => ['NS', 'TBD'].includes(f.fixture.status.short)) || fixturesData.response[0];
                             const fixtureId = validFixture.fixture.id;
@@ -464,11 +489,10 @@
                     }
                 }
 
-                // 2. Try Custom Backend API with strict validation
+                // 2. Try Custom Backend
                 const res = await fetch(`${API_BASE}/api/tips.php?type=basic`);
                 if (res.ok) {
                     const data = await res.json();
-                    
                     if (Array.isArray(data) && data.length > 0) {
                         const tipItem = data[0];
                         const teamA = tipItem.teamA || tipItem.homeTeam || tipItem.home;
@@ -484,7 +508,6 @@
                     }
                 }
 
-                // 3. Fallback if empty/invalid
                 $('#free-tip-time').text(defaultTip.time);
                 $('#free-tip-match').text(defaultTip.match);
                 $('#free-tip-pick').text(defaultTip.pick);
@@ -623,7 +646,9 @@
 
         async function fetchFlatTips(type, packageIdHint) {
             try {
-                const res = await fetch(`${API_BASE}/api/tips.php?type=${type}`);
+                // If your backend needs a flag to output unlocked tips, append it here
+                const authParam = isPremiumUnlocked ? '&unlocked=true' : '';
+                const res = await fetch(`${API_BASE}/api/tips.php?type=${type}${authParam}`);
                 const data = await res.json();
                 const $table = findTableForCategory(type);
                 if ($table.length) renderFlatTable(data,$table, false);
@@ -632,7 +657,8 @@
 
         async function fetchDrawTips() {
             try {
-                const res = await fetch(`${API_BASE}/api/tips.php?type=draws`);
+                const authParam = isPremiumUnlocked ? '&unlocked=true' : '';
+                const res = await fetch(`${API_BASE}/api/tips.php?type=draws${authParam}`);
                 const data = await res.json();
 
                 $('section[data-pkg-id^="draw"]').each(function() {
@@ -655,7 +681,8 @@
 
         async function fetchOddsTips() {
             try {
-                const res = await fetch(`${API_BASE}/api/tips.php?type=odds`);
+                const authParam = isPremiumUnlocked ? '&unlocked=true' : '';
+                const res = await fetch(`${API_BASE}/api/tips.php?type=odds${authParam}`);
                 const groups = await res.json();
                 Object.keys(groups).forEach(groupSize => {
                     const $table =$(`section[data-pkg-id="odds${groupSize}"] table`);
@@ -680,23 +707,33 @@
 
             data.forEach(item => {
                 const teamsBlank = !item.teamA && !item.teamB;
-                if (isDrawTable && teamsBlank) {
+                
+                if (isDrawTable && teamsBlank && !isPremiumUnlocked) {
                     tbody.append(`
                         <tr>
                             <td class="draw-hidden-match">🔒 Hidden match</td>
-                            <td style="color:#00e600; font-weight:bold;">${escapeHtml(item.tip || 'Draw')}</td>
+                            <td style="color:#00e600; font-weight:bold;">🔒 Unlock</td>
                             <td>${item.odds ? parseFloat(item.odds).toFixed(2) : '-'}</td>
                         </tr>`);
                     return;
                 }
 
-                const tipDisplay = item.isLocked || !item.tip
-                    ? '<span class="tip-locked">🔒 Unlock to view</span>' : escapeHtml(item.tip);
-                const oddsDisplay = (!item.isLocked && item.odds) ? parseFloat(item.odds).toFixed(2) : '-';
+                const forceLock = !isPremiumUnlocked && item.isLocked;
+                
+                const tipDisplay = forceLock || !item.tip
+                    ? '<span class="tip-locked">🔒 Unlock to view</span>' 
+                    : escapeHtml(item.tip);
+                    
+                const oddsDisplay = (!forceLock && item.odds) 
+                    ? parseFloat(item.odds).toFixed(2) 
+                    : '-';
+
+                const teamA = item.teamA || 'Match';
+                const teamB = item.teamB || 'Hidden';
 
                 tbody.append(`
                     <tr>
-                        <td>${escapeHtml(item.teamA)} VS ${escapeHtml(item.teamB)}</td>
+                        <td>${escapeHtml(teamA)} VS ${escapeHtml(teamB)}</td>
                         <td style="font-weight:bold;">${tipDisplay}</td>
                         <td>${oddsDisplay}</td>
                     </tr>`);
