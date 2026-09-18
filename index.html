@@ -60,17 +60,32 @@
         #splash-screen h1 {
             font-family: 'Paytone One', sans-serif;
             color: var(--green);
-            /* clamp() scales the text to the viewport instead of a fixed 3rem,
-               which on a narrow phone (~360-400px) forced "VICTONIC SPORTS"
-               to wrap mid-word or overflow, throwing off centering. Floor
-               1.6rem, ceiling 3rem, scales smoothly with 8vw in between. */
-            font-size: clamp(1.6rem, 8vw, 3rem);
             text-align: center;
             width: 100%;
             padding: 0 16px;
             margin: 0;
             box-sizing: border-box;
             animation: pulse 1.5s infinite;
+        }
+        /* Deliberately stacked on two lines rather than one long string left to
+           wrap naturally. "VICTONIC SPORTS" as a single line depended on the
+           browser choosing a good break point on narrow phones — since the two
+           words are different lengths, whichever way it wrapped looked ragged
+           as a block even with each line individually centered. Forcing the
+           break here guarantees the same clean, centered two-line mark on
+           every screen size, not just "hopefully fine" on some of them. */
+        #splash-screen .splash-line {
+            display: block;
+            line-height: 1.15;
+        }
+        #splash-screen .splash-line1 {
+            font-size: clamp(1.8rem, 9vw, 3rem);
+            letter-spacing: 0.04em;
+        }
+        #splash-screen .splash-line2 {
+            font-size: clamp(1.3rem, 6.5vw, 2.1rem);
+            letter-spacing: 0.12em;
+            opacity: 0.92;
         }
         #splash-screen p {
             text-align: center;
@@ -187,7 +202,7 @@
 <body>
 
     <div id="splash-screen">
-        <h1>VICTONIC SPORTS</h1>
+        <h1><span class="splash-line splash-line1">VICTONIC</span><span class="splash-line splash-line2">SPORTS</span></h1>
         <p>Loading the best odds...</p>
     </div>
 
@@ -425,6 +440,20 @@
          * looks the same colour on every platform. Correct Score and Jackpot
          * both use gold on the app too, so they share it here.
          */
+        /**
+         * Same per-bookmaker brand colours as VipComponents.kt's
+         * bookmakerColor() and the iOS build — SportPesa green, MegaJackpot
+         * red, Betika blue. The jackpot buy buttons here previously all used
+         * the same flat green as everything else, with no bookmaker
+         * distinction at all, unlike every other platform.
+         */
+        function bookmakerColorFor(name) {
+            const n = (name || '').toLowerCase();
+            if (n.includes('mega'))   return '#E53935';   // red
+            if (n.includes('betika')) return '#1565C0';   // blue
+            return '#00704A';                              // SportPesa green
+        }
+
         function accentColorFor(pkgId) {
             const id = pkgId.toLowerCase();
             if (id === 'draw1')  return 'var(--draw1)';
@@ -467,10 +496,12 @@
                 } else {
                     let rows = '';
                     jackpots.forEach(j => {
+                        const bkColor = bookmakerColorFor(j.bookmaker);
                         rows += `
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>${escapeHtml(j.bookmaker)}</span>
-                                <button class="btn btn-sm btn-custom" onclick="openPaymentModal('${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
+                                <span style="color:${bkColor}; font-weight:bold;">${escapeHtml(j.bookmaker)}</span>
+                                <button class="btn btn-sm" style="background-color:${bkColor}; color:#ffffff; border:none;"
+                                        onclick="openPaymentModal('${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
                                     KSh ${Math.round(j.amount * USD_TO_KES).toLocaleString()}
                                 </button>
                             </div>`;
