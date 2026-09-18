@@ -376,9 +376,39 @@
             // draws / correct / odds. The old 'premium' fetch pointed at a
             // category nothing publishes to, so that table was always empty.
             fetchFlatTips('correct', 'Correct Score');
+            fetchFreeTip();
             fetchDrawTips();
             fetchOddsTips();
             fetchHistory();
+        }
+
+        // ─── Free Tip of the Day — genuinely free, not a paid preview ─────────
+        //
+        // This banner was previously populated as a SIDE EFFECT of rendering
+        // the Correct Score table — a real paid product — which is exactly why
+        // it showed "Unlock to view": that tip is SUPPOSED to be locked. This
+        // site never actually called ?type=basic anywhere, so nothing free was
+        // ever fetched at all. tips.php treats 'basic' as always-unlocked (no
+        // package can buy it — it's bait content by definition), so this call
+        // genuinely returns an unlocked pick.
+        async function fetchFreeTip() {
+            try {
+                const res = await fetch(`${API_BASE}/api/tips.php?type=basic`);
+                const data = await res.json();
+                if (!data || data.length === 0) {
+                    $('#free-tip-time').text('Today');
+                    $('#free-tip-match').text('No free tip published yet');
+                    $('#free-tip-pick').text('Check back soon');
+                    return;
+                }
+                const freeTip = data[0];
+                $('#free-tip-time').text(freeTip.kickOff || 'Today');
+                $('#free-tip-match').text(`${freeTip.teamA} VS ${freeTip.teamB}`);
+                $('#free-tip-pick').text(`Pick: ${freeTip.tip}`);
+            } catch (err) {
+                console.error('Error fetching free tip:', err);
+                $('#free-tip-match').text('Failed to load');
+            }
         }
 
         // ─── Packages ────────────────────────────────────────────────────────
@@ -447,6 +477,27 @@
          * the same flat green as everything else, with no bookmaker
          * distinction at all, unlike every other platform.
          */
+        /**
+         * Same country -> flag mapping used in HomeScreen.kt / iOS
+         * Theme.swift's CountryFlag, so a country reads the same flag
+         * everywhere. Unknown countries fall back to a ball emoji rather
+         * than nothing, so a country this list hasn't seen yet still looks
+         * intentional instead of broken.
+         */
+        const COUNTRY_FLAGS = {
+            'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+            'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷',
+            'portugal': '🇵🇹', 'netherlands': '🇳🇱', 'belgium': '🇧🇪',
+            'turkey': '🇹🇷', 'greece': '🇬🇷', 'denmark': '🇩🇰', 'sweden': '🇸🇪',
+            'norway': '🇳🇴', 'brazil': '🇧🇷', 'argentina': '🇦🇷', 'mexico': '🇲🇽',
+            'usa': '🇺🇸', 'saudi arabia': '🇸🇦', 'japan': '🇯🇵', 'south korea': '🇰🇷',
+            'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'ghana': '🇬🇭',
+            'egypt': '🇪🇬', 'morocco': '🇲🇦', 'europe': '🇪🇺', 'world': '🌍'
+        };
+        function flagFor(country) {
+            return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️';
+        }
+
         function bookmakerColorFor(name) {
             const n = (name || '').toLowerCase();
             if (n.includes('mega'))   return '#E53935';   // red
@@ -651,15 +702,6 @@
                 return;
             }
 
-            // "Free Tip of the Day" is pulled from the first Correct Score
-            // entry when available, same behaviour as before.
-            if (!isDrawTable && data.length > 0 && $table.closest('[data-pkg-id="correctscore"]').length) {
-                const freeTip = data[0];
-                $('#free-tip-time').text(freeTip.kickOff || 'Today');
-                $('#free-tip-match').text(freeTip.teamA ? `${freeTip.teamA} VS ${freeTip.teamB}` : 'Locked match');
-                $('#free-tip-pick').text(freeTip.isLocked ? 'Pick: Unlock to view' : `Pick: ${freeTip.tip}`);
-            }
-
             data.forEach(item => {
                 const teamsBlank = !item.teamA && !item.teamB;
 
@@ -728,9 +770,15 @@
                             totalOdds *= parseFloat(m.odds);
                         }
 
+                        // api/history.php includes a per-match country field —
+                        // never rendered here before. tips.php (the live/preview
+                        // tables) has no such field, so flags are intentionally
+                        // shown ONLY in History, not added there too.
+                        const flag = m.country ? `${flagFor(m.country)} ` : '';
+
                         tableRows += `
                             <tr>
-                                <td>${escapeHtml(m.teamA)} VS ${escapeHtml(m.teamB)}</td>
+                                <td>${flag}${escapeHtml(m.teamA)} VS ${escapeHtml(m.teamB)}</td>
                                 <td>${escapeHtml(m.prediction)}${scoreDisplay}</td>
                                 <td>${m.odds || '-'}</td>
                                 <td style="color:${resultColor}; font-weight:bold;">${m.result}</td>
