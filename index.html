@@ -498,9 +498,6 @@
         let currentPayingPackageId = null; 
         let appData = null;
 
-        // BACK BUTTON NAVIGATION STATE HANDLER
-        let isNavigatingBack = false;
-
         function getTodayEAT() {
             return new Date().toLocaleDateString("en-CA", {timeZone: "Africa/Nairobi"});
         }
@@ -525,46 +522,40 @@
             unlockedPackages = stored.packages;
         }
 
-        // INITIALIZE HISTORY STATE ON LOAD
+        // INITIALIZE INITIAL HISTORY STATE FOR COUNTRY SCREEN
         if (window.history && window.history.replaceState) {
             window.history.replaceState({ page: 'country' }, '');
         }
 
-        // LISTEN TO MOBILE / BROWSER BACK BUTTON
+        // STATE-BASED POPSTATE HANDLER (FIXES MODAL CLOSING ISSUE)
         window.addEventListener('popstate', function (e) {
-            isNavigatingBack = true;
+            const state = e.state;
+            if (!state) return;
 
-            // 1. If Payment Modal is visible, close it
-            const modalEl = document.getElementById('pay-modal');
-            if (modalEl && modalEl.classList.contains('show')) {
-                if (payModal) {
-                    payModal.hide();
-                } else {
-                    $('#pay-modal').modal('hide');
-                }
-                isNavigatingBack = false;
-                return;
+            if (state.page === 'main') {
+                // If navigating back to 'main' state (e.g. from modal), hide modal & show main app
+                if (payModal) payModal.hide();
+                else $('#pay-modal').modal('hide');
+                
+                $('#country-screen').hide();
+                $('#main-app').show();
+            } else if (state.page === 'country') {
+                // If navigating back to 'country' state (e.g. from main app), hide modal & main app
+                if (payModal) payModal.hide();
+                else $('#pay-modal').modal('hide');
+
+                $('#main-app').hide();
+                $('#country-screen').css('display', 'flex');
             }
-
-            // 2. If Main App is visible, return to Country Selection
-            if ($('#main-app').is(':visible')) {
-                $('#main-app').fadeOut(200, function() {
-                    $('#country-screen').fadeIn(200);
-                });
-                isNavigatingBack = false;
-                return;
-            }
-
-            isNavigatingBack = false;
         });
 
         $(document).ready(function() {
             loadUnlockedState();
             payModal = new bootstrap.Modal(document.getElementById('pay-modal'));
 
-            // Sync history when Modal is closed via UI (e.g. X button / backdrop click)
+            // Sync browser history state when modal is closed via UI (e.g., 'X' button or backdrop click)
             $('#pay-modal').on('hidden.bs.modal', function () {
-                if (!isNavigatingBack && window.history.state && window.history.state.page === 'modal') {
+                if (window.history.state && window.history.state.page === 'modal') {
                     window.history.back();
                 }
             });
@@ -676,7 +667,7 @@
             currentCurrency = currency;
             currentRateToKes = rate;
             
-            // Push history state for back button navigation
+            // Push 'main' page state into history stack
             if (window.history && window.history.pushState) {
                 window.history.pushState({ page: 'main' }, '');
             }
@@ -813,7 +804,7 @@
             currentPayingPackageId = pkgId; 
             expectedKesAmount = kes;
 
-            // Push state for Modal navigation
+            // Push 'modal' state into history stack
             if (window.history && window.history.pushState) {
                 window.history.pushState({ page: 'modal' }, '');
             }
