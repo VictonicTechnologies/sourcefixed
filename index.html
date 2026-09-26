@@ -5,32 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="author" content="Victonic Sports">
-    <meta name="description" content="Victonic Sports offers sure soccer betting tips, daily odds accumulators, correct score predictions and SportPesa jackpot picks for Kenya, Uganda and Tanzania.">
-    <title>Victonic Sports | Sure Tips</title>
+    <meta name="description" content="Victonic Sports offers sure soccer betting tips, daily odds accumulators, correct score predictions and SportPesa jackpot picks.">
+    <title>Victonic Sports | Premium Sure Tips</title>
 
     <link rel="icon" type="image/gif" href="/tab.gif"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&family=Paytone+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Paytone+One&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg:          #0F1218;
-            --card:        #1A1D24;
-            --card-hover:  #232832;
-            --green:       #00C853;
-            --red:         #D32F2F;
+            --bg:          #0b0e14;
+            --card-bg:     rgba(22, 27, 38, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover:  #1e2532;
+            --green:       #00E676;
+            --green-glow:  rgba(0, 230, 118, 0.25);
+            --red:         #FF5252;
             --gold:        #FFD700;
+            --gold-glow:   rgba(255, 215, 0, 0.2);
             --purple:      #7E57C2;
-            --muted:       #9CA3AF;
+            --muted:       #8A94A6;
+            
             --draw1:  #1E88E5;
-            --draw2:  #5C6BC0;
+            --draw2:  #3F51B5;
             --draw3:  #7E57C2;
             --odds2:  #00ACC1;
-            --odds5:  #D81B60;
-            --odds10: #FFB300;
+            --odds5:  #E91E63;
+            --odds10: #FF9800;
         }
-        body { font-family: 'Josefin Sans', sans-serif; background: var(--bg); color: #ffffff; margin: 0; padding: 0; overflow-x: hidden; }
 
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background: radial-gradient(circle at top center, #161c28 0%, var(--bg) 70%);
+            color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* SPLASH & COUNTRY SELECTOR */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: var(--bg); display: flex; flex-direction: column;
@@ -38,48 +52,207 @@
             transition: opacity 0.5s ease-out;
         }
         #splash-screen h1 { font-family: 'Paytone One', sans-serif; color: var(--green); text-align: center; animation: pulse 1.5s infinite; }
-        #splash-screen .splash-line1 { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: 0.04em; display: block; }
-        #splash-screen .splash-line2 { font-size: clamp(1.3rem, 6.5vw, 2.1rem); letter-spacing: 0.12em; opacity: 0.92; display: block; }
+        #splash-screen .splash-line1 { font-size: clamp(2rem, 9vw, 3.2rem); letter-spacing: 0.04em; display: block; text-shadow: 0 0 20px var(--green-glow); }
+        #splash-screen .splash-line2 { font-size: clamp(1.4rem, 6.5vw, 2.2rem); letter-spacing: 0.12em; opacity: 0.9; color: var(--gold); display: block; }
 
         #country-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: var(--bg); display: none; flex-direction: column;
             justify-content: center; align-items: center; z-index: 9998; padding: 20px; text-align: center;
         }
-        #country-screen h2 { font-family: 'Paytone One', sans-serif; color: var(--gold); margin-bottom: 30px; }
-        #country-buttons-container { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 10px; }
-        .country-btn { background: var(--card); border: 2px solid var(--green); color: #fff; font-size: 1.5rem; font-family: 'Paytone One', sans-serif; padding: 15px 40px; border-radius: 10px; width: 80%; max-width: 300px; cursor: pointer; transition: all 0.3s; }
-        .country-btn:hover { background: var(--green); color: #0F1218; transform: scale(1.05); }
+        #country-screen h2 { font-family: 'Paytone One', sans-serif; color: var(--gold); margin-bottom: 25px; text-shadow: 0 0 15px var(--gold-glow); }
+        #country-buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .country-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--green);
+            color: #fff;
+            font-size: 1.2rem;
+            font-family: 'Paytone One', sans-serif;
+            padding: 16px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .country-btn:hover {
+            background: var(--green);
+            color: #0B0E14;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 25px var(--green-glow);
+        }
 
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* APP CARDS & GLASSMORPHISM */
         #main-app { display: none; }
-        .container { max-width: 1200px; padding: 20px; }
-        .card { background: var(--card); border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); margin-bottom: 20px; overflow: hidden; }
-        .card-header { background: var(--green); color: #0F1218; font-family: 'Paytone One', sans-serif; font-size: 1.5rem; text-align: center; padding: 15px; }
-        .card-body { padding: 20px; text-align: center; }
-        .btn-custom { background-color: var(--green); color: #0F1218; font-weight: bold; border-radius: 8px; padding: 10px 20px; transition: background-color 0.3s; border: none;}
-        .btn-custom:hover { background-color: #00A844; color: #0F1218; }
-        .table { background: var(--card); color: #ffffff; border-radius: 8px; overflow: hidden; max-width: 100%; margin-top: 15px; }
-        .table th { background-color: var(--card-hover); color: white; font-weight: bold; text-align: center; }
-        .table td { text-align: center; vertical-align: middle; }
-        .modal-content { background: var(--card); color: #ffffff; border-radius: 15px; }
-        .modal-header { background: var(--green); color: #0F1218; border-bottom: none; }
-        .modal-title { font-family: 'Paytone One', sans-serif; }
-        .list-group-item { background: var(--card-hover); color: #cccccc; border: none; }
+        .container { max-width: 900px; padding: 20px 12px; }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        .card-header {
+            font-family: 'Paytone One', sans-serif;
+            font-size: 1.35rem;
+            text-align: center;
+            padding: 14px 20px;
+            border-bottom: none;
+            letter-spacing: 0.5px;
+        }
+        .card-body { padding: 20px 16px; text-align: center; }
+
+        /* BUTTONS & BADGES */
+        .btn-custom {
+            background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%);
+            color: #0B0E14;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px var(--green-glow);
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+            color: #0B0E14;
+        }
+        .pkg-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #FFD700, #FF9800);
+            color: #000;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 10px var(--gold-glow);
+        }
+
+        /* TABLES & LOCKED/INVISIBLE STYLING */
+        .table-responsive { border-radius: 12px; overflow: hidden; margin-top: 15px; }
+        .table {
+            background: rgba(11, 14, 20, 0.6);
+            color: #ffffff;
+            margin-bottom: 0;
+            border-color: rgba(255,255,255,0.05);
+        }
+        .table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 14px 8px;
+            font-size: 0.95rem;
+            border-color: rgba(255, 255, 255, 0.04);
+        }
+        .table tbody tr:hover {
+            background: var(--card-hover);
+        }
+
+        /* ENHANCED LOCKED CONTENT (TEASER BLUR EFFECT) */
+        .locked-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            user-select: none;
+        }
+        .blurred-teaser {
+            filter: blur(5px);
+            opacity: 0.4;
+            pointer-events: none;
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+        .lock-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 215, 0, 0.12);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* MODAL STYLING */
+        .modal-content {
+            background: var(--bg);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+        .modal-header {
+            background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%);
+            color: #0B0E14;
+            border-bottom: none;
+            padding: 18px 24px;
+        }
+        .modal-title { font-family: 'Paytone One', sans-serif; font-size: 1.4rem; }
+        .list-group-item { background: rgba(255,255,255,0.03); color: #e0e0e0; border-color: rgba(255,255,255,0.05); }
         .list-group-item strong { color: var(--green); }
-        .copy-btn { background-color: var(--gold); border: none; color: #0F1218; padding: 5px 10px; border-radius: 5px; margin-left: 10px; cursor: pointer; font-weight: bold;}
-        .past-tips .card-header { background: var(--card-hover); color: var(--gold); }
-        .loader { border: 4px solid #333; border-top: 4px solid var(--green); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        .copy-btn {
+            background: var(--gold); border: none; color: #0B0E14;
+            padding: 3px 10px; border-radius: 6px; margin-left: 8px;
+            font-size: 0.8rem; font-weight: bold; transition: opacity 0.2s;
+        }
+        .copy-btn:hover { opacity: 0.85; }
+
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--green);
+            border-radius: 50%;
+            width: 32px; height: 32px;
+            animation: spin 0.8s linear infinite;
+            margin: 20px auto;
+        }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .tip-locked { color: var(--muted) !important; font-style: italic; }
-        .draw-hidden-match { color: var(--muted); font-style: italic; }
-        .pkg-badge { display: inline-block; font-size: 0.75rem; font-weight: bold; background: rgba(255,215,0,0.15); color: var(--gold); padding: 2px 10px; border-radius: 20px; margin-bottom: 8px; }
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
         <h1><span class="splash-line1">VICTONIC</span><span class="splash-line2">SPORTS</span></h1>
-        <p>Loading the best odds...</p>
+        <p class="mt-2 text-muted">Loading daily sure predictions...</p>
     </div>
 
     <div id="country-screen">
@@ -93,12 +266,16 @@
         <main class="container">
 
             <section class="card">
-                <div class="card-header">Free Tip of the Day</div>
+                <div class="card-header" style="background: linear-gradient(90deg, #FFD700, #FF8F00); color: #000;">
+                    🔥 Free Tip of the Day
+                </div>
                 <div class="card-body">
-                    <p id="free-tip-league" class="card-text mt-3" style="font-weight: bold; color: var(--gold); font-size: 1.1rem;"></p>
-                    <h2 class="card-title" id="free-tip-time">Loading...</h2>
-                    <p class="card-text"><strong id="free-tip-match">...</strong></p>
-                    <p class="card-text" style="color: #00C853;"><strong id="free-tip-pick">...</strong></p>
+                    <p id="free-tip-league" class="card-text mt-1" style="font-weight: bold; color: var(--gold); font-size: 1.05rem;"></p>
+                    <h3 class="card-title my-2" id="free-tip-time" style="color:#fff;">Loading...</h3>
+                    <p class="card-text fs-5"><strong id="free-tip-match">...</strong></p>
+                    <div class="p-2 rounded d-inline-block px-4" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green);">
+                        <strong id="free-tip-pick" style="color: var(--green);">...</strong>
+                    </div>
                 </div>
             </section>
 
@@ -106,89 +283,83 @@
                 <div class="loader"></div>
             </div>
 
-            <section class="past-tips">
-                <h1 class="text-center mb-4" style="color:#00e600;">Past Tips History</h1>
+            <section class="past-tips mt-5">
+                <h2 class="text-center mb-4" style="font-family:'Paytone One', sans-serif; color:var(--green); text-shadow: 0 0 10px var(--green-glow);">
+                    Past Tips History
+                </h2>
                 <div id="history-container">
                     <div class="loader"></div>
                 </div>
             </section>
 
-            <section class="text-center mt-4 mb-5">
-                <h3 style="color:white;">Contact Us</h3>
-                <a id="btn-whatsapp" href="#" class="btn btn-success m-1">WhatsApp</a>
-                <a id="btn-twitter" href="#" class="btn btn-primary m-1">Twitter</a>
-                <a id="btn-telegram" href="#" class="btn btn-info m-1">Telegram</a>
+            <section class="text-center mt-5 mb-5 p-4 card">
+                <h4 class="mb-3" style="color:white; font-family:'Paytone One', sans-serif;">Need Help & Support?</h4>
+                <div>
+                    <a id="btn-whatsapp" href="#" class="btn btn-success m-1 px-4 py-2" style="border-radius: 10px; font-weight: 700;">WhatsApp</a>
+                    <a id="btn-twitter" href="#" class="btn btn-primary m-1 px-4 py-2" style="border-radius: 10px; font-weight: 700;">Twitter</a>
+                    <a id="btn-telegram" href="#" class="btn btn-info text-white m-1 px-4 py-2" style="border-radius: 10px; font-weight: 700;">Telegram</a>
+                </div>
             </section>
 
+            <!-- PAYMENT MODAL -->
             <div class="modal fade payment-modal" id="pay-modal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title" id="pay-modal-title">Buy Tips</h3>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body p-4">
                             
-                            <!-- KENYA: Automatic Unlock via Till -->
+                            <!-- KENYA -->
                             <div class="pay-section" id="pay-ke" style="display:none;">
-                                <h4>Get Tips Instantly</h4>
+                                <h5 class="text-warning text-center mb-3">Automatic Instant Access</h5>
                                 <div class="text-center mb-3">
-                                    <img id="till-image" src="" alt="Till Image" style="max-width: 150px; border-radius: 10px;">
+                                    <img id="till-image" src="" alt="Till Image" style="max-width: 130px; border-radius: 12px; border: 2px solid var(--card-border);">
                                 </div>
-                                <ul class="list-group list-group-flush mb-3">
-                                    <li class="list-group-item">Go to "Safaricom - Buy Goods & Services"</li>
-                                    <li class="list-group-item bg-success">Enter Till No <strong id="till-number-display"></strong> (<span id="till-name-display"></span>) <button class="copy-btn" id="btn-copy-till">Copy</button></li>
-                                    <li class="list-group-item">Enter amount <strong id="pay-modal-amount-ke">KSh 0</strong>, click "OK"</li>
+                                <ul class="list-group list-group-flush mb-3 rounded">
+                                    <li class="list-group-item">1. Go to Safaricom -> <strong>Buy Goods & Services</strong></li>
+                                    <li class="list-group-item" style="background: rgba(0, 230, 118, 0.15);">2. Till No: <strong id="till-number-display"></strong> (<span id="till-name-display"></span>) <button class="copy-btn" id="btn-copy-till">Copy</button></li>
+                                    <li class="list-group-item">3. Amount: <strong id="pay-modal-amount-ke" class="text-warning">KSh 0</strong></li>
                                 </ul>
-                                <div class="mt-4 p-3 rounded" style="background-color: var(--bg);">
-                                    <h5 class="text-warning">Verify Your Payment</h5>
-                                    <label for="mpesa-message-input" class="form-label" style="font-size: 0.9rem;">Paste your full M-Pesa confirmation message here:</label>
-                                    <textarea class="form-control mb-2" id="mpesa-message-input" rows="4" placeholder="e.g. UAX9... Confirmed. Ksh1000.00 paid to ..."></textarea>
-                                    <button class="btn btn-success w-100" id="verify-mpesa-btn">Verify Payment & Unlock Tips</button>
-                                    <div id="mpesa-verification-result" class="mt-3 text-center" style="font-weight:bold; font-size: 0.95rem;"></div>
+                                <div class="p-3 rounded" style="background-color: rgba(0,0,0,0.4); border: 1px solid var(--card-border);">
+                                    <h6 class="text-warning mb-2">Verify Confirmation Message</h6>
+                                    <textarea class="form-control mb-2" id="mpesa-message-input" rows="3" style="background:#121620; color:#fff; border: 1px solid #2a3245;" placeholder="Paste complete M-Pesa SMS here..."></textarea>
+                                    <button class="btn btn-custom w-100" id="verify-mpesa-btn">Verify Payment & Unlock</button>
+                                    <div id="mpesa-verification-result" class="mt-2 text-center" style="font-weight:bold; font-size: 0.9rem;"></div>
                                 </div>
                             </div>
                             
-                            <!-- UGANDA: Manual WhatsApp Unlock -->
+                            <!-- UGANDA -->
                             <div class="pay-section" id="pay-ug" style="display:none;">
-                                <h4 class="network-title">HOW TO PAY VIA MTN Uganda</h4>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item bg-success">Enter Phone Number: <strong id="ug-mtn-number"></strong></li>
-                                    <li class="list-group-item">Enter: amount <strong id="pay-modal-amount-ug-mtn">UGX 0</strong></li>
-                                </ul>
-                                <h4 class="network-title">UGANDA AIRTEL Subscribers</h4>
-                                <ul class="list-group list-group-flush mb-3">
-                                    <li class="list-group-item bg-success">Enter Phone Number: <strong id="ug-airtel-number"></strong></li>
-                                    <li class="list-group-item">Enter : Amount <strong id="pay-modal-amount-ug-airtel">UGX 0</strong></li>
-                                </ul>
-                                <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
-                                    <h5 class="text-warning">Receive Tips Manually</h5>
-                                    <p style="font-size: 0.9rem;">After sending the money, please forward your Mobile Money confirmation message to our WhatsApp. You will receive your tips manually via chat.</p>
-                                    <a id="btn-ug-wa" href="#" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
+                                <h6 class="text-warning">MTN UGANDA</h6>
+                                <p>Send <strong id="pay-modal-amount-ug-mtn" class="text-success"></strong> to <strong id="ug-mtn-number" class="text-warning"></strong></p>
+                                <h6 class="text-warning mt-3">AIRTEL UGANDA</h6>
+                                <p>Send <strong id="pay-modal-amount-ug-airtel" class="text-success"></strong> to <strong id="ug-airtel-number" class="text-warning"></strong></p>
+                                <div class="mt-4 p-3 rounded" style="background: rgba(0,230,118,0.08); border: 1px solid var(--green);">
+                                    <h6>Receive Tips via WhatsApp</h6>
+                                    <p class="small text-muted mb-2">After sending payment, forward your message to WhatsApp to unlock.</p>
+                                    <a id="btn-ug-wa" href="#" class="btn btn-success w-100 font-weight-bold" target="_blank">Forward to WhatsApp</a>
                                 </div>
                             </div>
                             
-                            <!-- TANZANIA: Manual WhatsApp Unlock -->
+                            <!-- TANZANIA -->
                             <div class="pay-section" id="pay-tz" style="display:none;">
-                                <h4 class="network-title">Hatua za Kutuma Pesa Ukitumia VODACOM</h4>
-                                <ul class="list-group list-group-flush mb-3">
-                                    <li class="list-group-item bg-success">Ingiza Namba ya Mpokeaji: <strong id="tz-number"></strong></li>
-                                    <li class="list-group-item">Weka Kiasi Cha pesa ni: <strong id="pay-modal-amount-tz">TZS 0</strong></li>
-                                </ul>
-                                <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
-                                    <h5 class="text-warning">Pokea Tips WhatsApp</h5>
-                                    <p style="font-size: 0.9rem;">Baada ya kutuma pesa, tafadhali tuma ujumbe wako wa M-Pesa (forward) kwenye WhatsApp yetu. Utapokea tips zako manually kupitia WhatsApp.</p>
-                                    <a id="btn-tz-wa" href="#" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
+                                <h6 class="text-warning">VODACOM / M-PESA TZ</h6>
+                                <p>Tuma <strong id="pay-modal-amount-tz" class="text-success"></strong> kwenda <strong id="tz-number" class="text-warning"></strong></p>
+                                <div class="mt-4 p-3 rounded" style="background: rgba(0,230,118,0.08); border: 1px solid var(--green);">
+                                    <h6>Thibitisha Malipo</h6>
+                                    <p class="small text-muted mb-2">Baada ya kutuma pesa, tuma ujumbe wako wa M-Pesa WhatsApp ili upokee tips.</p>
+                                    <a id="btn-tz-wa" href="#" class="btn btn-success w-100 font-weight-bold" target="_blank">Forward to WhatsApp</a>
                                 </div>
                             </div>
 
-                            <!-- OTHER DYNAMIC COUNTRIES: Manual WhatsApp Unlock -->
+                            <!-- GENERIC DYNAMIC -->
                             <div class="pay-section" id="pay-generic" style="display:none;">
-                                <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
-                                    <h5 class="text-warning">Receive Tips Manually</h5>
-                                    <p style="font-size: 1rem;">To purchase this package (<strong id="pay-modal-amount-generic"></strong>), please contact us via WhatsApp for the best local payment methods.</p>
-                                    <p style="font-size: 0.9rem; color: #ccc;">After confirming your payment on chat, you will receive your tips manually via WhatsApp.</p>
-                                    <a id="btn-generic-wa" href="#" class="btn btn-success w-100" target="_blank">Contact WhatsApp to Pay</a>
+                                <div class="p-3 rounded text-center" style="background: rgba(0,230,118,0.08); border: 1px solid var(--green);">
+                                    <h5>Package Price: <span id="pay-modal-amount-generic" class="text-warning"></span></h5>
+                                    <p class="small text-muted mb-3">Contact our live customer support to pay via localized payment options in your country.</p>
+                                    <a id="btn-generic-wa" href="#" class="btn btn-success w-100 font-weight-bold" target="_blank">Pay via WhatsApp Chat</a>
                                 </div>
                             </div>
 
@@ -242,7 +413,6 @@
             loadUnlockedState();
             payModal = new bootstrap.Modal(document.getElementById('pay-modal'));
 
-            // Load JSON immediately to build country screen
             fetch('external.json').then(res => res.json()).then(data => {
                 appData = data;
                 buildCountryScreen(appData.countries);
@@ -255,8 +425,8 @@
                     }, 500);
                 }, 1000);
             }).catch(err => {
-                console.error("Failed to load JSON initially", err);
-                $('#country-buttons-container').html('<p class="text-danger">Failed to load system data.</p>');
+                console.error("Failed to load JSON data", err);
+                $('#country-buttons-container').html('<p class="text-danger">Failed to load system configurations.</p>');
             });
 
             $('#btn-copy-till').click(function() {
@@ -269,12 +439,11 @@
                 });
             });
 
-            // M-Pesa automated unlock (Kenya Only)
             $('#verify-mpesa-btn').click(function() {
                 const msg = $('#mpesa-message-input').val().trim();
-                const $result =$('#mpesa-verification-result');
+                const $result = $('#mpesa-verification-result');
 
-                if (!msg) { $result.text('Please paste your M-Pesa message first.').css('color', 'var(--red)'); return; }
+                if (!msg) { $result.text('Please paste your M-Pesa confirmation SMS.').css('color', 'var(--red)'); return; }
 
                 const codeMatch = msg.match(/^[A-Z0-9]{10}/i);
                 if (!codeMatch || !msg.toLowerCase().includes('confirmed')) { 
@@ -285,24 +454,24 @@
                 const mpesaCode = codeMatch[0].toUpperCase();
                 let usedCodes = JSON.parse(localStorage.getItem('usedMpesaCodes') || '[]');
                 if (usedCodes.includes(mpesaCode)) { 
-                    $result.text('This M-Pesa code has already been used.').css('color', 'var(--red)'); 
+                    $result.text('This M-Pesa receipt code has already been used.').css('color', 'var(--red)'); 
                     return; 
                 }
 
                 if (!msg.toLowerCase().includes(appData.till_info.name.toLowerCase())) {
-                    $result.text(`Invalid Till Name. Please ensure you paid to ${appData.till_info.name}.`).css('color', 'var(--red)');
+                    $result.text(`Invalid Till Name. Ensure payment was made to ${appData.till_info.name}.`).css('color', 'var(--red)');
                     return;
                 }
 
                 const amountMatch = msg.match(/Ksh\s*([\d,]+\.\d{2})/i);
                 if (!amountMatch) { 
-                    $result.text('Could not detect amount in message. Ensure it is complete.').css('color', 'var(--red)'); 
+                    $result.text('Could not detect amount in message. Ensure message is full.').css('color', 'var(--red)'); 
                     return; 
                 }
                 
                 const paidAmount = parseFloat(amountMatch[1].replace(/,/g, ''));
                 if (paidAmount < expectedKesAmount) { 
-                    $result.text(`Insufficient amount. Expected KSh ${expectedKesAmount}, but found KSh ${paidAmount}.`).css('color', 'var(--red)'); 
+                    $result.text(`Insufficient amount. Package price is KSh ${expectedKesAmount}.`).css('color', 'var(--red)'); 
                     return; 
                 }
 
@@ -316,19 +485,19 @@
                 const dateRegex = new RegExp(`${dStr}/${mStr}/(?:20)?${yy}`, 'i');
                 
                 if (!dateRegex.test(msg)) {
-                    $result.text('Date mismatch. Payment message must be from today.').css('color', 'var(--red)');
+                    $result.text('Date mismatch. Payment SMS must be from today.').css('color', 'var(--red)');
                     return;
                 }
 
                 usedCodes.push(mpesaCode);
                 localStorage.setItem('usedMpesaCodes', JSON.stringify(usedCodes));
-                $result.text('Payment Verified Successfully! Accessing your tips...').css('color', 'var(--green)');
+                $result.text('Payment Verified Successfully! Unlocking tips...').css('color', 'var(--green)');
                 
                 setTimeout(() => {
                     if (currentPayingPackageId) saveUnlockedState(currentPayingPackageId);
                     payModal.hide();
                     renderTips(); 
-                }, 1500);
+                }, 1400);
             });
         });
 
@@ -336,11 +505,10 @@
             const container = $('#country-buttons-container');
             container.empty();
             countries.forEach(c => {
-                container.append(`<button class="country-btn" onclick="selectCountry('${c.code}', '${c.currency}', ${c.rate_to_kes})">${c.flag} ${c.name}</button>`);
+                container.append(`<button class="country-btn" onclick="selectCountry('${c.code}', '${c.currency}', ${c.rate_to_kes})"><span>${c.flag}</span> <span>${c.name}</span></button>`);
             });
         }
 
-        // Must assign selectCountry to window scope for onclick binding
         window.selectCountry = function(countryCode, currency, rate) {
             currentCountry = countryCode;
             currentCurrency = currency;
@@ -390,10 +558,10 @@
 
         function accentColorFor(pkgId) {
             const id = (pkgId || '').toLowerCase();
-            if (id.includes('draw')) return 'var(--draw1)';
-            if (id.includes('odds') || id.includes('vip')) return 'var(--odds5)';
-            if (id.includes('correct') || id.includes('jackpot')) return 'var(--gold)';
-            return 'var(--green)';
+            if (id.includes('draw')) return 'linear-gradient(135deg, #1E88E5 0%, #1565C0 100%)';
+            if (id.includes('odds') || id.includes('vip')) return 'linear-gradient(135deg, #E91E63 0%, #AD1457 100%)';
+            if (id.includes('correct') || id.includes('jackpot')) return 'linear-gradient(135deg, #FFB300 0%, #FF8F00 100%)';
+            return 'linear-gradient(135deg, #00E676 0%, #00A844 100%)';
         }
 
         function renderPackages(packages) {
@@ -401,46 +569,45 @@
             container.empty();
             
             packages.forEach(pkg => {
-                const accent = accentColorFor(pkg.id);
+                const accentGrad = accentColorFor(pkg.id);
                 const isJackpot = pkg.type === 'jackpot';
                 let priceHtml = '', actionHtml = '';
 
                 if (isJackpot) {
-                    if (currentCountry !== 'ke') return; // Hide jackpots for non-KE per original rules
+                    if (currentCountry !== 'ke') return; 
                     let rows = '';
                     (pkg.jackpots || []).forEach(j => {
                         const jackpotPkgId = `jackpot-${j.bookmaker.replace(/\s+/g, '-').toLowerCase()}`;
                         const isJkpUnlocked = unlockedPackages.includes(jackpotPkgId);
                         
                         rows += `<div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span style="font-weight:bold;">${j.bookmaker}</span>
+                                    <span style="font-weight:700;">${j.bookmaker}</span>
                                     ${!isJkpUnlocked ? 
                                       `<button class="btn btn-sm btn-custom" onclick="openPaymentModal('${jackpotPkgId}', '${j.bookmaker}', ${j.amount_kes})">${formatLocalPrice(j.amount_kes)}</button>` :
                                       `<span class="badge bg-success">UNLOCKED</span>`
                                     }
                                  </div>
-                                 <table class="table" id="table-${jackpotPkgId}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table>`;
+                                 <div class="table-responsive"><table class="table" id="table-${jackpotPkgId}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table></div>`;
                     });
                     priceHtml = rows;
                 } else {
-                    priceHtml = `<h3 class="card-title">Price: <span class="pkg-price">${formatLocalPrice(pkg.price_kes)}</span></h3>`;
+                    priceHtml = `<h3 class="card-title my-1" style="color:#fff;">Price: <span class="text-warning font-weight-bold">${formatLocalPrice(pkg.price_kes)}</span></h3>`;
                     
                     if (unlockedPackages.includes(pkg.id) && currentCountry === 'ke') {
-                        actionHtml = `<button class="btn btn-success mt-2 w-100" disabled>Tips Unlocked</button>`;
+                        actionHtml = `<button class="btn btn-success mt-3 w-100 font-weight-bold" style="border-radius:10px; padding:12px;" disabled>✓ Ticket Unlocked</button>`;
                     } else {
-                        // Non-Kenyans never auto-unlock via the app, they just contact WhatsApp. But they can still view locked tables.
-                        const btnText = (currentCountry === 'ke') ? 'Buy Ticket Now' : 'Buy to Reveal via WhatsApp';
-                        actionHtml = `<button class="btn btn-custom mt-2" onclick="openPaymentModal('${pkg.id}', '${pkg.title}', ${pkg.price_kes})">${btnText}</button>`;
+                        const btnText = (currentCountry === 'ke') ? 'Buy Ticket Now' : 'Get via WhatsApp';
+                        actionHtml = `<button class="btn btn-custom mt-3 w-100" onclick="openPaymentModal('${pkg.id}', '${pkg.title}', ${pkg.price_kes})">${btnText}</button>`;
                     }
                 }
 
                 container.append(`
                     <section class="card" data-pkg-id="${pkg.id}">
-                        <div class="card-header" style="background:${accent}; color:#0F1218;">${pkg.title}</div>
+                        <div class="card-header" style="background:${accentGrad}; color:#ffffff;">${pkg.title}</div>
                         <div class="card-body">
-                            ${pkg.isMostPopular ? '<div class="pkg-badge">MOST POPULAR</div>' : ''}
+                            ${pkg.isMostPopular ? '<div class="pkg-badge">🔥 MOST POPULAR</div>' : ''}
                             ${priceHtml}
-                            ${!isJackpot ? `<table class="table" id="table-${pkg.id}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table>` : ''}
+                            ${!isJackpot ? `<div class="table-responsive"><table class="table" id="table-${pkg.id}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table></div>` : ''}
                             ${actionHtml}
                         </div>
                     </section>`);
@@ -465,20 +632,20 @@
                     let teamA, teamB, tipDisplay, oddsDisplay;
 
                     if (isDrawPackage) {
-                        // Draw: Lock teams (if locked), show prediction and odds ALWAYS.
-                        teamA = isUnlocked ? item.teamA : '<span class="draw-hidden-match">🔒 Hidden</span>';
-                        teamB = isUnlocked ? item.teamB : '<span class="draw-hidden-match">🔒 Hidden</span>';
-                        tipDisplay = item.tip;
-                        oddsDisplay = item.odds;
+                        // DRAWS: Lock/Blur Teams, show tips and odds
+                        teamA = isUnlocked ? item.teamA : `<div class="locked-container"><span class="blurred-teaser">Team Alpha</span> <span class="lock-pill">🔒 Locked</span></div>`;
+                        teamB = isUnlocked ? item.teamB : `<div class="locked-container"><span class="blurred-teaser">Team Beta</span></div>`;
+                        tipDisplay = `<span style="color:var(--green); font-weight:bold;">${item.tip}</span>`;
+                        oddsDisplay = `<span class="badge bg-secondary">${item.odds}</span>`;
                     } else {
-                        // Others: Show updated teams from JSON ALWAYS, lock prediction and odds (if locked).
+                        // OTHERS: Show Teams, Lock/Blur Tip & Odds
                         teamA = item.teamA;
                         teamB = item.teamB;
-                        tipDisplay = isUnlocked ? item.tip : '<span class="tip-locked">🔒 Unlock to view</span>';
-                        oddsDisplay = isUnlocked ? item.odds : '-';
+                        tipDisplay = isUnlocked ? `<span style="color:var(--green); font-weight:bold;">${item.tip}</span>` : `<div class="locked-container"><span class="blurred-teaser">1 & Over 2.5</span> <span class="lock-pill">🔒 Locked</span></div>`;
+                        oddsDisplay = isUnlocked ? `<span class="badge bg-secondary">${item.odds}</span>` : '-';
                     }
 
-                    tbody.append(`<tr><td>${teamA} VS ${teamB}</td><td style="font-weight:bold;">${tipDisplay}</td><td>${oddsDisplay}</td></tr>`);
+                    tbody.append(`<tr><td>${teamA} ${isUnlocked || !isDrawPackage ? 'VS' : ''} ${teamB}</td><td>${tipDisplay}</td><td>${oddsDisplay}</td></tr>`);
                 });
             });
         }
@@ -515,7 +682,7 @@
         function renderHistory(data) {
             const container = $('#history-container');
             container.empty();
-            if (!data || data.length === 0) { container.html('<p class="text-center">No past history available.</p>'); return; }
+            if (!data || data.length === 0) { container.html('<p class="text-center text-muted">No historical records available.</p>'); return; }
 
             data.forEach(day => {
                 for (const catName in day.categories) {
@@ -523,18 +690,29 @@
                     let totalOdds = 1.0, tableRows = '';
                     
                     matches.forEach(m => {
-                        const resultColor = m.result === 'WON' ? '#00C853' : (m.result === 'LOST' ? '#D32F2F' : '#FFD700');
+                        const isWon = m.result === 'WON';
+                        const badgeBg = isWon ? 'rgba(0,230,118,0.2)' : 'rgba(255,82,82,0.2)';
+                        const badgeColor = isWon ? 'var(--green)' : 'var(--red)';
                         if (m.odds && !isNaN(m.odds)) totalOdds *= parseFloat(m.odds);
 
                         tableRows += `<tr>
                             <td>${flagFor(m.country)} ${m.teamA} VS ${m.teamB}</td>
-                            <td>${m.prediction} (${m.score})</td>
-                            <td>${m.odds}</td>
-                            <td style="color:${resultColor}; font-weight:bold;">${m.result}</td>
+                            <td><strong>${m.prediction}</strong> (${m.score})</td>
+                            <td><span class="badge bg-dark">${m.odds}</span></td>
+                            <td><span class="badge" style="background:${badgeBg}; color:${badgeColor}; border: 1px solid ${badgeColor};">${m.result}</span></td>
                         </tr>`;
                     });
 
-                    container.append(`<div class="card mb-3"><div class="card-header">${day.date} - ${catName}</div><div class="card-body"><table class="table"><thead><tr><th>Team</th><th>Tip</th><th>Odds</th><th>Status</th></tr></thead><tbody>${tableRows}</tbody></table><p class="card-text" style="color:#FFD700;">Total Odds: ${totalOdds.toFixed(2)}</p></div></div>`);
+                    container.append(`
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: rgba(255,255,255,0.05); color: var(--gold); border-bottom: 1px solid var(--card-border);">
+                                📅 ${day.date} — ${catName}
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive"><table class="table"><thead><tr><th>Match</th><th>Tip (Score)</th><th>Odds</th><th>Status</th></tr></thead><tbody>${tableRows}</tbody></table></div>
+                                <div class="mt-2 text-end" style="color:var(--gold); font-weight:bold;">Accumulated Odds: ${totalOdds.toFixed(2)}</div>
+                            </div>
+                        </div>`);
                 }
             });
         }
