@@ -42,6 +42,13 @@
             --gold-glow:   rgba(255, 215, 0, 0.2);
             --purple:      #7E57C2;
             --muted:       #8A94A6;
+            
+            --draw1:  #1E88E5;
+            --draw2:  #3F51B5;
+            --draw3:  #7E57C2;
+            --odds2:  #00ACC1;
+            --odds5:  #E91E63;
+            --odds10: #FF9800;
         }
 
         body {
@@ -54,6 +61,7 @@
             overflow-x: hidden;
         }
 
+        /* SPLASH & COUNTRY SELECTOR */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: var(--bg); display: flex; flex-direction: column;
@@ -102,54 +110,179 @@
 
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
+        /* APP CARDS & GLASSMORPHISM */
         #main-app { display: none; }
         .container { max-width: 900px; padding: 20px 12px; }
 
-        .seo-header { text-align: center; margin-bottom: 30px; padding-top: 20px; }
-        .seo-header h1 { font-family: 'Paytone One', sans-serif; color: var(--green); font-size: clamp(2rem, 6vw, 2.8rem); text-shadow: 0 0 15px var(--green-glow); margin-bottom: 5px; letter-spacing: 1px; }
-        .seo-header p { color: var(--gold); font-size: 1.1rem; font-weight: 600; }
+        .seo-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+        .seo-header h1 {
+            font-family: 'Paytone One', sans-serif;
+            color: var(--green);
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            text-shadow: 0 0 15px var(--green-glow);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .seo-header p {
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
 
-        .card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--card-border); border-radius: 18px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); margin-bottom: 24px; overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease; }
-        .card:hover { border-color: rgba(255, 255, 255, 0.18); }
-        .card-header { font-family: 'Paytone One', sans-serif; font-size: 1.35rem; text-align: center; padding: 14px 20px; border-bottom: none; letter-spacing: 0.5px; }
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        .card-header {
+            font-family: 'Paytone One', sans-serif;
+            font-size: 1.35rem;
+            text-align: center;
+            padding: 14px 20px;
+            border-bottom: none;
+            letter-spacing: 0.5px;
+        }
         .card-body { padding: 20px 16px; text-align: center; }
 
+        /* BUTTONS & BADGES */
         .btn-custom {
-            background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%); color: #0B0E14; font-weight: 700; border-radius: 10px; padding: 12px 24px; transition: all 0.3s ease; border: none; box-shadow: 0 4px 15px var(--green-glow); text-transform: uppercase; font-size: 0.95rem; letter-spacing: 0.5px; text-decoration: none; display: inline-block;
+            background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%);
+            color: #0B0E14;
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px var(--green-glow);
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
         }
-        .btn-custom:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4); color: #0B0E14; }
-        
-        .pkg-badge { display: inline-block; font-size: 0.75rem; font-weight: 800; background: linear-gradient(90deg, #FFD700, #FF9800); color: #000; padding: 3px 12px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 10px var(--gold-glow); }
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4);
+            color: #0B0E14;
+        }
+        .pkg-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #FFD700, #FF9800);
+            color: #000;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 10px var(--gold-glow);
+        }
 
+        /* TABLES & LOCKED STYLING */
         .table-responsive { border-radius: 12px; overflow: hidden; margin-top: 15px; }
-        .table { background: rgba(11, 14, 20, 0.6); color: #ffffff; margin-bottom: 0; border-color: rgba(255,255,255,0.05); }
-        .table th { background: rgba(255, 255, 255, 0.05); color: var(--gold); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; padding: 12px 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .table td { text-align: center; vertical-align: middle; padding: 14px 8px; font-size: 0.95rem; border-color: rgba(255, 255, 255, 0.04); }
-        .table tbody tr:hover { background: var(--card-hover); }
+        .table {
+            background: rgba(11, 14, 20, 0.6);
+            color: #ffffff;
+            margin-bottom: 0;
+            border-color: rgba(255,255,255,0.05);
+        }
+        .table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 14px 8px;
+            font-size: 0.95rem;
+            border-color: rgba(255, 255, 255, 0.04);
+        }
+        .table tbody tr:hover {
+            background: var(--card-hover);
+        }
 
-        .locked-container { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; user-select: none; }
-        .blurred-teaser { filter: blur(5px); opacity: 0.4; pointer-events: none; letter-spacing: 1px; font-family: monospace; }
-        .lock-pill { display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 215, 0, 0.12); border: 1px solid rgba(255, 215, 0, 0.35); color: var(--gold); font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; backdrop-filter: blur(4px); }
+        /* TEASER BLUR EFFECT */
+        .locked-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            user-select: none;
+        }
+        .blurred-teaser {
+            filter: blur(5px);
+            opacity: 0.4;
+            pointer-events: none;
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+        .lock-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 215, 0, 0.12);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+        }
 
-        .modal-content { background: var(--bg); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
-        .modal-body { max-height: 75vh; overflow-y: auto; }
-        .modal-header { background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%); color: #0B0E14; border-bottom: none; padding: 18px 24px; }
+        /* MODAL STYLING */
+        .modal-content {
+            background: var(--bg);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+        .modal-header {
+            background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%);
+            color: #0B0E14;
+            border-bottom: none;
+            padding: 18px 24px;
+        }
         .modal-title { font-family: 'Paytone One', sans-serif; font-size: 1.4rem; }
-        
         .list-group-item { background: rgba(255,255,255,0.03); color: #e0e0e0; border-color: rgba(255,255,255,0.05); }
         .list-group-item strong { color: var(--green); }
-        
-        /* Guide Steps Styling */
-        .step-box { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; }
-        .step-box h6 { font-family: 'Paytone One', sans-serif; letter-spacing: 0.5px; margin-bottom: 10px; }
-        .step-list { padding-left: 20px; margin-bottom: 0; font-size: 0.9rem; color: #ddd; }
-        .step-list li { margin-bottom: 6px; }
-        .step-list li:last-child { margin-bottom: 0; }
-
-        .copy-btn { background: var(--gold); border: none; color: #0B0E14; padding: 3px 10px; border-radius: 6px; margin-left: 8px; font-size: 0.8rem; font-weight: bold; transition: opacity 0.2s; }
+        .copy-btn {
+            background: var(--gold); border: none; color: #0B0E14;
+            padding: 3px 10px; border-radius: 6px; margin-left: 8px;
+            font-size: 0.8rem; font-weight: bold; transition: opacity 0.2s;
+        }
         .copy-btn:hover { opacity: 0.85; }
 
-        .loader { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--green); border-radius: 50%; width: 32px; height: 32px; animation: spin 0.8s linear infinite; margin: 20px auto; }
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--green);
+            border-radius: 50%;
+            width: 32px; height: 32px;
+            animation: spin 0.8s linear infinite;
+            margin: 20px auto;
+        }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -222,133 +355,39 @@
                             <h3 class="modal-title" id="pay-modal-title">Buy Tips</h3>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body p-4 text-center">
+                        <div class="modal-body p-4">
                             
-                            <!-- KENYA (Automated) -->
+                            <!-- KENYA (Automated Instant Verification) -->
                             <div class="pay-section" id="pay-ke" style="display:none;">
-                                <h5 class="text-warning mb-3">Automatic Instant Access</h5>
-                                <div class="mb-3">
+                                <h5 class="text-warning text-center mb-3">Automatic Instant Access</h5>
+                                <div class="text-center mb-3">
                                     <img id="till-image" src="" alt="Lipa na M-Pesa Till" style="max-width: 130px; border-radius: 12px; border: 2px solid var(--card-border);">
                                 </div>
-                                <ul class="list-group list-group-flush mb-3 rounded text-start">
+                                <ul class="list-group list-group-flush mb-3 rounded">
                                     <li class="list-group-item">1. Go to Safaricom -> <strong>Buy Goods & Services</strong></li>
                                     <li class="list-group-item" style="background: rgba(0, 230, 118, 0.15);">2. Till No: <strong id="till-number-display"></strong> (<span id="till-name-display"></span>) <button class="copy-btn" id="btn-copy-till">Copy</button></li>
                                     <li class="list-group-item">3. Amount: <strong id="pay-modal-amount-ke" class="text-warning">KSh 0</strong></li>
                                 </ul>
-                                <div class="p-3 rounded text-start" style="background-color: rgba(0,0,0,0.4); border: 1px solid var(--card-border);">
-                                    <h6 class="text-warning mb-2 text-center">Verify Confirmation Message</h6>
+                                <div class="p-3 rounded" style="background-color: rgba(0,0,0,0.4); border: 1px solid var(--card-border);">
+                                    <h6 class="text-warning mb-2">Verify Confirmation Message</h6>
                                     <textarea class="form-control mb-2" id="mpesa-message-input" rows="3" style="background:#121620; color:#fff; border: 1px solid #2a3245;" placeholder="Paste complete M-Pesa SMS here..."></textarea>
                                     <button class="btn btn-custom w-100" id="verify-mpesa-btn">Verify Payment & Unlock</button>
                                     <div id="mpesa-verification-result" class="mt-2 text-center" style="font-weight:bold; font-size: 0.9rem;"></div>
                                 </div>
                             </div>
-                            
-                            <!-- UGANDA -->
-                            <div class="pay-section" id="pay-ug" style="display:none;">
-                                <h5 class="text-warning mb-3">How to Pay from Uganda</h5>
-                                <div class="step-box">
-                                    <h6 style="color: #FFCC00;">MTN Uganda (to Safaricom M-Pesa)</h6>
-                                    <ol class="step-list">
-                                        <li>Dial <strong>*165#</strong> on your mobile line.</li>
-                                        <li>Select 1: Send Money -> 3: International Transfer -> 1: Safaricom M-Pesa.</li>
-                                        <li>Enter recipient number: <strong class="text-warning intl-number-display"></strong></li>
-                                        <li>Enter amount: <strong class="pay-modal-amount-ug text-success"></strong> and state reason.</li>
-                                        <li>Enter your MTN MoMo PIN to authorize.</li>
-                                    </ol>
-                                </div>
-                                <div class="step-box">
-                                    <h6 style="color: #FF0000;">Airtel Uganda</h6>
-                                    <ol class="step-list">
-                                        <li>Dial <strong>*185#</strong>.</li>
-                                        <li>Select 1: Send Money -> 4: International Transfer -> Kenya.</li>
-                                        <li>Enter recipient number: <strong class="text-warning intl-number-display"></strong></li>
-                                        <li>Enter amount: <strong class="pay-modal-amount-ug text-success"></strong> and state reason.</li>
-                                        <li>Confirm with your Airtel Money PIN.</li>
-                                    </ol>
-                                </div>
-                                <p class="mt-3 text-white" style="background: rgba(0,230,118,0.2); padding:10px; border-radius:8px;">After sending, forward your confirmation SMS to our WhatsApp to get your tips instantly!</p>
-                                <a href="#" class="btn btn-custom w-100 forward-wa-btn" target="_blank">Forward SMS to WhatsApp</a>
-                            </div>
 
-                            <!-- TANZANIA -->
-                            <div class="pay-section" id="pay-tz" style="display:none;">
-                                <h5 class="text-warning mb-3">How to Pay from Tanzania</h5>
-                                <div class="step-box">
-                                    <h6 style="color: #E60000;">Vodacom M-Pesa Tanzania</h6>
-                                    <ol class="step-list">
-                                        <li>Dial <strong>*150*00#</strong>.</li>
-                                        <li>Select Send Money -> International Transfers -> M-Pesa Kenya.</li>
-                                        <li>Enter recipient number: <strong class="text-warning intl-number-display"></strong></li>
-                                        <li>Enter amount: <strong class="pay-modal-amount-tz text-success"></strong>.</li>
-                                        <li>Review conversion rates and enter your M-Pesa PIN.</li>
-                                    </ol>
-                                </div>
-                                <div class="step-box">
-                                    <h6 style="color: #FF0000;">Airtel Tanzania</h6>
-                                    <ol class="step-list">
-                                        <li>Dial <strong>*150*60#</strong>.</li>
-                                        <li>Select 1: Send Money -> 5: Send Money Abroad -> Kenya.</li>
-                                        <li>Select 1: Mobile Wallet (Choose Airtel or M-Pesa Kenya).</li>
-                                        <li>Enter recipient number: <strong class="text-warning intl-number-display"></strong></li>
-                                        <li>Enter amount: <strong class="pay-modal-amount-tz text-success"></strong>, pick reason, and enter PIN.</li>
-                                    </ol>
-                                </div>
-                                <p class="mt-3 text-white" style="background: rgba(0,230,118,0.2); padding:10px; border-radius:8px;">Baada ya kutuma pesa, tuma ujumbe wako wa M-Pesa (SMS) WhatsApp ili upokee tips zako papo hapo.</p>
-                                <a href="#" class="btn btn-custom w-100 forward-wa-btn" target="_blank">Tuma SMS WhatsApp</a>
-                            </div>
+                            <!-- DYNAMIC MANUAL PAYMENT (For Uganda, Tanzania, Rwanda, Zambia, Malawi, and any added JSON countries) -->
+                            <div class="pay-section" id="dynamic-manual-pay" style="display:none;"></div>
 
-                            <!-- RWANDA -->
-                            <div class="pay-section" id="pay-rw" style="display:none;">
-                                <h5 class="text-warning mb-3">How to Pay from Rwanda</h5>
-                                <div class="step-box">
-                                    <h6 style="color: #FFCC00;">MTN Rwanda</h6>
-                                    <ol class="step-list">
-                                        <li>Dial <strong>*182#</strong>.</li>
-                                        <li>Select Send Money -> International Remittance / Cross Border.</li>
-                                        <li>Choose Kenya -> Select destination wallet (M-Pesa or Airtel).</li>
-                                        <li>Enter recipient number: <strong class="text-warning intl-number-display"></strong></li>
-                                        <li>Enter amount: <strong class="pay-modal-amount-rw text-success"></strong> and confirm with MoMo PIN.</li>
-                                    </ol>
-                                </div>
-                                <div class="step-box">
-                                    <h6 style="color: #FF0000;">Airtel Rwanda</h6>
-                                    <ol class="step-list">
-                                        <li>Dial <strong>*182#</strong> or open MyAirtel App.</li>
-                                        <li>Choose Airtel Money -> Send Money -> International -> Kenya.</li>
-                                        <li>Enter recipient number: <strong class="text-warning intl-number-display"></strong></li>
-                                        <li>Enter amount: <strong class="pay-modal-amount-rw text-success"></strong> and confirm with Airtel PIN.</li>
-                                    </ol>
-                                </div>
-                                <p class="mt-3 text-white" style="background: rgba(0,230,118,0.2); padding:10px; border-radius:8px;">After sending, forward your confirmation SMS to our WhatsApp to get your tips instantly!</p>
-                                <a href="#" class="btn btn-custom w-100 forward-wa-btn" target="_blank">Forward SMS to WhatsApp</a>
-                            </div>
-
-                            <!-- ZAMBIA & MALAWI -->
-                            <div class="pay-section" id="pay-zm" style="display:none;">
-                                <h5 class="text-warning mb-3">How to Pay (Airtel)</h5>
-                                <div class="step-box">
-                                    <h6 style="color: #FF0000;">Airtel Zambia / Airtel Malawi</h6>
-                                    <ol class="step-list">
-                                        <li>Dial <strong>*115#</strong> (Zambia) or <strong>*211#</strong> (Malawi).</li>
-                                        <li>Navigate to Airtel Money -> Send Money -> International Transfer -> Kenya.</li>
-                                        <li>Enter recipient number: <strong class="text-warning intl-number-display"></strong></li>
-                                        <li>Enter amount: <strong class="pay-modal-amount-zm text-success"></strong></li>
-                                        <li>Review the currency exchange window and enter your Airtel T-PIN to submit.</li>
-                                    </ol>
-                                </div>
-                                <p class="mt-3 text-white" style="background: rgba(0,230,118,0.2); padding:10px; border-radius:8px;">After sending, forward your confirmation SMS to our WhatsApp to get your tips instantly!</p>
-                                <a href="#" class="btn btn-custom w-100 forward-wa-btn" target="_blank">Forward SMS to WhatsApp</a>
-                            </div>
-
-                            <!-- GENERIC / REST OF WORLD -->
+                            <!-- GENERIC / FALLBACK -->
                             <div class="pay-section" id="pay-generic" style="display:none;">
-                                <h5 class="text-warning mb-3">Global Payment Support</h5>
-                                <ul class="list-group list-group-flush mb-3 rounded text-start">
+                                <h5 class="text-warning text-center mb-3">Global Payment Support</h5>
+                                <ul class="list-group list-group-flush mb-3 rounded">
                                     <li class="list-group-item">1. <strong>Package Price:</strong> <strong id="pay-modal-amount-generic" class="text-warning"></strong></li>
                                     <li class="list-group-item">2. We accept <strong>Skrill, Binance (Crypto), Chipper Cash, and WorldRemit.</strong></li>
-                                    <li class="list-group-item" style="background: rgba(0, 230, 118, 0.15);">3. Click below to contact our 24/7 support team and request the payment address for your preferred method.</li>
+                                    <li class="list-group-item" style="background: rgba(0, 230, 118, 0.15);">3. Click below to contact our 24/7 support team and request payment instructions.</li>
                                 </ul>
-                                <a id="btn-generic-wa" href="#" class="btn btn-custom w-100 mt-2 forward-wa-btn" target="_blank">Chat with Support to Pay</a>
+                                <a id="btn-generic-wa" href="#" class="btn btn-custom w-100 mt-2" target="_blank">Chat with Support to Pay</a>
                             </div>
 
                         </div>
@@ -492,7 +531,7 @@
         function buildCountryScreen(countries) {
             const container = $('#country-buttons-container');
             container.empty();
-            countries.forEach(c => {
+            (countries || []).forEach(c => {
                 container.append(`<button class="country-btn" onclick="selectCountry('${c.code}', '${c.currency}', ${c.rate_to_kes})"><span>${c.flag}</span> <span>${c.name}</span></button>`);
             });
         }
@@ -512,52 +551,38 @@
             renderHistory(appData.history);
         };
 
-        const COUNTRY_FLAGS = { 'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷', 'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'europe': '🇪🇺', 'world': '🌍' };
+        const COUNTRY_FLAGS = { 'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷', 'kenya': '🇰🇪', 'uganda': '🇺🇬', 'tanzania': '🇹🇿', 'rwanda': '🇷🇼', 'zambia': '🇿🇲', 'malawi': '🇲🇼' };
         function flagFor(country) { return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️'; }
 
         function populateContactsAndTill(data) {
             $('#btn-whatsapp').attr('href', data.contact_details.whatsapp_url);
             $('#btn-twitter').attr('href', data.contact_details.twitter_url);
             $('#btn-telegram').attr('href', data.contact_details.telegram_url);
-            
-            // Set dynamic forward to WhatsApp link for all modal buttons
-            $('.forward-wa-btn').attr('href', data.contact_details.whatsapp_url);
+            $('#btn-generic-wa').attr('href', data.contact_details.whatsapp_url);
 
             $('#till-name-display').text(data.till_info.name);
             $('#till-number-display').text(data.till_info.number);
-            $('#till-image').attr('src', data.till_info.image_url);
-
-            // Populate the international Kenya number (WhatsApp number usually, or a specific field)
-            // fallback to the WhatsApp number link extracted if it's there
-            let intlPhone = "+254 7XX XXX XXX"; 
-            if (data.contact_details.whatsapp_url) {
-                // simple extraction from wa.me/XXXX
-                const match = data.contact_details.whatsapp_url.match(/wa\.me\/(\d+)/);
-                if (match && match[1].startsWith('254')) {
-                    intlPhone = '+' + match[1];
-                }
-            }
-            $('.intl-number-display').text(intlPhone);
+            $('#till-image').attr('src', data.till_info.image);
         }
 
         function renderFreeTip(tip) {
-            $('#free-tip-league').html(`${flagFor(tip.country)} ${tip.league}`);
+            $('#free-tip-league').text(`${flagFor(tip.country)} ${tip.country} - ${tip.league}`);
             $('#free-tip-time').text(tip.time);
-            $('#free-tip-match').text(tip.match);
-            $('#free-tip-pick').text(`PICK: ${tip.pick}`);
+            $('#free-tip-match').text(`${tip.teamA} VS ${tip.teamB}`);
+            $('#free-tip-pick').text(`${tip.pick} (Confidence: ${tip.confidence}%)`);
         }
 
-        function getLocalPrice(kesPrice) {
-            if (!kesPrice || isNaN(kesPrice)) return `${currentCurrency} 0`;
-            const numKes = parseFloat(kesPrice);
-            if (currentCountry === 'ke') return `KSh ${numKes}`;
-            
-            const localNum = Math.round(numKes * currentRateToKes);
-            if (['ug', 'tz', 'rw'].includes(currentCountry)) {
-                const roundedLocal = Math.ceil(localNum / 100) * 100; 
-                return `${currentCurrency} ${roundedLocal.toLocaleString()}`;
-            }
-            return `${currentCurrency} ${localNum.toLocaleString()}`;
+        function formatLocalPrice(kes) {
+            const local = Math.round(kes * currentRateToKes);
+            return `${currentCurrency} ${local.toLocaleString()}`;
+        }
+
+        function accentColorFor(pkgId) {
+            const id = (pkgId || '').toLowerCase();
+            if (id.includes('draw')) return 'linear-gradient(135deg, #1E88E5 0%, #1565C0 100%)';
+            if (id.includes('odds') || id.includes('vip')) return 'linear-gradient(135deg, #E91E63 0%, #AD1457 100%)';
+            if (id.includes('correct') || id.includes('jackpot')) return 'linear-gradient(135deg, #FFB300 0%, #FF8F00 100%)';
+            return 'linear-gradient(135deg, #00E676 0%, #00A844 100%)';
         }
 
         function renderPackages(packages) {
@@ -565,126 +590,179 @@
             container.empty();
             
             packages.forEach(pkg => {
-                const isUnlocked = unlockedPackages.includes(pkg.id);
-                const priceStr = getLocalPrice(pkg.price_kes);
-                
-                const card = $(`
-                    <section class="card package-card" id="pkg-${pkg.id}" data-pkg-id="${pkg.id}" data-kes-price="${pkg.price_kes}">
-                        <div class="card-header text-white" style="background: ${pkg.color};">
-                            ${pkg.title} <span class="badge bg-dark ms-2 text-warning fs-6">ODDS: ${pkg.total_odds}</span>
-                        </div>
+                const accentGrad = accentColorFor(pkg.id);
+                const isJackpot = pkg.type === 'jackpot';
+                let priceHtml = '', actionHtml = '';
+
+                if (isJackpot) {
+                    if (currentCountry !== 'ke') return; 
+                    let rows = '';
+                    (pkg.jackpots || []).forEach(j => {
+                        const jackpotPkgId = `jackpot-${j.bookmaker.replace(/\s+/g, '-').toLowerCase()}`;
+                        const isJkpUnlocked = unlockedPackages.includes(jackpotPkgId);
+                        
+                        rows += `<div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span style="font-weight:700;">${j.bookmaker}</span>
+                                    ${!isJkpUnlocked ? 
+                                      `<button class="btn btn-sm btn-custom" onclick="openPaymentModal('${jackpotPkgId}', '${j.bookmaker}', ${j.amount_kes})">${formatLocalPrice(j.amount_kes)}</button>` :
+                                      `<span class="badge bg-success">UNLOCKED</span>`
+                                    }
+                                 </div>
+                                 <div class="table-responsive"><table class="table" id="table-${jackpotPkgId}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table></div>`;
+                    });
+                    priceHtml = rows;
+                } else {
+                    priceHtml = `<h3 class="card-title my-1" style="color:#fff;">Price: <span class="text-warning font-weight-bold">${formatLocalPrice(pkg.price_kes)}</span></h3>`;
+                    
+                    if (unlockedPackages.includes(pkg.id) && currentCountry === 'ke') {
+                        actionHtml = `<button class="btn btn-success mt-3 w-100 font-weight-bold" style="border-radius:10px; padding:12px;" disabled>✓ Ticket Unlocked</button>`;
+                    } else {
+                        const btnText = (currentCountry === 'ke') ? 'Buy Ticket Now' : 'Get via WhatsApp';
+                        actionHtml = `<button class="btn btn-custom mt-3 w-100" onclick="openPaymentModal('${pkg.id}', '${pkg.title}', ${pkg.price_kes})">${btnText}</button>`;
+                    }
+                }
+
+                container.append(`
+                    <section class="card" data-pkg-id="${pkg.id}">
+                        <div class="card-header" style="background:${accentGrad}; color:#ffffff;">${pkg.title}</div>
                         <div class="card-body">
-                            <h4 class="text-warning mb-3 fw-bold">${priceStr}</h4>
-                            <div class="tips-container"></div>
-                            ${!isUnlocked ? `<button class="btn btn-custom w-100 mt-3 btn-buy" onclick="openPaymentModal('${pkg.id}')">BUY NOW & UNLOCK</button>` : ''}
+                            ${pkg.isMostPopular ? '<div class="pkg-badge">🔥 MOST POPULAR</div>' : ''}
+                            ${priceHtml}
+                            ${!isJackpot ? `<div class="table-responsive"><table class="table" id="table-${pkg.id}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table></div>` : ''}
+                            ${actionHtml}
                         </div>
-                    </section>
-                `);
-                container.append(card);
+                    </section>`);
             });
         }
 
         function renderTips() {
-            appData.packages.forEach(pkg => {
-                const isUnlocked = unlockedPackages.includes(pkg.id);
-                const container = $(`#pkg-${pkg.id} .tips-container`);
+            renderPackages(appData.packages);
+            
+            Object.keys(appData.tips).forEach(pkgId => {
+                const $table =$(`#table-${pkgId}`);
+                if (!$table.length) return;
+                
+                const data = appData.tips[pkgId];
+                const tbody = $table.find('tbody');
+                tbody.empty();
+                
+                const isUnlocked = unlockedPackages.includes(pkgId) && currentCountry === 'ke';
+                const isDrawPackage = pkgId.toLowerCase().includes('draw');
+                
+                data.forEach(item => {
+                    let teamA, teamB, tipDisplay, oddsDisplay;
+
+                    if (isDrawPackage) {
+                        teamA = isUnlocked ? item.teamA : `<div class="locked-container"><span class="blurred-teaser">Team Alpha</span> <span class="lock-pill">🔒 Locked</span></div>`;
+                        teamB = isUnlocked ? item.teamB : `<div class="locked-container"><span class="blurred-teaser">Team Beta</span></div>`;
+                        tipDisplay = `<span style="color:var(--green); font-weight:bold;">${item.tip}</span>`;
+                        oddsDisplay = `<span class="badge bg-secondary">${item.odds}</span>`;
+                    } else {
+                        teamA = item.teamA;
+                        teamB = item.teamB;
+                        tipDisplay = isUnlocked ? `<span style="color:var(--green); font-weight:bold;">${item.tip}</span>` : `<div class="locked-container"><span class="blurred-teaser">1 & Over 2.5</span> <span class="lock-pill">🔒 Locked</span></div>`;
+                        oddsDisplay = isUnlocked ? `<span class="badge bg-secondary">${item.odds}</span>` : '-';
+                    }
+
+                    tbody.append(`<tr><td>${teamA} ${isUnlocked || !isDrawPackage ? 'VS' : ''} ${teamB}</td><td>${tipDisplay}</td><td>${oddsDisplay}</td></tr>`);
+                });
+            });
+        }
+
+        window.openPaymentModal = function(pkgId, title, kes) {
+            currentPayingPackageId = pkgId; 
+            expectedKesAmount = kes;
+            
+            $('#pay-modal-title').text(title);
+            $('.pay-section').hide();
+            
+            const countryData = (appData.countries || []).find(c => c.code === currentCountry);
+            const localAmountStr = formatLocalPrice(kes);
+            
+            if (currentCountry === 'ke' || (countryData && countryData.type === 'automated')) {
+                $('#pay-modal-amount-ke').text(`KSh ${kes.toLocaleString()}`);
+                $('#mpesa-message-input').val('');
+                $('#mpesa-verification-result').text('');
+                $('#pay-ke').show();
+            } else if (countryData && countryData.methods) {
+                const container = $('#dynamic-manual-pay');
                 container.empty();
                 
-                if (isUnlocked) {
-                    $(`#pkg-${pkg.id} .btn-buy`).remove();
-                    
-                    const table = $(`
-                        <div class="table-responsive">
-                            <table class="table table-borderless table-sm">
-                                <thead><tr><th>Time</th><th>Match</th><th>Pick</th></tr></thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    `);
-                    
-                    pkg.tips.forEach(tip => {
-                        table.find('tbody').append(`
-                            <tr>
-                                <td style="color:#00E676; font-weight:600; white-space:nowrap;">${tip.time}</td>
-                                <td style="font-weight:600;">${tip.match}</td>
-                                <td><span class="badge" style="background:rgba(255,215,0,0.15); color:var(--gold); border:1px solid rgba(255,215,0,0.4); font-size:0.8rem; padding:6px 10px;">${tip.pick}</span></td>
-                            </tr>
-                        `);
-                    });
-                    container.append(table);
-                } else {
-                    const teaserHtml = `
-                        <div class="locked-container">
-                            <div class="blurred-teaser">${pkg.tips.length} Premium Tips Available Today</div>
-                        </div>
-                        <div class="mt-3"><span class="lock-pill">🔒 VIP CONTENT LOCKED</span></div>
-                        <p class="text-muted mt-2 small">Unlock this package to view all ${pkg.tips.length} sure matches for today.</p>
-                    `;
-                    container.append(teaserHtml);
-                }
-            });
-        }
-
-        function renderHistory(history) {
-            const container = $('#history-container');
-            container.empty();
-            history.forEach(day => {
-                const dayCard = $(`
-                    <div class="card mb-4" style="border-radius: 12px; background: rgba(22, 27, 38, 0.6); box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-                        <div class="card-header py-2" style="background: rgba(0,230,118,0.15); color: var(--green); border-bottom:1px solid rgba(0,230,118,0.3); font-size: 1rem; text-align: left; padding-left: 15px;">
-                            ${day.date} <span class="badge bg-success float-end mt-1">WON ✅</span>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive" style="margin-top:0;">
-                                <table class="table table-sm table-borderless mb-0">
-                                    <tbody id="history-tbody-${day.date.replace(/ /g,'')}"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                `);
+                let methodsHtml = `<h5 class="text-warning text-center mb-3">${countryData.flag} How to Send Money (${countryData.name})</h5>`;
                 
-                const tbody = dayCard.find('tbody');
-                day.tips.forEach(tip => {
-                    tbody.append(`
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                            <td class="text-start" style="padding-left:15px;"><span style="color:#aaa; font-size:0.8rem; margin-right:5px;">${tip.time}</span> ${tip.match}</td>
-                            <td class="text-end" style="padding-right:15px; color:var(--gold); font-weight:600;">${tip.pick} <span style="color:var(--green); margin-left:5px;">✅</span></td>
-                        </tr>
-                    `);
+                countryData.methods.forEach(m => {
+                    methodsHtml += `
+                        <div class="mb-3 p-3 rounded text-start" style="background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);">
+                            <h6 style="color: var(--gold); font-weight: bold; margin-bottom: 10px;">${m.provider}</h6>
+                            <ol class="ps-3 mb-0" style="font-size: 0.92rem; line-height: 1.6; color: #e0e0e0;">`;
+                    
+                    m.steps.forEach(step => {
+                        let formattedStep = step
+                            .replace('{amount}', `<strong class="text-success">${localAmountStr}</strong>`)
+                            .replace('{phone}', `<strong class="text-warning">${m.phone}</strong>`);
+                        methodsHtml += `<li class="mb-1">${formattedStep}</li>`;
+                    });
+                    
+                    methodsHtml += `</ol></div>`;
                 });
-                container.append(dayCard);
-            });
-        }
-
-        window.openPaymentModal = function(pkgId) {
-            currentPayingPackageId = pkgId;
-            const pkgCard = $(`#pkg-${pkgId}`);
-            expectedKesAmount = parseFloat(pkgCard.attr('data-kes-price'));
-            const localAmountStr = getLocalPrice(expectedKesAmount);
-
-            $('.pay-section').hide();$('#mpesa-message-input').val('');
-            $('#mpesa-verification-result').text('');
-
-            if (currentCountry === 'ke') {
-                $('#pay-modal-amount-ke').text(`KSh ${expectedKesAmount}`);
-                $('#pay-ke').show();
-            } else if (currentCountry === 'ug') {
-                $('.pay-modal-amount-ug').text(localAmountStr);$('#pay-ug').show();
-            } else if (currentCountry === 'tz') {
-                $('.pay-modal-amount-tz').text(localAmountStr);$('#pay-tz').show();
-            } else if (currentCountry === 'rw') {
-                $('.pay-modal-amount-rw').text(localAmountStr);$('#pay-rw').show();
-            } else if (currentCountry === 'zm' || currentCountry === 'mw') {
-                $('.pay-modal-amount-zm').text(localAmountStr);$('#pay-zm').show();
+                
+                const waBase = appData.contact_details.whatsapp_url.split('?')[0];
+                const waMsg = encodeURIComponent(`Hello, I have paid ${localAmountStr} for ${title} from ${countryData.name}. Here is my mobile money payment confirmation:`);
+                const waUrl = `${waBase}?text=${waMsg}`;
+                
+                methodsHtml += `
+                    <div class="p-3 rounded text-center mb-3" style="background: rgba(0, 230, 118, 0.12); border: 1px solid var(--green);">
+                        <p class="mb-2" style="font-size:0.9rem;"><strong>After sending payment:</strong> Copy and forward your payment confirmation SMS to WhatsApp to get access instantly.</p>
+                        <a href="${waUrl}" class="btn btn-custom w-100" target="_blank">Forward SMS to WhatsApp</a>
+                    </div>
+                `;
+                
+                container.html(methodsHtml).show();
             } else {
                 $('#pay-modal-amount-generic').text(localAmountStr);
                 $('#pay-generic').show();
             }
-
+            
             payModal.show();
         };
 
+        function renderHistory(data) {
+            const container = $('#history-container');
+            container.empty();
+            if (!data || data.length === 0) { container.html('<p class="text-center text-muted">No historical records available.</p>'); return; }
+
+            data.forEach(day => {
+                for (const catName in day.categories) {
+                    const matches = day.categories[catName];
+                    let totalOdds = 1.0, tableRows = '';
+                    
+                    matches.forEach(m => {
+                        const isWon = m.result === 'WON';
+                        const badgeBg = isWon ? 'rgba(0,230,118,0.2)' : 'rgba(255,82,82,0.2)';
+                        const badgeColor = isWon ? 'var(--green)' : 'var(--red)';
+                        if (m.odds && !isNaN(m.odds)) totalOdds *= parseFloat(m.odds);
+
+                        tableRows += `<tr>
+                            <td>${flagFor(m.country)} ${m.teamA} VS ${m.teamB}</td>
+                            <td><strong>${m.prediction}</strong> (${m.score})</td>
+                            <td><span class="badge bg-dark">${m.odds}</span></td>
+                            <td><span class="badge" style="background:${badgeBg}; color:${badgeColor}; border: 1px solid ${badgeColor};">${m.result}</span></td>
+                        </tr>`;
+                    });
+
+                    container.append(`
+                        <div class="card mb-3">
+                            <div class="card-header" style="background: rgba(255,255,255,0.05); color: var(--gold); border-bottom: 1px solid var(--card-border);">
+                                📅 ${day.date} — ${catName}
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive"><table class="table"><thead><tr><th>Match</th><th>Tip (Score)</th><th>Odds</th><th>Status</th></tr></thead><tbody>${tableRows}</tbody></table></div>
+                                <div class="mt-2 text-end" style="color:var(--gold); font-weight:bold;">Accumulated Odds: ${totalOdds.toFixed(2)}</div>
+                            </div>
+                        </div>`);
+                }
+            });
+        }
     </script>
 </body>
 </html>
