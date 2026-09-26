@@ -6,8 +6,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="author" content="Victonic Sports">
     <meta name="description" content="Victonic Sports offers sure soccer betting tips, daily odds accumulators, correct score predictions and SportPesa jackpot picks for Kenya, Uganda and Tanzania.">
-    <meta name="keywords" content="soccer tips, betting tips, SportPesa jackpot, daily odds, sure bets, Victonic Sports">
-    <meta name="robots" content="index, follow">
     <title>Victonic Sports | Sure Tips</title>
 
     <link rel="icon" type="image/gif" href="/tab.gif"/>
@@ -31,131 +29,37 @@
             --odds5:  #D81B60;
             --odds10: #FFB300;
         }
-        body {
-            font-family: 'Josefin Sans', sans-serif;
-            background: var(--bg);
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
+        body { font-family: 'Josefin Sans', sans-serif; background: var(--bg); color: #ffffff; margin: 0; padding: 0; overflow-x: hidden; }
 
         #splash-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
             transition: opacity 0.5s ease-out;
         }
-        #splash-screen h1 {
-            font-family: 'Paytone One', sans-serif;
-            color: var(--green);
-            text-align: center;
-            width: 100%;
-            padding: 0 16px;
-            margin: 0;
-            box-sizing: border-box;
-            animation: pulse 1.5s infinite;
-        }
-        #splash-screen .splash-line {
-            display: block;
-            line-height: 1.15;
-        }
-        #splash-screen .splash-line1 {
-            font-size: clamp(1.8rem, 9vw, 3rem);
-            letter-spacing: 0.04em;
-        }
-        #splash-screen .splash-line2 {
-            font-size: clamp(1.3rem, 6.5vw, 2.1rem);
-            letter-spacing: 0.12em;
-            opacity: 0.92;
-        }
-        #splash-screen p {
-            text-align: center;
-            padding: 0 16px;
-        }
+        #splash-screen h1 { font-family: 'Paytone One', sans-serif; color: var(--green); text-align: center; animation: pulse 1.5s infinite; }
+        #splash-screen .splash-line1 { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: 0.04em; display: block; }
+        #splash-screen .splash-line2 { font-size: clamp(1.3rem, 6.5vw, 2.1rem); letter-spacing: 0.12em; opacity: 0.92; display: block; }
 
         #country-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--bg);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9998;
-            padding: 20px;
-            text-align: center;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg); display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9998; padding: 20px;
         }
-        #country-screen h2 {
-            font-family: 'Paytone One', sans-serif;
-            color: var(--gold);
-            margin-bottom: 30px;
-        }
-        .country-btn {
-            background: var(--card);
-            border: 2px solid var(--green);
-            color: #fff;
-            font-size: 1.5rem;
-            font-family: 'Paytone One', sans-serif;
-            padding: 15px 40px;
-            margin: 10px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 300px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .country-btn:hover {
-            background: var(--green);
-            color: #0F1218;
-            transform: scale(1.05);
-        }
+        #country-screen h2 { font-family: 'Paytone One', sans-serif; color: var(--gold); margin-bottom: 30px; }
+        .country-btn { background: var(--card); border: 2px solid var(--green); color: #fff; font-size: 1.5rem; font-family: 'Paytone One', sans-serif; padding: 15px 40px; margin: 10px; border-radius: 10px; width: 80%; max-width: 300px; cursor: pointer; transition: all 0.3s; }
+        .country-btn:hover { background: var(--green); color: #0F1218; transform: scale(1.05); }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
 
         #main-app { display: none; }
         .container { max-width: 1200px; padding: 20px; }
-        .card {
-            background: var(--card);
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); }
-        .card-header {
-            background: var(--green);
-            color: #0F1218;
-            font-family: 'Paytone One', sans-serif;
-            font-size: 1.5rem;
-            text-align: center;
-            padding: 15px;
-        }
+        .card { background: var(--card); border: none; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); margin-bottom: 20px; overflow: hidden; }
+        .card-header { background: var(--green); color: #0F1218; font-family: 'Paytone One', sans-serif; font-size: 1.5rem; text-align: center; padding: 15px; }
         .card-body { padding: 20px; text-align: center; }
-        .card-title { color: var(--gold); font-size: 1.25rem; margin-bottom: 10px; }
-        .card-text { color: #cccccc; font-size: 1rem; margin-bottom: 10px; }
-        .card-img-top { max-width: 100px; height: auto; margin: 10px auto; display: block; }
-        .btn-custom {
-            background-color: var(--green);
-            color: #0F1218;
-            font-weight: bold;
-            border-radius: 8px;
-            padding: 10px 20px;
-            transition: background-color 0.3s;
-        }
+        .btn-custom { background-color: var(--green); color: #0F1218; font-weight: bold; border-radius: 8px; padding: 10px 20px; transition: background-color 0.3s; }
         .btn-custom:hover { background-color: #00A844; color: #0F1218; }
-        .table { background: var(--card); color: #ffffff; border-radius: 8px; overflow: hidden; max-width: 100%; }
+        .table { background: var(--card); color: #ffffff; border-radius: 8px; overflow: hidden; max-width: 100%; margin-top: 15px; }
         .table th { background-color: var(--card-hover); color: white; font-weight: bold; text-align: center; }
         .table td { text-align: center; vertical-align: middle; }
         .modal-content { background: var(--card); color: #ffffff; border-radius: 15px; }
@@ -163,30 +67,19 @@
         .modal-title { font-family: 'Paytone One', sans-serif; }
         .list-group-item { background: var(--card-hover); color: #cccccc; border: none; }
         .list-group-item strong { color: var(--green); }
-        .copy-btn {
-            background-color: var(--gold); border: none; color: #0F1218;
-            padding: 5px 10px; border-radius: 5px; margin-left: 10px; cursor: pointer;
-        }
-        .copy-btn:hover { background-color: #E6C200; }
+        .copy-btn { background-color: var(--gold); border: none; color: #0F1218; padding: 5px 10px; border-radius: 5px; margin-left: 10px; cursor: pointer; }
         .past-tips .card-header { background: var(--card-hover); color: var(--gold); }
-        .past-tips .table { background: var(--card-hover); }
-        .network-title { color: var(--gold); margin-top: 15px; text-decoration: underline; }
         .loader { border: 4px solid #333; border-top: 4px solid var(--green); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
         .tip-locked { color: var(--muted) !important; font-style: italic; }
         .draw-hidden-match { color: var(--muted); font-style: italic; }
-        .pkg-badge {
-            display: inline-block; font-size: 0.75rem; font-weight: bold;
-            background: rgba(255,215,0,0.15); color: var(--gold);
-            padding: 2px 10px; border-radius: 20px; margin-bottom: 8px;
-        }
+        .pkg-badge { display: inline-block; font-size: 0.75rem; font-weight: bold; background: rgba(255,215,0,0.15); color: var(--gold); padding: 2px 10px; border-radius: 20px; margin-bottom: 8px; }
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
-        <h1><span class="splash-line splash-line1">VICTONIC</span><span class="splash-line splash-line2">SPORTS</span></h1>
+        <h1><span class="splash-line1">VICTONIC</span><span class="splash-line2">SPORTS</span></h1>
         <p>Loading the best odds...</p>
     </div>
 
@@ -203,7 +96,6 @@
             <section class="card">
                 <div class="card-header">Free Tip of the Day</div>
                 <div class="card-body">
-                    <img class="card-img-top" src="https://images.unsplash.com/photo-w0O0lxbZp9A?auto=format&fit=crop&w=800&q=80" alt="Free Soccer Betting Tip Banner" loading="lazy">
                     <p id="free-tip-league" class="card-text mt-3" style="font-weight: bold; color: var(--gold); font-size: 1.1rem;"></p>
                     <h2 class="card-title" id="free-tip-time">Loading...</h2>
                     <p class="card-text"><strong id="free-tip-match">...</strong></p>
@@ -224,9 +116,9 @@
 
             <section class="text-center mt-4 mb-5">
                 <h3 style="color:white;">Contact Us</h3>
-                <a href="https://wa.me/254713804279?text=I'm%20interested%20in%20your%20sure%20tips%20today" rel="nofollow" class="btn btn-success m-1">WhatsApp</a>
-                <a href="https://twitter.com/victonic_sports" rel="nofollow" class="btn btn-primary m-1">Twitter</a>
-                <a href="https://t.me/+GEkAL_4kqyJjNDc0" rel="nofollow" class="btn btn-info m-1">Telegram</a>
+                <a id="btn-whatsapp" href="#" class="btn btn-success m-1">WhatsApp</a>
+                <a id="btn-twitter" href="#" class="btn btn-primary m-1">Twitter</a>
+                <a id="btn-telegram" href="#" class="btn btn-info m-1">Telegram</a>
             </section>
 
             <div class="modal fade payment-modal" id="pay-modal" tabindex="-1" aria-hidden="true">
@@ -240,17 +132,20 @@
                             
                             <div class="pay-ke">
                                 <h4>Get Tips Instantly</h4>
+                                <div class="text-center mb-3">
+                                    <img id="till-image" src="" alt="Till Image" style="max-width: 150px; border-radius: 10px;">
+                                </div>
                                 <ul class="list-group list-group-flush mb-3">
                                     <li class="list-group-item">Go to "Safaricom - Buy Goods & Services"</li>
-                                    <li class="list-group-item bg-success">Enter Till No <strong>668526</strong> (Statarea Systems) <button class="copy-btn" data-till="668526">Copy</button></li>
+                                    <li class="list-group-item bg-success">Enter Till No <strong id="till-number-display"></strong> (<span id="till-name-display"></span>) <button class="copy-btn" id="btn-copy-till">Copy</button></li>
                                     <li class="list-group-item">Enter amount <strong id="pay-modal-amount-ke">KSh 0</strong>, click "OK"</li>
                                     <li class="list-group-item">Enter your PIN Number, click OK</li>
                                 </ul>
                                 <div class="mt-4 p-3 rounded" style="background-color: var(--bg);">
                                     <h5 class="text-warning">Verify Your Payment</h5>
                                     <label for="mpesa-message-input" class="form-label" style="font-size: 0.9rem;">Paste your full M-Pesa confirmation message here:</label>
-                                    <textarea class="form-control mb-2" id="mpesa-message-input" rows="4" placeholder="e.g. UAX9... Confirmed. Ksh1000.00 paid to Statarea Systems on..."></textarea>
-                                    <button class="btn btn-success w-100" id="verify-mpesa-btn">Verify Payment</button>
+                                    <textarea class="form-control mb-2" id="mpesa-message-input" rows="4" placeholder="e.g. UAX9... Confirmed. Ksh1000.00 paid to ..."></textarea>
+                                    <button class="btn btn-success w-100" id="verify-mpesa-btn">Verify Payment & Unlock Tips</button>
                                     <div id="mpesa-verification-result" class="mt-3 text-center" style="font-weight:bold; font-size: 0.95rem;"></div>
                                 </div>
                             </div>
@@ -258,50 +153,34 @@
                             <div class="pay-ug" style="display:none;">
                                 <h4 class="network-title">HOW TO PAY VIA MTN Uganda</h4>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Dial: <strong>*170#</strong> on your MTN Uganda mobile phone.</li>
-                                    <li class="list-group-item">Select: option for "Transfer Money" or Send money</li>
-                                    <li class="list-group-item">Chose: Option to send to "Other Network"</li>
-                                    <li class="list-group-item">Select: The network (Safaricom M-PESA).</li>
-                                    <li class="list-group-item bg-success">Enter Phone Number: <strong>254713804279</strong></li>
+                                    <li class="list-group-item bg-success">Enter Phone Number: <strong id="ug-mtn-number"></strong></li>
                                     <li class="list-group-item">Enter: amount <strong id="pay-modal-amount-ug-mtn">UGX 0</strong></li>
-                                    <li class="list-group-item">Enter: your MTN PIN to confirm the transaction.</li>
                                 </ul>
                                 <h4 class="network-title">UGANDA AIRTEL Subscribers</h4>
                                 <ul class="list-group list-group-flush mb-3">
-                                    <li class="list-group-item">Dial : <strong>*185#</strong> from your Airtel Uganda line</li>
-                                    <li class="list-group-item">Select : the "Send Money" option</li>
-                                    <li class="list-group-item">Choose: "International Transfer" from the menu.</li>
-                                    <li class="list-group-item">Select: KENYA as the destination country</li>
-                                    <li class="list-group-item bg-success">Enter Phone Number: <strong>254739162763</strong></li>
+                                    <li class="list-group-item bg-success">Enter Phone Number: <strong id="ug-airtel-number"></strong></li>
                                     <li class="list-group-item">Enter : Amount <strong id="pay-modal-amount-ug-airtel">UGX 0</strong></li>
-                                    <li class="list-group-item">Reason for Transfer: To Buy Sure Tips</li>
                                 </ul>
                                 <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
                                     <h5 class="text-warning">Step 2: Confirm Your Payment</h5>
                                     <p style="font-size: 0.9rem;">After sending the money, please forward your Mobile Money confirmation message to our WhatsApp to receive your tips immediately.</p>
-                                    <a href="https://wa.me/254713804279?text=Hello,%20I%20have%20paid%20for%20Uganda%20tips.%20Here%20is%20my%20message:%20" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
+                                    <a id="btn-ug-wa" href="#" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
                                 </div>
                             </div>
                             
                             <div class="pay-tz" style="display:none;">
                                 <h4 class="network-title">Hatua za Kutuma Pesa Ukitumia VODACOM</h4>
                                 <ul class="list-group list-group-flush mb-3">
-                                    <li class="list-group-item">BONYEZA : <strong>*150*00#</strong> Kwenye simu yako ya Vodacom</li>
-                                    <li class="list-group-item">Chagua Tuma Pesa : Ingia kwenye menyu na uchague "Tuma Pesa"</li>
-                                    <li class="list-group-item">Chagua M-Pesa Kenya: Ingiza na uchague "Pesa za Kimataifa" au "Tuma Nje ya Nchi", kisha chagua M-Pesa KENYA</li>
-                                    <li class="list-group-item bg-success">Ingiza Namba ya Mpokeaji: <strong>254713804279</strong> au <strong>254739162763</strong></li>
+                                    <li class="list-group-item bg-success">Ingiza Namba ya Mpokeaji: <strong id="tz-number"></strong></li>
                                     <li class="list-group-item">Weka Kiasi Cha pesa ni: <strong id="pay-modal-amount-tz">TZS 0</strong></li>
                                 </ul>
                                 <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
                                     <h5 class="text-warning">Hatua ya 2: Thibitisha Malipo</h5>
                                     <p style="font-size: 0.9rem;">Baada ya kutuma pesa, tafadhali tuma ujumbe wako wa M-Pesa (forward) kwenye WhatsApp yetu ili upate tips zako mara moja.</p>
-                                    <a href="https://wa.me/254713804279?text=Hello,%20I%20have%20paid%20for%20Tanzania%20tips.%20Here%20is%20my%20message:%20" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
+                                    <a id="btn-tz-wa" href="#" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -314,18 +193,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        const API_BASE = 'https://www.footyscorelive.com';
         let currentCountry = 'ke';
         let payModal = null;
         let expectedKesAmount = 0; 
-        
-        // Track unlocked packages specifically
         let unlockedPackages = []; 
         let currentPayingPackageId = null; 
+        let appData = null;
 
         const UGX_PER_KES = 18.7;
         const TZS_PER_KES = 13.4;
-        const USD_TO_KES  = 130; 
 
         $(document).ready(function() {
             payModal = new bootstrap.Modal(document.getElementById('pay-modal'));
@@ -338,8 +214,8 @@
                 }, 500);
             }, 1500);
 
-            $('.copy-btn').click(function() {
-                const tillNumber = $(this).data('till');
+            $('#btn-copy-till').click(function() {
+                const tillNumber = appData.till_info.number;
                 navigator.clipboard.writeText(tillNumber).then(() => {
                     const btn = $(this);
                     const originalText = btn.text();
@@ -348,87 +224,41 @@
                 });
             });
 
-            // M-Pesa Message Verification Logic
             $('#verify-mpesa-btn').click(function() {
                 const msg = $('#mpesa-message-input').val().trim();
-                const $result = $('#mpesa-verification-result');
+                const $result =$('#mpesa-verification-result');
 
-                if (!msg) {
-                    $result.text('Please paste your M-Pesa message first.').css('color', 'var(--red)');
-                    return;
-                }
+                if (!msg) { $result.text('Please paste your M-Pesa message first.').css('color', 'var(--red)'); return; }
 
-                // Format & One-Time Use Check
                 const codeMatch = msg.match(/^[A-Z0-9]{10}/i);
-                if (!codeMatch || !msg.toLowerCase().includes('confirmed')) {
-                    $result.text('Invalid M-Pesa message format.').css('color', 'var(--red)');
-                    return;
-                }
+                if (!codeMatch || !msg.toLowerCase().includes('confirmed')) { $result.text('Invalid M-Pesa message format.').css('color', 'var(--red)'); return; }
                 
                 const mpesaCode = codeMatch[0].toUpperCase();
                 let usedCodes = JSON.parse(localStorage.getItem('usedMpesaCodes') || '[]');
-                if (usedCodes.includes(mpesaCode)) {
-                    $result.text('This M-Pesa code has already been used.').css('color', 'var(--red)');
+                if (usedCodes.includes(mpesaCode)) { $result.text('This M-Pesa code has already been used.').css('color', 'var(--red)'); return; }
+
+                if (!msg.toLowerCase().includes(appData.till_info.name.toLowerCase())) {
+                    $result.text(`Invalid Till Name. Please ensure you paid to ${appData.till_info.name}.`).css('color', 'var(--red)');
                     return;
                 }
 
-                // Till Name Check
-                if (!msg.toLowerCase().includes('statarea systems')) {
-                    $result.text('Invalid Till Name. Please ensure you paid to Statarea Systems.').css('color', 'var(--red)');
-                    return;
-                }
-
-                // Amount Check
                 const amountMatch = msg.match(/Ksh\s*([\d,]+\.\d{2})/i);
-                if (!amountMatch) {
-                    $result.text('Could not detect amount in message. Ensure it is complete.').css('color', 'var(--red)');
-                    return;
-                }
+                if (!amountMatch) { $result.text('Could not detect amount in message. Ensure it is complete.').css('color', 'var(--red)'); return; }
                 
                 const paidAmount = parseFloat(amountMatch[1].replace(/,/g, ''));
-                if (paidAmount < expectedKesAmount) {
-                    $result.text(`Insufficient amount. Expected KSh ${expectedKesAmount}, but found KSh ${paidAmount}.`).css('color', 'var(--red)');
-                    return;
-                }
+                if (paidAmount < expectedKesAmount) { $result.text(`Insufficient amount. Expected KSh ${expectedKesAmount}, but found KSh ${paidAmount}.`).css('color', 'var(--red)'); return; }
 
-                // Date Check
-                const today = new Date();
-                const d = today.getDate();
-                const m = today.getMonth() + 1;
-                const yy = today.getFullYear().toString().slice(-2);
-                
-                const dStr = d < 10 ? `0?${d}` : d;
-                const mStr = m < 10 ? `0?${m}` : m;
-                
-                const dateRegex = new RegExp(`${dStr}/${mStr}/(?:20)?${yy}`, 'i');
-                
-                if (!dateRegex.test(msg)) {
-                    $result.text('Date mismatch. Payment message must be from today.').css('color', 'var(--red)');
-                    return;
-                }
-
-                // Success! Save the code to prevent reuse
                 usedCodes.push(mpesaCode);
                 localStorage.setItem('usedMpesaCodes', JSON.stringify(usedCodes));
 
                 $result.text('Payment Verified Successfully! Accessing your tips...').css('color', 'var(--green)');
                 
-                // Unlock ONLY the current paying package
                 setTimeout(() => {
                     if (currentPayingPackageId && !unlockedPackages.includes(currentPayingPackageId)) {
                         unlockedPackages.push(currentPayingPackageId);
                     }
                     payModal.hide();
-                    
-                    // Show loaders for the specific table (or all tables as a refresh)
-                    $('.table tbody').html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
-                    loadAPIData();
-                    
-                    // Scroll to the targeted package if possible
-                    const $targetSection =$(`section[data-pkg-id="${currentPayingPackageId}"]`);
-                    if ($targetSection.length) {
-                        $('html, body').animate({ scrollTop:$targetSection.offset().top - 20 }, 500);
-                    }
+                    renderTips();
                 }, 1500);
             });
         });
@@ -437,214 +267,132 @@
             currentCountry = countryCode;
             $('#country-screen').hide();
             $('#main-app').fadeIn();
-            loadAPIData();
+            loadJSONData();
         }
 
-        async function loadAPIData() {
-            await loadPackages();
-            fetchFlatTips('correct', 'correctscore');
-            fetchFreeTip();
-            fetchDrawTips();
-            fetchOddsTips();
-            fetchHistory();
-        }
-
-        const COUNTRY_FLAGS = {
-            'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷',
-            'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'europe': '🇪🇺', 'world': '🌍'
-        };
-        function flagFor(country) { return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️'; }
-
-        async function fetchFreeTip() {
-            const defaultTip = {
-                league: '🇪🇸 Spain - La Liga',
-                time: 'Today 20:00 EAT',
-                match: 'Real Madrid VS Barcelona',
-                pick: 'Pick: Over 2.5 Goals (Confidence: 88%)'
-            };
-
+        async function loadJSONData() {
             try {
-                const today = new Date().toISOString().split('T')[0];
-                const apiFootballKey = '062c7d918d3e2b59a2d2947470490161';
-
-                if (apiFootballKey && apiFootballKey !== '062c7d918d3e2b59a2d2947470490161') {
-                    const headers = { "x-apisports-key": apiFootballKey };
-                    const fixturesRes = await fetch(`https://v3.football.api-sports.io/fixtures?date=${today}`, { headers });
-                    
-                    if (fixturesRes.ok) {
-                        const fixturesData = await fixturesRes.json();
-                        if (fixturesData.errors && Object.keys(fixturesData.errors).length > 0) {
-                            console.error('API-Football Error:', fixturesData.errors);
-                        } else if (fixturesData.response && fixturesData.response.length > 0) {
-                            const validFixture = fixturesData.response.find(f => ['NS', 'TBD'].includes(f.fixture.status.short)) || fixturesData.response[0];
-                            const fixtureId = validFixture.fixture.id;
-                            
-                            const predRes = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${fixtureId}`, { headers });
-                            if (predRes.ok) {
-                                const predData = await predRes.json();
-                                if (predData.response && predData.response.length > 0) {
-                                    const p = predData.response[0];
-                                    const pred = p.predictions;
-                                    const teams = p.teams;
-                                    const leagueData = validFixture.league;
-                                    
-                                    const homePercent = parseInt(pred.percent?.home?.replace('%','') || 0);
-                                    const awayPercent = parseInt(pred.percent?.away?.replace('%','') || 0);
-                                    const drawPercent = parseInt(pred.percent?.draw?.replace('%','') || 0);
-                                    const highConfidence = Math.max(homePercent, awayPercent, drawPercent);
-                                    
-                                    let pickText = pred.winner?.name ? `${pred.winner.name} Win` : (pred.advice || 'Home Win / Draw');
-
-                                    const countryName = leagueData.country || 'World';
-                                    const leagueName = leagueData.name || 'League';
-                                    
-                                    $('#free-tip-league').text(`${flagFor(countryName)} ${countryName} - ${leagueName}`);
-                                    $('#free-tip-time').text(validFixture.fixture.date ? new Date(validFixture.fixture.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Today');
-                                    $('#free-tip-match').text(`${teams.home.name} VS ${teams.away.name}`);
-                                    $('#free-tip-pick').text(`Pick: ${pickText} (Confidence: ${highConfidence}%)`);
-                                    return; 
-                                }
-                            }
-                        }
-                    }
-                }
-
-                const res = await fetch(`${API_BASE}/api/tips.php?type=basic`);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (Array.isArray(data) && data.length > 0) {
-                        const tipItem = data[0];
-                        const teamA = tipItem.teamA || tipItem.homeTeam || tipItem.home;
-                        const teamB = tipItem.teamB || tipItem.awayTeam || tipItem.away;
-                        const pick = tipItem.tip || tipItem.prediction || tipItem.pick;
-                        
-                        const cName = tipItem.country || 'World';
-                        const lName = tipItem.league || 'League Match';
-
-                        if (teamA && teamB && pick && String(pick).trim() !== '') {
-                            $('#free-tip-league').text(`${flagFor(cName)} ${cName} - ${lName}`);
-                            $('#free-tip-time').text(tipItem.kickOff || tipItem.time || 'Today');
-                            $('#free-tip-match').text(`${teamA} VS ${teamB}`);
-                            $('#free-tip-pick').text(`Pick: ${pick}`);
-                            return; 
-                        }
-                    }
-                }
-
-                $('#free-tip-league').text(defaultTip.league);
-                $('#free-tip-time').text(defaultTip.time);
-                $('#free-tip-match').text(defaultTip.match);
-                $('#free-tip-pick').text(defaultTip.pick);
-
+                const res = await fetch('external.json');
+                appData = await res.json();
+                
+                populateContactsAndTill(appData);
+                renderFreeTip(appData.free_tip);
+                renderPackages(appData.packages);
+                renderTips();
+                renderHistory(appData.history);
             } catch (err) {
-                console.error('Error in fetchFreeTip:', err);
-                $('#free-tip-league').text(defaultTip.league);
-                $('#free-tip-time').text(defaultTip.time);
-                $('#free-tip-match').text(defaultTip.match);
-                $('#free-tip-pick').text(defaultTip.pick);
-            }
-        }
-
-        async function loadPackages() {
-            try {
-                const res = await fetch(`${API_BASE}/api/packages.php`);
-                const packages = await res.json();
-                renderPackages(packages);
-            } catch (err) {
-                console.error('Error loading packages:', err);
+                console.error('Failed to load JSON data:', err);
                 $('#packages-container').html('<p class="text-center text-danger">Failed to load packages.</p>');
             }
         }
 
-        function kesFromUsd(usdAmount) { return Math.round(usdAmount * USD_TO_KES); }
-        function formatAllCurrencies(kes) {
-            const ugx = Math.round(kes * UGX_PER_KES);
-            const tzs = Math.round(kes * TZS_PER_KES);
-            return { kes, ugx, tzs };
-        }
-        function priceLabelFor(country, amounts) {
-            if (country === 'ug') return `UGX ${amounts.ugx.toLocaleString()}`;
-            if (country === 'tz') return `TZS ${amounts.tzs.toLocaleString()}`;
-            return `KSh ${amounts.kes.toLocaleString()}`;
-        }
-        function renderPackages(packages) {
-            const container = $('#packages-container');
-            container.empty();
-            packages.forEach(pkg => container.append(buildPackageCard(pkg)));
+        const COUNTRY_FLAGS = { 'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷', 'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'europe': '🇪🇺', 'world': '🌍' };
+        function flagFor(country) { return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️'; }
+
+        function populateContactsAndTill(data) {
+            $('#btn-whatsapp').attr('href', data.contact_details.whatsapp_url);
+            $('#btn-twitter').attr('href', data.contact_details.twitter_url);
+            $('#btn-telegram').attr('href', data.contact_details.telegram_url);
+            $('#btn-ug-wa').attr('href', data.contact_details.ug_forward_wa);
+            $('#btn-tz-wa').attr('href', data.contact_details.tz_forward_wa);
+
+            $('#till-name-display').text(data.till_info.name);
+            $('#till-number-display').text(data.till_info.number);
+            $('#till-image').attr('src', data.till_info.image);
+
+            $('#ug-mtn-number').text(data.contact_details.ug_number_mtn);
+            $('#ug-airtel-number').text(data.contact_details.ug_number_airtel);
+            $('#tz-number').text(data.contact_details.tz_number);
         }
 
-        function bookmakerColorFor(name) {
-            const n = (name || '').toLowerCase();
-            if (n.includes('mega')) return '#E53935';
-            if (n.includes('betika')) return '#1565C0';
-            return '#00704A';
+        function renderFreeTip(tip) {
+            $('#free-tip-league').text(`${flagFor(tip.country)} ${tip.country} - ${tip.league}`);
+            $('#free-tip-time').text(tip.time);
+            $('#free-tip-match').text(`${tip.teamA} VS ${tip.teamB}`);
+            $('#free-tip-pick').text(`${tip.pick} (Confidence: ${tip.confidence}%)`);
+        }
+
+        function formatAllCurrencies(kes) { return { kes, ugx: Math.round(kes * UGX_PER_KES), tzs: Math.round(kes * TZS_PER_KES) }; }
+        function priceLabelFor(amounts) {
+            if (currentCountry === 'ug') return `UGX ${amounts.ugx.toLocaleString()}`;
+            if (currentCountry === 'tz') return `TZS ${amounts.tzs.toLocaleString()}`;
+            return `KSh ${amounts.kes.toLocaleString()}`;
         }
 
         function accentColorFor(pkgId) {
             const id = (pkgId || '').toLowerCase();
             if (id.includes('draw')) return 'var(--draw1)';
-            if (id.includes('odds')) return 'var(--odds5)';
+            if (id.includes('odds') || id.includes('vip')) return 'var(--odds5)';
             if (id.includes('correct') || id.includes('jackpot')) return 'var(--gold)';
             return 'var(--green)';
         }
 
-        function buildPackageCard(pkg) {
-            const isJackpot = pkg.type === 'jackpot' || (pkg.price && pkg.price.jackpots && pkg.price.jackpots.length > 0);
-            const tableId = `tips-table-${pkg.id}`;
-            const accent = accentColorFor(pkg.id);
-            let priceHtml = '', buyButtonHtml = '';
+        function renderPackages(packages) {
+            const container = $('#packages-container');
+            container.empty();
+            packages.forEach(pkg => {
+                const accent = accentColorFor(pkg.id);
+                const isJackpot = pkg.type === 'jackpot';
+                let priceHtml = '', buyButtonHtml = '';
 
-            if (isJackpot) {
-                if (currentCountry !== 'ke') return '';
-                const jackpots = (pkg.price && pkg.price.jackpots) || [];
-                if (jackpots.length === 0) {
-                    priceHtml = '<p class="card-text">No jackpot on sale right now.</p>';
-                } else {
+                if (isJackpot) {
+                    if (currentCountry !== 'ke') return; 
                     let rows = '';
-                    jackpots.forEach(j => {
-                        const bkColor = bookmakerColorFor(j.bookmaker);
+                    (pkg.jackpots || []).forEach(j => {
                         const jackpotPkgId = `jackpot-${j.bookmaker.replace(/\s+/g, '-').toLowerCase()}`;
-                        rows += `
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span style="color:${bkColor}; font-weight:bold;">${escapeHtml(j.bookmaker)}</span>
-                                <button class="btn btn-sm" style="background-color:${bkColor}; color:#ffffff; border:none;"
-                                        onclick="openPaymentModal('${jackpotPkgId}', '${escapeHtml(j.bookmaker)}', ${Math.round(j.amount * USD_TO_KES)})">
-                                    KSh ${Math.round(j.amount * USD_TO_KES).toLocaleString()}
-                                </button>
-                            </div>`;
+                        rows += `<div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span style="font-weight:bold;">${j.bookmaker}</span>
+                                    <button class="btn btn-sm btn-custom" onclick="openPaymentModal('${jackpotPkgId}', '${j.bookmaker}', ${j.amount_kes})">KSh ${j.amount_kes}</button>
+                                 </div>
+                                 <table class="table" id="table-${jackpotPkgId}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table>`;
                     });
                     priceHtml = rows;
+                } else {
+                    const amounts = formatAllCurrencies(pkg.price_kes);
+                    priceHtml = `<h3 class="card-title">Price: <span class="pkg-price">${priceLabelFor(amounts)}</span></h3>`;
+                    buyButtonHtml = `<button class="btn btn-custom mt-2" onclick="openPaymentModal('${pkg.id}', '${pkg.title}', ${pkg.price_kes})">Buy Ticket Now</button>`;
                 }
-            } else {
-                const tier = (pkg.price.prices || []).find(p => p.duration === 'DAILY') || (pkg.price.prices || [])[0];
-                const kes = tier ? kesFromUsd(tier.amount) : 0;
-                const amounts = formatAllCurrencies(kes);
-                priceHtml = `<h3 class="card-title">Price: <span class="pkg-price">${priceLabelFor(currentCountry, amounts)}</span></h3>`;
-                buyButtonHtml = `<button class="btn btn-custom" onclick="openPaymentModal('${pkg.id}', '${escapeHtml(pkg.title)}', ${kes})">Buy Ticket Now</button>`;
-            }
 
-            const badge = pkg.isMostPopular ? '<div class="pkg-badge">MOST POPULAR</div>' : '';
-            return `
-                <section class="card" data-pkg-id="${pkg.id}">
-                    <div class="card-header" style="background:${accent}; color:#0F1218;">${escapeHtml(pkg.title)}</div>
-                    <div class="card-body">
-                        ${badge}
-                        ${priceHtml}
-                        ${!isJackpot ? `
-                        <table class="table" id="${tableId}">
-                            <thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead>
-                            <tbody><tr><td colspan="3"><div class="loader"></div></td></tr></tbody>
-                        </table>` : ''}
-                        ${buyButtonHtml}
-                    </div>
-                </section>
-            `;
+                container.append(`
+                    <section class="card" data-pkg-id="${pkg.id}">
+                        <div class="card-header" style="background:${accent}; color:#0F1218;">${pkg.title}</div>
+                        <div class="card-body">
+                            ${pkg.isMostPopular ? '<div class="pkg-badge">MOST POPULAR</div>' : ''}
+                            ${priceHtml}
+                            ${!isJackpot ? `<table class="table" id="table-${pkg.id}"><thead><tr><th>Match</th><th>Tip</th><th>Odds</th></tr></thead><tbody></tbody></table>` : ''}
+                            ${buyButtonHtml}
+                        </div>
+                    </section>`);
+            });
+        }
+
+        function renderTips() {
+            Object.keys(appData.tips).forEach(pkgId => {
+                const $table =$(`#table-${pkgId}`);
+                if (!$table.length) return;
+                
+                const data = appData.tips[pkgId];
+                const tbody = $table.find('tbody');
+                tbody.empty();
+                
+                const isUnlocked = unlockedPackages.includes(pkgId);
+                
+                data.forEach(item => {
+                    const tipDisplay = isUnlocked ? item.tip : '<span class="tip-locked">🔒 Unlock to view</span>';
+                    const oddsDisplay = isUnlocked ? item.odds : '-';
+                    const teamA = isUnlocked ? item.teamA : 'Hidden Match';
+                    const teamB = isUnlocked ? item.teamB : 'Hidden Match';
+
+                    tbody.append(`<tr><td>${teamA} VS ${teamB}</td><td style="font-weight:bold;">${tipDisplay}</td><td>${oddsDisplay}</td></tr>`);
+                });
+            });
         }
 
         function openPaymentModal(pkgId, title, kes) {
             currentPayingPackageId = pkgId; 
             expectedKesAmount = kes;
             const amounts = formatAllCurrencies(kes);
+            
             $('#pay-modal-title').text(title);
             $('#pay-modal-amount-ke').text(`KSh ${amounts.kes.toLocaleString()}`);
             $('#pay-modal-amount-ug-mtn').text(`UGX ${amounts.ugx.toLocaleString()}`);
@@ -659,133 +407,10 @@
             payModal.show();
         }
 
-        function escapeHtml(str) {
-            return String(str ?? '').replace(/[&<>"']/g, c => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            }[c]));
-        }
-
-        // Add unlocked array to API fetch query
-        function getAuthQueryParam() {
-            return unlockedPackages.length > 0 ? `&unlocked=${encodeURIComponent(unlockedPackages.join(','))}` : '';
-        }
-
-        async function fetchFlatTips(type, pkgId) {
-            try {
-                const authParam = getAuthQueryParam();
-                const res = await fetch(`${API_BASE}/api/tips.php?type=${type}${authParam}`);
-                const data = await res.json();
-                const $table = findTableForCategory(type);
-                if ($table.length) renderFlatTable(data,$table, false, pkgId);
-            } catch (err) { console.error(`Error fetching ${type} tips:`, err); }
-        }
-
-        async function fetchDrawTips() {
-            try {
-                const authParam = getAuthQueryParam();
-                const res = await fetch(`${API_BASE}/api/tips.php?type=draws${authParam}`);
-                const data = await res.json();
-
-                $('section[data-pkg-id^="draw"]').each(function() {
-                    const pkgId = ($(this).attr('data-pkg-id') || '').toLowerCase();
-                    const match = pkgId.match(/\d+/);
-                    const tierCount = match ? parseInt(match[0], 10) : data.length;
-                    const $table =$(this).find('table');
-                    
-                    if ($table.length) {
-                        let tableData = data.slice(0, tierCount);
-                        while (tableData.length < tierCount) {
-                            const realisticOdds = (Math.random() * (3.50 - 3.10) + 3.10).toFixed(2);
-                            tableData.push({ isLocked: true, teamA: '', teamB: '', tip: 'Draw', odds: realisticOdds });
-                        }
-                        renderFlatTable(tableData, $table, true, pkgId);
-                    }
-                });
-            } catch (err) { console.error('Error fetching draw tips:', err); }
-        }
-
-        async function fetchOddsTips() {
-            try {
-                const authParam = getAuthQueryParam();
-                const res = await fetch(`${API_BASE}/api/tips.php?type=odds${authParam}`);
-                const groups = await res.json();
-                Object.keys(groups).forEach(groupSize => {
-                    const pkgId = `odds${groupSize}`;
-                    const $table =$(`section[data-pkg-id="${pkgId}"] table`);
-                    if ($table.length) renderFlatTable(groups[groupSize],$table, false, pkgId);
-                });
-            } catch (err) { console.error('Error fetching odds tips:', err); }
-        }
-
-        function findTableForCategory(type) {
-            if (type === 'correct') return $('section[data-pkg-id="correctscore"] table');
-            return $(`section[data-pkg-id="${type}"] table`);
-        }
-
-        function renderFlatTable(data, $table, isDrawTable, pkgId) {
-            const tbody = $table.find('tbody');
-            tbody.empty();
-
-            if (!data || data.length === 0) {
-                tbody.html('<tr><td colspan="3">No tips available right now.</td></tr>');
-                return;
-            }
-
-            const isThisPackageUnlocked = unlockedPackages.includes(pkgId);
-
-            data.forEach(item => {
-                const teamsBlank = !item.teamA && !item.teamB;
-                
-                if (isDrawTable && teamsBlank && !isThisPackageUnlocked) {
-                    tbody.append(`
-                        <tr>
-                            <td class="draw-hidden-match">🔒 Hidden match</td>
-                            <td style="color:#00e600; font-weight:bold;">🔒 Unlock</td>
-                            <td>${item.odds ? parseFloat(item.odds).toFixed(2) : '-'}</td>
-                        </tr>`);
-                    return;
-                }
-
-                const forceLock = !isThisPackageUnlocked && item.isLocked;
-                
-                const tipDisplay = forceLock || !item.tip
-                    ? '<span class="tip-locked">🔒 Unlock to view</span>' 
-                    : escapeHtml(item.tip);
-                    
-                const oddsDisplay = (!forceLock && item.odds) 
-                    ? parseFloat(item.odds).toFixed(2) 
-                    : '-';
-
-                const teamA = item.teamA || 'Match';
-                const teamB = item.teamB || 'Hidden';
-
-                tbody.append(`
-                    <tr>
-                        <td>${escapeHtml(teamA)} VS ${escapeHtml(teamB)}</td>
-                        <td style="font-weight:bold;">${tipDisplay}</td>
-                        <td>${oddsDisplay}</td>
-                    </tr>`);
-            });
-        }
-
-        async function fetchHistory() {
-            try {
-                const res = await fetch(`${API_BASE}/api/history.php`);
-                const data = await res.json();
-                renderHistory(data);
-            } catch (err) {
-                $('#history-container').html('<p class="text-center text-danger">Failed to load history.</p>');
-            }
-        }
-
         function renderHistory(data) {
             const container = $('#history-container');
             container.empty();
-
-            if (!data || data.length === 0) {
-                container.html('<p class="text-center">No past history available.</p>');
-                return;
-            }
+            if (!data || data.length === 0) { container.html('<p class="text-center">No past history available.</p>'); return; }
 
             data.forEach(day => {
                 for (const catName in day.categories) {
@@ -793,30 +418,18 @@
                     let totalOdds = 1.0, tableRows = '';
                     
                     matches.forEach(m => {
-                        const scoreDisplay = m.score ? ` (${m.score})` : '';
                         const resultColor = m.result === 'WON' ? '#00C853' : (m.result === 'LOST' ? '#D32F2F' : '#FFD700');
                         if (m.odds && !isNaN(m.odds)) totalOdds *= parseFloat(m.odds);
 
-                        tableRows += `
-                            <tr>
-                                <td>${flagFor(m.country)} ${escapeHtml(m.teamA)} VS ${escapeHtml(m.teamB)}</td>
-                                <td>${escapeHtml(m.prediction)}${scoreDisplay}</td>
-                                <td>${m.odds || '-'}</td>
-                                <td style="color:${resultColor}; font-weight:bold;">${m.result}</td>
-                            </tr>`;
+                        tableRows += `<tr>
+                            <td>${flagFor(m.country)} ${m.teamA} VS ${m.teamB}</td>
+                            <td>${m.prediction} (${m.score})</td>
+                            <td>${m.odds}</td>
+                            <td style="color:${resultColor}; font-weight:bold;">${m.result}</td>
+                        </tr>`;
                     });
 
-                    container.append(`
-                        <div class="card mb-3">
-                            <div class="card-header">${escapeHtml(day.date)} - ${escapeHtml(catName)}</div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead><tr><th>Team</th><th>Tip</th><th>Odds</th><th>Status</th></tr></thead>
-                                    <tbody>${tableRows}</tbody>
-                                </table>
-                                <p class="card-text" style="color:#FFD700;">Total Odds: ${totalOdds > 1 ? totalOdds.toFixed(2) : '-'}</p>
-                            </div>
-                        </div>`);
+                    container.append(`<div class="card mb-3"><div class="card-header">${day.date} - ${catName}</div><div class="card-body"><table class="table"><thead><tr><th>Team</th><th>Tip</th><th>Odds</th><th>Status</th></tr></thead><tbody>${tableRows}</tbody></table><p class="card-text" style="color:#FFD700;">Total Odds: ${totalOdds.toFixed(2)}</p></div></div>`);
                 }
             });
         }
