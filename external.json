@@ -1,0 +1,60 @@
+{
+  "till_info": {
+    "name": "Statarea Systems",
+    "number": "668526",
+    "image": "https://images.unsplash.com/photo-1557992260-ec58e38d363c?auto=format&fit=crop&w=300&q=80"
+  },
+  "contact_details": {
+    "whatsapp_url": "https://wa.me/254713804279?text=I'm%20interested%20in%20your%20sure%20tips%20today",
+    "twitter_url": "https://twitter.com/victonic_sports",
+    "telegram_url": "https://t.me/+GEkAL_4kqyJjNDc0",
+    "ug_number_mtn": "254713804279",
+    "ug_number_airtel": "254739162763",
+    "tz_number": "254713804279",
+    "tz_forward_wa": "https://wa.me/254713804279?text=Hello,%20I%20have%20paid%20for%20Tanzania%20tips.%20Here%20is%20my%20message:%20",
+    "ug_forward_wa": "https://wa.me/254713804279?text=Hello,%20I%20have%20paid%20for%20Uganda%20tips.%20Here%20is%20my%20message:%20"
+  },
+  "free_tip": {
+    "country": "England",
+    "league": "Premier League",
+    "time": "Today 17:00 EAT",
+    "teamA": "Arsenal",
+    "teamB": "Chelsea",
+    "pick": "Pick: 1 & Over 1.5 Goals",
+    "confidence": "92"
+  },
+  "packages": [
+    { "id": "draw1", "title": "1 Draw Package", "type": "flat", "price_kes": 150 },
+    { "id": "draw2", "title": "2 Draws Package", "type": "flat", "price_kes": 250 },
+    { "id": "draw3", "title": "3 Draws Package", "type": "flat", "price_kes": 350 },
+    { "id": "odds2", "title": "2 Odds Package", "type": "flat", "price_kes": 100 },
+    { "id": "odds5", "title": "5 Odds Package", "type": "flat", "price_kes": 200 },
+    { "id": "odds10", "title": "10 Odds Package", "type": "flat", "price_kes": 300 },
+    { "id": "vip1000", "title": "VIP Tips Package", "type": "flat", "price_kes": 1000, "isMostPopular": true },
+    { "id": "jackpot", "title": "SportPesa & Betika Jackpots", "type": "jackpot", "jackpots": [
+        { "bookmaker": "SportPesa Mega", "amount_kes": 200 },
+        { "bookmaker": "Betika Midweek", "amount_kes": 150 }
+      ]
+    }
+  ],
+  "tips": {
+    "draw1": [ { "teamA": "Valencia", "teamB": "Sevilla", "tip": "Draw", "odds": "3.20" } ],
+    "draw2": [ { "teamA": "Everton", "teamB": "Fulham", "tip": "Draw", "odds": "3.40" }, { "teamA": "Lazio", "teamB": "Roma", "tip": "Draw", "odds": "3.10" } ],
+    "draw3": [ { "teamA": "Nantes", "teamB": "Rennes", "tip": "Draw", "odds": "3.15" }, { "teamA": "Genoa", "teamB": "Torino", "tip": "Draw", "odds": "3.00" }, { "teamA": "Mainz", "teamB": "Bremen", "tip": "Draw", "odds": "3.30" } ],
+    "odds2": [ { "teamA": "Man City", "teamB": "Burnley", "tip": "1 & Over 2.5", "odds": "2.10" } ],
+    "odds5": [ { "teamA": "Liverpool", "teamB": "Aston Villa", "tip": "1 & GG", "odds": "2.80" }, { "teamA": "Bayern", "teamB": "Dortmund", "tip": "Over 3.5", "odds": "1.90" } ],
+    "odds10": [ { "teamA": "Arsenal", "teamB": "Chelsea", "tip": "X2", "odds": "1.80" }, { "teamA": "Napoli", "teamB": "Milan", "tip": "1", "odds": "2.20" }, { "teamA": "PSG", "teamB": "Monaco", "tip": "GG & Over 2.5", "odds": "2.55" } ],
+    "vip1000": [ { "teamA": "Inter", "teamB": "Juventus", "tip": "1", "odds": "2.15" }, { "teamA": "Real Sociedad", "teamB": "Athletic Bilbao", "tip": "Under 2.5", "odds": "1.65" }, { "teamA": "Benfica", "teamB": "Porto", "tip": "GG", "odds": "1.85" } ],
+    "jackpot-sportpesa-mega": [ { "teamA": "Match 1", "teamB": "Team B", "tip": "1", "odds": "-" } ],
+    "jackpot-betika-midweek": [ { "teamA": "Match 1", "teamB": "Team B", "tip": "X", "odds": "-" } ]
+  },
+  "history": [
+    {
+      "date": "2026-09-25",
+      "categories": {
+        "VIP Tips": [ { "country": "italy", "teamA": "Juventus", "teamB": "Milan", "prediction": "Draw", "score": "1-1", "odds": "3.20", "result": "WON" } ],
+        "2 Odds": [ { "country": "england", "teamA": "Arsenal", "teamB": "Chelsea", "prediction": "1", "score": "2-0", "odds": "2.10", "result": "WON" } ]
+      }
+    }
+  ]
+}
