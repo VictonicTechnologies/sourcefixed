@@ -50,10 +50,35 @@
   },
   "history": [
     {
-      "date": "2026-09-25",
+      "date": "Yesterday",
       "categories": {
-        "VIP Tips": [ { "country": "italy", "teamA": "Juventus", "teamB": "Milan", "prediction": "Draw", "score": "1-1", "odds": "3.20", "result": "WON" } ],
-        "2 Odds": [ { "country": "england", "teamA": "Arsenal", "teamB": "Chelsea", "prediction": "1", "score": "2-0", "odds": "2.10", "result": "WON" } ]
+        "1 Draw": [ { "country": "spain", "teamA": "Getafe", "teamB": "Alaves", "prediction": "Draw", "score": "1-1", "odds": "3.10", "result": "WON" } ],
+        "2 Draws": [ 
+            { "country": "italy", "teamA": "Verona", "teamB": "Empoli", "prediction": "Draw", "score": "0-0", "odds": "3.25", "result": "WON" },
+            { "country": "france", "teamA": "Lens", "teamB": "Lille", "prediction": "Draw", "score": "1-1", "odds": "3.30", "result": "WON" }
+        ],
+        "3 Draws": [ 
+            { "country": "germany", "teamA": "Bochum", "teamB": "Koln", "prediction": "Draw", "score": "2-2", "odds": "3.40", "result": "WON" },
+            { "country": "england", "teamA": "Crystal Palace", "teamB": "West Ham", "prediction": "Draw", "score": "1-1", "odds": "3.15", "result": "WON" },
+            { "country": "italy", "teamA": "Lecce", "teamB": "Cagliari", "prediction": "Draw", "score": "0-0", "odds": "3.00", "result": "WON" }
+        ],
+        "2 Odds": [ { "country": "england", "teamA": "Arsenal", "teamB": "Chelsea", "prediction": "1", "score": "2-0", "odds": "2.10", "result": "WON" } ],
+        "5 Odds": [ 
+            { "country": "spain", "teamA": "Real Madrid", "teamB": "Sevilla", "prediction": "1 & Over 2.5", "score": "3-1", "odds": "2.30", "result": "WON" },
+            { "country": "germany", "teamA": "Bayern Munich", "teamB": "Stuttgart", "prediction": "1", "score": "2-0", "odds": "1.85", "result": "WON" },
+            { "country": "italy", "teamA": "Juventus", "teamB": "Torino", "prediction": "Under 2.5", "score": "1-0", "odds": "1.50", "result": "WON" }
+        ],
+        "10 Odds": [ 
+            { "country": "france", "teamA": "PSG", "teamB": "Marseille", "prediction": "1 & GG", "score": "3-1", "odds": "2.80", "result": "WON" },
+            { "country": "england", "teamA": "Liverpool", "teamB": "Newcastle", "prediction": "1", "score": "2-0", "odds": "1.75", "result": "WON" },
+            { "country": "italy", "teamA": "Napoli", "teamB": "Roma", "prediction": "GG", "score": "1-1", "odds": "1.90", "result": "WON" },
+            { "country": "spain", "teamA": "Barcelona", "teamB": "Girona", "prediction": "Over 2.5", "score": "2-1", "odds": "1.65", "result": "WON" }
+        ],
+        "VIP Tips": [ 
+            { "country": "italy", "teamA": "Inter", "teamB": "Lazio", "prediction": "1", "score": "2-0", "odds": "1.95", "result": "WON" },
+            { "country": "england", "teamA": "Man City", "teamB": "Aston Villa", "prediction": "1 & Over 2.5", "score": "3-1", "odds": "2.05", "result": "WON" },
+            { "country": "germany", "teamA": "Leverkusen", "teamB": "Dortmund", "prediction": "GG & Over 2.5", "score": "2-2", "odds": "2.15", "result": "WON" }
+        ]
       }
     }
   ]
