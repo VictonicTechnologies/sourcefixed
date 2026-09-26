@@ -44,13 +44,12 @@
         #country-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: var(--bg); display: none; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9998; padding: 20px;
+            justify-content: center; align-items: center; z-index: 9998; padding: 20px; text-align: center;
         }
         #country-screen h2 { font-family: 'Paytone One', sans-serif; color: var(--gold); margin-bottom: 30px; }
-        .country-btn { background: var(--card); border: 2px solid var(--green); color: #fff; font-size: 1.5rem; font-family: 'Paytone One', sans-serif; padding: 15px 40px; margin: 10px; border-radius: 10px; width: 80%; max-width: 300px; cursor: pointer; transition: all 0.3s; }
+        #country-buttons-container { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 10px; }
+        .country-btn { background: var(--card); border: 2px solid var(--green); color: #fff; font-size: 1.5rem; font-family: 'Paytone One', sans-serif; padding: 15px 40px; border-radius: 10px; width: 80%; max-width: 300px; cursor: pointer; transition: all 0.3s; }
         .country-btn:hover { background: var(--green); color: #0F1218; transform: scale(1.05); }
-
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
 
         #main-app { display: none; }
         .container { max-width: 1200px; padding: 20px; }
@@ -72,6 +71,7 @@
         .loader { border: 4px solid #333; border-top: 4px solid var(--green); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .tip-locked { color: var(--muted) !important; font-style: italic; }
+        .draw-hidden-match { color: var(--muted); font-style: italic; }
         .pkg-badge { display: inline-block; font-size: 0.75rem; font-weight: bold; background: rgba(255,215,0,0.15); color: var(--gold); padding: 2px 10px; border-radius: 20px; margin-bottom: 8px; }
     </style>
 </head>
@@ -84,9 +84,9 @@
 
     <div id="country-screen">
         <h2>Select Your Country</h2>
-        <button class="country-btn" onclick="selectCountry('ke')">🇰🇪 Kenya</button>
-        <button class="country-btn" onclick="selectCountry('ug')">🇺🇬 Uganda</button>
-        <button class="country-btn" onclick="selectCountry('tz')">🇹🇿 Tanzania</button>
+        <div id="country-buttons-container">
+            <div class="loader"></div>
+        </div>
     </div>
 
     <div id="main-app">
@@ -129,7 +129,8 @@
                         </div>
                         <div class="modal-body">
                             
-                            <div class="pay-ke">
+                            <!-- KENYA: Automatic Unlock via Till -->
+                            <div class="pay-section" id="pay-ke" style="display:none;">
                                 <h4>Get Tips Instantly</h4>
                                 <div class="text-center mb-3">
                                     <img id="till-image" src="" alt="Till Image" style="max-width: 150px; border-radius: 10px;">
@@ -138,7 +139,6 @@
                                     <li class="list-group-item">Go to "Safaricom - Buy Goods & Services"</li>
                                     <li class="list-group-item bg-success">Enter Till No <strong id="till-number-display"></strong> (<span id="till-name-display"></span>) <button class="copy-btn" id="btn-copy-till">Copy</button></li>
                                     <li class="list-group-item">Enter amount <strong id="pay-modal-amount-ke">KSh 0</strong>, click "OK"</li>
-                                    <li class="list-group-item">Enter your PIN Number, click OK</li>
                                 </ul>
                                 <div class="mt-4 p-3 rounded" style="background-color: var(--bg);">
                                     <h5 class="text-warning">Verify Your Payment</h5>
@@ -149,7 +149,8 @@
                                 </div>
                             </div>
                             
-                            <div class="pay-ug" style="display:none;">
+                            <!-- UGANDA: Manual WhatsApp Unlock -->
+                            <div class="pay-section" id="pay-ug" style="display:none;">
                                 <h4 class="network-title">HOW TO PAY VIA MTN Uganda</h4>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item bg-success">Enter Phone Number: <strong id="ug-mtn-number"></strong></li>
@@ -161,22 +162,33 @@
                                     <li class="list-group-item">Enter : Amount <strong id="pay-modal-amount-ug-airtel">UGX 0</strong></li>
                                 </ul>
                                 <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
-                                    <h5 class="text-warning">Step 2: Confirm Your Payment</h5>
-                                    <p style="font-size: 0.9rem;">After sending the money, please forward your Mobile Money confirmation message to our WhatsApp to receive your tips immediately.</p>
+                                    <h5 class="text-warning">Receive Tips Manually</h5>
+                                    <p style="font-size: 0.9rem;">After sending the money, please forward your Mobile Money confirmation message to our WhatsApp. You will receive your tips manually via chat.</p>
                                     <a id="btn-ug-wa" href="#" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
                                 </div>
                             </div>
                             
-                            <div class="pay-tz" style="display:none;">
+                            <!-- TANZANIA: Manual WhatsApp Unlock -->
+                            <div class="pay-section" id="pay-tz" style="display:none;">
                                 <h4 class="network-title">Hatua za Kutuma Pesa Ukitumia VODACOM</h4>
                                 <ul class="list-group list-group-flush mb-3">
                                     <li class="list-group-item bg-success">Ingiza Namba ya Mpokeaji: <strong id="tz-number"></strong></li>
                                     <li class="list-group-item">Weka Kiasi Cha pesa ni: <strong id="pay-modal-amount-tz">TZS 0</strong></li>
                                 </ul>
                                 <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
-                                    <h5 class="text-warning">Hatua ya 2: Thibitisha Malipo</h5>
-                                    <p style="font-size: 0.9rem;">Baada ya kutuma pesa, tafadhali tuma ujumbe wako wa M-Pesa (forward) kwenye WhatsApp yetu ili upate tips zako mara moja.</p>
+                                    <h5 class="text-warning">Pokea Tips WhatsApp</h5>
+                                    <p style="font-size: 0.9rem;">Baada ya kutuma pesa, tafadhali tuma ujumbe wako wa M-Pesa (forward) kwenye WhatsApp yetu. Utapokea tips zako manually kupitia WhatsApp.</p>
                                     <a id="btn-tz-wa" href="#" class="btn btn-success w-100" target="_blank">Forward to WhatsApp</a>
+                                </div>
+                            </div>
+
+                            <!-- OTHER DYNAMIC COUNTRIES: Manual WhatsApp Unlock -->
+                            <div class="pay-section" id="pay-generic" style="display:none;">
+                                <div class="mt-4 p-3 rounded border border-success" style="background-color: var(--bg);">
+                                    <h5 class="text-warning">Receive Tips Manually</h5>
+                                    <p style="font-size: 1rem;">To purchase this package (<strong id="pay-modal-amount-generic"></strong>), please contact us via WhatsApp for the best local payment methods.</p>
+                                    <p style="font-size: 0.9rem; color: #ccc;">After confirming your payment on chat, you will receive your tips manually via WhatsApp.</p>
+                                    <a id="btn-generic-wa" href="#" class="btn btn-success w-100" target="_blank">Contact WhatsApp to Pay</a>
                                 </div>
                             </div>
 
@@ -193,27 +205,23 @@
 
     <script>
         let currentCountry = 'ke';
+        let currentCurrency = 'KSh';
+        let currentRateToKes = 1;
+        
         let payModal = null;
         let expectedKesAmount = 0; 
         let unlockedPackages = []; 
         let currentPayingPackageId = null; 
         let appData = null;
 
-        const UGX_PER_KES = 18.7;
-        const TZS_PER_KES = 13.4;
-
-        // Fetch Current EAT Date String (YYYY-MM-DD)
         function getTodayEAT() {
             return new Date().toLocaleDateString("en-CA", {timeZone: "Africa/Nairobi"});
         }
 
-        // Manage Unlocked State with Daily Expiry (Midnight EAT)
         function loadUnlockedState() {
             const todayEAT = getTodayEAT();
             let stored = JSON.parse(localStorage.getItem('victonic_unlocked') || '{"date":"","packages":[]}');
-            
             if (stored.date !== todayEAT) {
-                // It's a new day in Kenya! Expire all locks.
                 unlockedPackages = [];
                 localStorage.removeItem('victonic_unlocked');
             } else {
@@ -224,14 +232,8 @@
         function saveUnlockedState(pkgId) {
             const todayEAT = getTodayEAT();
             let stored = JSON.parse(localStorage.getItem('victonic_unlocked') || '{"date":"","packages":[]}');
-            
-            if (stored.date !== todayEAT) {
-                stored = { date: todayEAT, packages: [] };
-            }
-            if (!stored.packages.includes(pkgId)) {
-                stored.packages.push(pkgId);
-            }
-            
+            if (stored.date !== todayEAT) { stored = { date: todayEAT, packages: [] }; }
+            if (!stored.packages.includes(pkgId)) { stored.packages.push(pkgId); }
             localStorage.setItem('victonic_unlocked', JSON.stringify(stored));
             unlockedPackages = stored.packages;
         }
@@ -240,13 +242,22 @@
             loadUnlockedState();
             payModal = new bootstrap.Modal(document.getElementById('pay-modal'));
 
-            setTimeout(function() {
-                $('#splash-screen').css('opacity', '0');
-                setTimeout(function() {
-                    $('#splash-screen').hide();
-                    $('#country-screen').css('display', 'flex');
-                }, 500);
-            }, 1500);
+            // Load JSON immediately to build country screen
+            fetch('external.json').then(res => res.json()).then(data => {
+                appData = data;
+                buildCountryScreen(appData.countries);
+                
+                setTimeout(() => {
+                    $('#splash-screen').css('opacity', '0');
+                    setTimeout(() => {
+                        $('#splash-screen').hide();
+                        $('#country-screen').css('display', 'flex');
+                    }, 500);
+                }, 1000);
+            }).catch(err => {
+                console.error("Failed to load JSON initially", err);
+                $('#country-buttons-container').html('<p class="text-danger">Failed to load system data.</p>');
+            });
 
             $('#btn-copy-till').click(function() {
                 const tillNumber = appData.till_info.number;
@@ -258,13 +269,13 @@
                 });
             });
 
+            // M-Pesa automated unlock (Kenya Only)
             $('#verify-mpesa-btn').click(function() {
                 const msg = $('#mpesa-message-input').val().trim();
                 const $result =$('#mpesa-verification-result');
 
                 if (!msg) { $result.text('Please paste your M-Pesa message first.').css('color', 'var(--red)'); return; }
 
-                // 1. Basic Format Check
                 const codeMatch = msg.match(/^[A-Z0-9]{10}/i);
                 if (!codeMatch || !msg.toLowerCase().includes('confirmed')) { 
                     $result.text('Invalid M-Pesa message format.').css('color', 'var(--red)'); 
@@ -278,13 +289,11 @@
                     return; 
                 }
 
-                // 2. Till Name Check
                 if (!msg.toLowerCase().includes(appData.till_info.name.toLowerCase())) {
                     $result.text(`Invalid Till Name. Please ensure you paid to ${appData.till_info.name}.`).css('color', 'var(--red)');
                     return;
                 }
 
-                // 3. Amount Check
                 const amountMatch = msg.match(/Ksh\s*([\d,]+\.\d{2})/i);
                 if (!amountMatch) { 
                     $result.text('Could not detect amount in message. Ensure it is complete.').css('color', 'var(--red)'); 
@@ -297,7 +306,6 @@
                     return; 
                 }
 
-                // 4. Date Check (Must match today in EAT)
                 const todayEATObj = new Date(new Date().toLocaleString("en-US", {timeZone: "Africa/Nairobi"}));
                 const d = todayEATObj.getDate();
                 const m = todayEATObj.getMonth() + 1;
@@ -312,44 +320,41 @@
                     return;
                 }
 
-                // Success! Save code & unlock package
                 usedCodes.push(mpesaCode);
                 localStorage.setItem('usedMpesaCodes', JSON.stringify(usedCodes));
-
                 $result.text('Payment Verified Successfully! Accessing your tips...').css('color', 'var(--green)');
                 
                 setTimeout(() => {
-                    if (currentPayingPackageId) {
-                        saveUnlockedState(currentPayingPackageId);
-                    }
+                    if (currentPayingPackageId) saveUnlockedState(currentPayingPackageId);
                     payModal.hide();
-                    renderTips(); // Re-render to show unlocked tips
+                    renderTips(); 
                 }, 1500);
             });
         });
 
-        function selectCountry(countryCode) {
-            currentCountry = countryCode;
-            $('#country-screen').hide();
-            $('#main-app').fadeIn();
-            loadJSONData();
+        function buildCountryScreen(countries) {
+            const container = $('#country-buttons-container');
+            container.empty();
+            countries.forEach(c => {
+                container.append(`<button class="country-btn" onclick="selectCountry('${c.code}', '${c.currency}', ${c.rate_to_kes})">${c.flag} ${c.name}</button>`);
+            });
         }
 
-        async function loadJSONData() {
-            try {
-                const res = await fetch('external.json');
-                appData = await res.json();
-                
-                populateContactsAndTill(appData);
-                renderFreeTip(appData.free_tip);
-                renderPackages(appData.packages);
-                renderTips();
-                renderHistory(appData.history);
-            } catch (err) {
-                console.error('Failed to load JSON data:', err);
-                $('#packages-container').html('<p class="text-center text-danger">Failed to load packages.</p>');
-            }
-        }
+        // Must assign selectCountry to window scope for onclick binding
+        window.selectCountry = function(countryCode, currency, rate) {
+            currentCountry = countryCode;
+            currentCurrency = currency;
+            currentRateToKes = rate;
+            
+            $('#country-screen').hide();
+            $('#main-app').fadeIn();
+            
+            populateContactsAndTill(appData);
+            renderFreeTip(appData.free_tip);
+            renderPackages(appData.packages);
+            renderTips();
+            renderHistory(appData.history);
+        };
 
         const COUNTRY_FLAGS = { 'england': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'spain': '🇪🇸', 'italy': '🇮🇹', 'germany': '🇩🇪', 'france': '🇫🇷', 'kenya': '🇰🇪', 'nigeria': '🇳🇬', 'south africa': '🇿🇦', 'europe': '🇪🇺', 'world': '🌍' };
         function flagFor(country) { return COUNTRY_FLAGS[(country || '').toLowerCase()] || '⚽️'; }
@@ -360,6 +365,7 @@
             $('#btn-telegram').attr('href', data.contact_details.telegram_url);
             $('#btn-ug-wa').attr('href', data.contact_details.ug_forward_wa);
             $('#btn-tz-wa').attr('href', data.contact_details.tz_forward_wa);
+            $('#btn-generic-wa').attr('href', data.contact_details.generic_forward_wa);
 
             $('#till-name-display').text(data.till_info.name);
             $('#till-number-display').text(data.till_info.number);
@@ -377,11 +383,9 @@
             $('#free-tip-pick').text(`${tip.pick} (Confidence: ${tip.confidence}%)`);
         }
 
-        function formatAllCurrencies(kes) { return { kes, ugx: Math.round(kes * UGX_PER_KES), tzs: Math.round(kes * TZS_PER_KES) }; }
-        function priceLabelFor(amounts) {
-            if (currentCountry === 'ug') return `UGX ${amounts.ugx.toLocaleString()}`;
-            if (currentCountry === 'tz') return `TZS ${amounts.tzs.toLocaleString()}`;
-            return `KSh ${amounts.kes.toLocaleString()}`;
+        function formatLocalPrice(kes) {
+            const local = Math.round(kes * currentRateToKes);
+            return `${currentCurrency} ${local.toLocaleString()}`;
         }
 
         function accentColorFor(pkgId) {
@@ -395,13 +399,14 @@
         function renderPackages(packages) {
             const container = $('#packages-container');
             container.empty();
+            
             packages.forEach(pkg => {
                 const accent = accentColorFor(pkg.id);
                 const isJackpot = pkg.type === 'jackpot';
                 let priceHtml = '', actionHtml = '';
 
                 if (isJackpot) {
-                    if (currentCountry !== 'ke') return; 
+                    if (currentCountry !== 'ke') return; // Hide jackpots for non-KE per original rules
                     let rows = '';
                     (pkg.jackpots || []).forEach(j => {
                         const jackpotPkgId = `jackpot-${j.bookmaker.replace(/\s+/g, '-').toLowerCase()}`;
@@ -410,7 +415,7 @@
                         rows += `<div class="d-flex justify-content-between align-items-center mb-2">
                                     <span style="font-weight:bold;">${j.bookmaker}</span>
                                     ${!isJkpUnlocked ? 
-                                      `<button class="btn btn-sm btn-custom" onclick="openPaymentModal('${jackpotPkgId}', '${j.bookmaker}', ${j.amount_kes})">KSh ${j.amount_kes}</button>` :
+                                      `<button class="btn btn-sm btn-custom" onclick="openPaymentModal('${jackpotPkgId}', '${j.bookmaker}', ${j.amount_kes})">${formatLocalPrice(j.amount_kes)}</button>` :
                                       `<span class="badge bg-success">UNLOCKED</span>`
                                     }
                                  </div>
@@ -418,13 +423,14 @@
                     });
                     priceHtml = rows;
                 } else {
-                    const amounts = formatAllCurrencies(pkg.price_kes);
-                    priceHtml = `<h3 class="card-title">Price: <span class="pkg-price">${priceLabelFor(amounts)}</span></h3>`;
+                    priceHtml = `<h3 class="card-title">Price: <span class="pkg-price">${formatLocalPrice(pkg.price_kes)}</span></h3>`;
                     
-                    if (unlockedPackages.includes(pkg.id)) {
+                    if (unlockedPackages.includes(pkg.id) && currentCountry === 'ke') {
                         actionHtml = `<button class="btn btn-success mt-2 w-100" disabled>Tips Unlocked</button>`;
                     } else {
-                        actionHtml = `<button class="btn btn-custom mt-2" onclick="openPaymentModal('${pkg.id}', '${pkg.title}', ${pkg.price_kes})">Buy Ticket Now</button>`;
+                        // Non-Kenyans never auto-unlock via the app, they just contact WhatsApp. But they can still view locked tables.
+                        const btnText = (currentCountry === 'ke') ? 'Buy Ticket Now' : 'Buy to Reveal via WhatsApp';
+                        actionHtml = `<button class="btn btn-custom mt-2" onclick="openPaymentModal('${pkg.id}', '${pkg.title}', ${pkg.price_kes})">${btnText}</button>`;
                     }
                 }
 
@@ -442,7 +448,6 @@
         }
 
         function renderTips() {
-            // Re-render packages section to update "Buy" to "Unlocked" buttons if necessary
             renderPackages(appData.packages);
             
             Object.keys(appData.tips).forEach(pkgId => {
@@ -453,37 +458,59 @@
                 const tbody = $table.find('tbody');
                 tbody.empty();
                 
-                const isUnlocked = unlockedPackages.includes(pkgId);
+                const isUnlocked = unlockedPackages.includes(pkgId) && currentCountry === 'ke';
+                const isDrawPackage = pkgId.toLowerCase().includes('draw');
                 
                 data.forEach(item => {
-                    const tipDisplay = isUnlocked ? item.tip : '<span class="tip-locked">🔒 Unlock to view</span>';
-                    const oddsDisplay = isUnlocked ? item.odds : '-';
-                    const teamA = isUnlocked ? item.teamA : 'Hidden Match';
-                    const teamB = isUnlocked ? item.teamB : 'Hidden Match';
+                    let teamA, teamB, tipDisplay, oddsDisplay;
+
+                    if (isDrawPackage) {
+                        // Draw: Lock teams (if locked), show prediction and odds ALWAYS.
+                        teamA = isUnlocked ? item.teamA : '<span class="draw-hidden-match">🔒 Hidden</span>';
+                        teamB = isUnlocked ? item.teamB : '<span class="draw-hidden-match">🔒 Hidden</span>';
+                        tipDisplay = item.tip;
+                        oddsDisplay = item.odds;
+                    } else {
+                        // Others: Show updated teams from JSON ALWAYS, lock prediction and odds (if locked).
+                        teamA = item.teamA;
+                        teamB = item.teamB;
+                        tipDisplay = isUnlocked ? item.tip : '<span class="tip-locked">🔒 Unlock to view</span>';
+                        oddsDisplay = isUnlocked ? item.odds : '-';
+                    }
 
                     tbody.append(`<tr><td>${teamA} VS ${teamB}</td><td style="font-weight:bold;">${tipDisplay}</td><td>${oddsDisplay}</td></tr>`);
                 });
             });
         }
 
-        function openPaymentModal(pkgId, title, kes) {
+        window.openPaymentModal = function(pkgId, title, kes) {
             currentPayingPackageId = pkgId; 
             expectedKesAmount = kes;
-            const amounts = formatAllCurrencies(kes);
             
             $('#pay-modal-title').text(title);
-            $('#pay-modal-amount-ke').text(`KSh ${amounts.kes.toLocaleString()}`);
-            $('#pay-modal-amount-ug-mtn').text(`UGX ${amounts.ugx.toLocaleString()}`);
-            $('#pay-modal-amount-ug-airtel').text(`UGX ${amounts.ugx.toLocaleString()}`);
-            $('#pay-modal-amount-tz').text(`TZS ${amounts.tzs.toLocaleString()}`);
+            $('.pay-section').hide();
             
-            $('#mpesa-message-input').val('');
-            $('#mpesa-verification-result').text('');
+            const localAmountStr = formatLocalPrice(kes);
             
-            $('.pay-ke, .pay-ug, .pay-tz').hide();$(`.pay-${currentCountry}`).show();
+            if (currentCountry === 'ke') {
+                $('#pay-modal-amount-ke').text(`KSh ${kes.toLocaleString()}`);
+                $('#mpesa-message-input').val('');
+                $('#mpesa-verification-result').text('');
+                $('#pay-ke').show();
+            } else if (currentCountry === 'ug') {
+                $('#pay-modal-amount-ug-mtn').text(localAmountStr);
+                $('#pay-modal-amount-ug-airtel').text(localAmountStr);
+                $('#pay-ug').show();
+            } else if (currentCountry === 'tz') {
+                $('#pay-modal-amount-tz').text(localAmountStr);
+                $('#pay-tz').show();
+            } else {
+                $('#pay-modal-amount-generic').text(localAmountStr);
+                $('#pay-generic').show();
+            }
             
             payModal.show();
-        }
+        };
 
         function renderHistory(data) {
             const container = $('#history-container');
