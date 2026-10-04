@@ -18,7 +18,41 @@
       "rate_to_kes": 1,
       "type": "automated"
     },
-    
+    {
+      "code": "ug",
+      "name": "Uganda",
+      "flag": "🇺🇬",
+      "currency": "UGX",
+      "rate_to_kes": 28.5,
+      "type": "manual",
+      "methods": [
+        {
+          "provider": "MTN Uganda (to Safaricom M-Pesa)",
+          "phone": "254713804279",
+          "steps": [
+            "Dial *165# on your mobile line.",
+            "Select 1: Send Money.",
+            "Choose 3: International Transfer.",
+            "Select 1: Safaricom M-Pesa.",
+            "Enter recipient phone number: {phone}",
+            "Enter amount in UGX ({amount}) and state reason.",
+            "Enter your MTN MoMo PIN to authorize."
+          ]
+        },
+        {
+          "provider": "Airtel Uganda",
+          "phone": "254739162763",
+          "steps": [
+            "Dial *185#.",
+            "Select 1: Send Money.",
+            "Choose 4: International Transfer.",
+            "Select Kenya.",
+            "Enter recipient phone number: {phone}",
+            "Enter amount ({amount}), input transaction reason, and confirm with Airtel Money PIN."
+          ]
+        }
+      ]
+    },
     {
       "code": "tz",
       "name": "Tanzania",
