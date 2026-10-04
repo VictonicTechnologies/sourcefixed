@@ -31,31 +31,34 @@
 
     <style>
         :root {
-            --bg:          #0b0e14;
-            --card-bg:     rgba(22, 27, 38, 0.85);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --card-hover:  #1e2532;
+            --bg:          #110b08;
+            --card-bg:     rgba(36, 24, 18, 0.90);
+            --card-border: rgba(217, 160, 102, 0.22);
+            --card-hover:  #332219;
             --green:       #00E676;
             --green-glow:  rgba(0, 230, 118, 0.25);
             --red:         #FF5252;
             --gold:        #FFD700;
-            --gold-glow:   rgba(255, 215, 0, 0.2);
-            --blue:        #00B0FF;
-            --purple:      #7E57C2;
-            --muted:       #8A94A6;
+            --gold-glow:   rgba(255, 215, 0, 0.25);
+            --amber-brown: #D97706;
+            --bronze:      #CD7F32;
+            --copper:      #B85E00;
+            --blue:        #38BDF8;
+            --purple:      #A78BFA;
+            --muted:       #A39489;
             
-            --draw1:  #1E88E5;
-            --draw2:  #3F51B5;
-            --draw3:  #7E57C2;
-            --odds2:  #00ACC1;
-            --odds5:  #E91E63;
-            --odds10: #FF9800;
+            --draw1:  #2563EB;
+            --draw2:  #4F46E5;
+            --draw3:  #7C3AED;
+            --odds2:  #0284C7;
+            --odds5:  #E11D48;
+            --odds10: #D97706;
         }
 
         body {
             font-family: 'Josefin Sans', sans-serif;
-            background: radial-gradient(circle at top center, #161c28 0%, var(--bg) 70%);
-            color: #f0f4f8;
+            background: radial-gradient(circle at top center, #2e1d15 0%, var(--bg) 75%);
+            color: #f7f3ee;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -69,9 +72,9 @@
             justify-content: center; align-items: center; z-index: 9999;
             transition: opacity 0.5s ease-out;
         }
-        #splash-screen .brand-title { font-family: 'Paytone One', sans-serif; color: var(--green); text-align: center; animation: pulse 1.5s infinite; }
-        #splash-screen .splash-line1 { font-size: clamp(2rem, 9vw, 3.2rem); letter-spacing: 0.04em; display: block; text-shadow: 0 0 20px var(--green-glow); }
-        #splash-screen .splash-line2 { font-size: clamp(1.4rem, 6.5vw, 2.2rem); letter-spacing: 0.12em; opacity: 0.9; color: var(--gold); display: block; }
+        #splash-screen .brand-title { font-family: 'Paytone One', sans-serif; color: var(--gold); text-align: center; animation: pulse 1.5s infinite; }
+        #splash-screen .splash-line1 { font-size: clamp(2rem, 9vw, 3.2rem); letter-spacing: 0.04em; display: block; text-shadow: 0 0 20px var(--gold-glow); }
+        #splash-screen .splash-line2 { font-size: clamp(1.4rem, 6.5vw, 2.2rem); letter-spacing: 0.12em; opacity: 0.95; color: var(--green); display: block; text-shadow: 0 0 15px var(--green-glow); }
 
         #country-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -88,7 +91,7 @@
         }
         .country-btn {
             background: var(--card-bg);
-            border: 1px solid var(--green);
+            border: 1px solid var(--amber-brown);
             color: #fff;
             font-size: 1.2rem;
             font-family: 'Paytone One', sans-serif;
@@ -96,17 +99,17 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
         .country-btn:hover {
-            background: var(--green);
-            color: #0B0E14;
+            background: linear-gradient(135deg, var(--amber-brown) 0%, var(--copper) 100%);
+            color: #ffffff;
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 25px var(--green-glow);
+            box-shadow: 0 8px 25px rgba(217, 119, 6, 0.4);
         }
 
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
@@ -117,40 +120,40 @@
 
         .seo-header { text-align: center; margin-bottom: 30px; padding-top: 20px; }
         .seo-header h1 {
-            font-family: 'Paytone One', sans-serif; color: var(--green);
-            font-size: clamp(2rem, 6vw, 2.8rem); text-shadow: 0 0 15px var(--green-glow);
+            font-family: 'Paytone One', sans-serif; color: var(--gold);
+            font-size: clamp(2rem, 6vw, 2.8rem); text-shadow: 0 0 18px var(--gold-glow);
             margin-bottom: 5px; letter-spacing: 1px;
         }
-        .seo-header p { color: var(--gold); font-size: 1.1rem; font-weight: 600; }
+        .seo-header p { color: #f3d4a0; font-size: 1.1rem; font-weight: 600; }
 
         .card {
             background: var(--card-bg); backdrop-filter: blur(12px);
             border: 1px solid var(--card-border); border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65); margin-bottom: 24px;
             overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        .card:hover { border-color: rgba(255, 255, 255, 0.18); }
+        .card:hover { border-color: rgba(255, 215, 0, 0.35); }
         .card-header { font-family: 'Paytone One', sans-serif; font-size: 1.35rem; text-align: center; padding: 14px 20px; border-bottom: none; letter-spacing: 0.5px; }
         .card-body { padding: 20px 16px; text-align: center; }
 
         /* BUTTONS & BADGES */
         .btn-custom {
-            background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%);
-            color: #0B0E14; font-weight: 700; border-radius: 10px; padding: 12px 24px;
-            transition: all 0.3s ease; border: none; box-shadow: 0 4px 15px var(--green-glow);
+            background: linear-gradient(135deg, #D97706 0%, #B85E00 100%);
+            color: #ffffff; font-weight: 700; border-radius: 10px; padding: 12px 24px;
+            transition: all 0.3s ease; border: none; box-shadow: 0 4px 15px rgba(217, 119, 6, 0.35);
             text-transform: uppercase; font-size: 0.95rem; letter-spacing: 0.5px; text-decoration: none; display: inline-block;
         }
-        .btn-custom:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 230, 118, 0.4); color: #0B0E14; }
+        .btn-custom:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(217, 119, 6, 0.55); color: #ffffff; }
         .pkg-badge {
-            display: inline-block; font-size: 0.75rem; font-weight: 800; background: linear-gradient(90deg, #FFD700, #FF9800);
-            color: #000; padding: 3px 12px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 10px var(--gold-glow);
+            display: inline-block; font-size: 0.75rem; font-weight: 800; background: linear-gradient(90deg, #FFD700, #D97706);
+            color: #110b08; padding: 4px 14px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 10px var(--gold-glow);
         }
 
         /* TABLES */
         .table-responsive { border-radius: 12px; overflow: hidden; margin-top: 15px; }
-        .table { background: rgba(11, 14, 20, 0.6); color: #ffffff; margin-bottom: 0; border-color: rgba(255,255,255,0.05); }
-        .table th { background: rgba(255, 255, 255, 0.05); color: var(--gold); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; padding: 12px 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .table td { text-align: center; vertical-align: middle; padding: 14px 8px; font-size: 0.95rem; border-color: rgba(255, 255, 255, 0.04); }
+        .table { background: rgba(17, 11, 8, 0.75); color: #ffffff; margin-bottom: 0; border-color: rgba(255,255,255,0.08); }
+        .table th { background: rgba(255, 255, 255, 0.08); color: var(--gold); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; padding: 12px 8px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+        .table td { text-align: center; vertical-align: middle; padding: 14px 8px; font-size: 0.95rem; border-color: rgba(255, 255, 255, 0.05); }
         .table tbody tr:hover { background: var(--card-hover); }
 
         /* SLIPS & LOCKED UI */
@@ -166,26 +169,26 @@
             word-break: break-all; font-family: monospace; letter-spacing: 1px; color: var(--gold);
         }
         .lock-pill {
-            display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 215, 0, 0.12);
-            border: 1px solid rgba(255, 215, 0, 0.35); color: var(--gold); font-size: 0.72rem; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.4); color: var(--gold); font-size: 0.72rem; font-weight: 700;
             padding: 2px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; backdrop-filter: blur(4px);
         }
 
         /* MODAL STYLING */
-        .modal-content { background: var(--bg); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
-        .modal-header { background: linear-gradient(135deg, var(--green) 0%, #00B0FF 100%); color: #0B0E14; border-bottom: none; padding: 18px 24px; }
+        .modal-content { background: var(--bg); border: 1px solid rgba(217, 160, 102, 0.3); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
+        .modal-header { background: linear-gradient(135deg, #D97706 0%, #78350F 100%); color: #ffffff; border-bottom: none; padding: 18px 24px; }
         .modal-title { font-family: 'Paytone One', sans-serif; font-size: 1.4rem; }
-        .list-group-item { background: rgba(255,255,255,0.03); color: #e0e0e0; border-color: rgba(255,255,255,0.05); }
-        .list-group-item strong { color: var(--green); }
-        .copy-btn { background: var(--gold); border: none; color: #0B0E14; padding: 3px 10px; border-radius: 6px; margin-left: 8px; font-size: 0.8rem; font-weight: bold; transition: opacity 0.2s; }
+        .list-group-item { background: rgba(255,255,255,0.04); color: #f0e6df; border-color: rgba(255,255,255,0.08); }
+        .list-group-item strong { color: var(--gold); }
+        .copy-btn { background: var(--gold); border: none; color: #110b08; padding: 3px 10px; border-radius: 6px; margin-left: 8px; font-size: 0.8rem; font-weight: bold; transition: opacity 0.2s; }
         .copy-btn:hover { opacity: 0.85; }
 
-        .loader { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--green); border-radius: 50%; width: 32px; height: 32px; animation: spin 0.8s linear infinite; margin: 20px auto; }
+        .loader { border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--amber-brown); border-radius: 50%; width: 32px; height: 32px; animation: spin 0.8s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* History Badge Categories */
-        .badge-midweek { background: rgba(0, 176, 255, 0.15); color: var(--blue); border: 1px solid var(--blue); }
-        .badge-mega { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
+        .badge-midweek { background: rgba(217, 119, 6, 0.2); color: #FFB300; border: 1px solid #D97706; }
+        .badge-mega { background: rgba(255, 215, 0, 0.2); color: var(--gold); border: 1px solid var(--gold); }
     </style>
 </head>
 <body>
@@ -214,14 +217,14 @@
             </header>
 
             <section class="card">
-                <div class="card-header" style="background: linear-gradient(90deg, #FFD700, #FF8F00); color: #000;">
+                <div class="card-header" style="background: linear-gradient(90deg, #D97706, #78350F); color: #ffffff;">
                     🔥 Free Tip of the Day
                 </div>
                 <div class="card-body">
                     <p id="free-tip-league" class="card-text mt-1" style="font-weight: bold; color: var(--gold); font-size: 1.05rem;"></p>
                     <h3 class="card-title my-2" id="free-tip-time" style="color:#fff;">Loading...</h3>
                     <p class="card-text fs-5" style="color: #ffffff;"><strong id="free-tip-match">...</strong></p>
-                    <div class="p-2 rounded d-inline-block px-4" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green);">
+                    <div class="p-2 rounded d-inline-block px-4" style="background: rgba(0,230,118,0.12); border: 1px solid var(--green);">
                         <strong id="free-tip-pick" style="color: var(--green);">...</strong>
                     </div>
                 </div>
@@ -232,7 +235,7 @@
             </div>
 
             <section class="past-tips mt-5">
-                <h2 class="text-center mb-4" style="font-family:'Paytone One', sans-serif; color:var(--green); text-shadow: 0 0 10px var(--green-glow);">
+                <h2 class="text-center mb-4" style="font-family:'Paytone One', sans-serif; color:var(--gold); text-shadow: 0 0 10px var(--gold-glow);">
                     Past Tips History
                 </h2>
                 <div id="history-container">
@@ -267,12 +270,12 @@
                                 </div>
                                 <ul class="list-group list-group-flush mb-3 rounded">
                                     <li class="list-group-item">1. Go to Safaricom -> <strong>Buy Goods & Services</strong></li>
-                                    <li class="list-group-item" style="background: rgba(0, 230, 118, 0.15);">2. Till No: <strong id="till-number-display"></strong> (<span id="till-name-display"></span>) <button class="copy-btn" id="btn-copy-till">Copy</button></li>
+                                    <li class="list-group-item" style="background: rgba(217, 119, 6, 0.18);">2. Till No: <strong id="till-number-display"></strong> (<span id="till-name-display"></span>) <button class="copy-btn" id="btn-copy-till">Copy</button></li>
                                     <li class="list-group-item">3. Amount: <strong id="pay-modal-amount-ke" class="text-warning">KSh 0</strong></li>
                                 </ul>
                                 <div class="p-3 rounded" style="background-color: rgba(0,0,0,0.4); border: 1px solid var(--card-border);">
                                     <h6 class="text-warning mb-2">Verify Confirmation Message</h6>
-                                    <textarea class="form-control mb-2" id="mpesa-message-input" rows="3" style="background:#121620; color:#fff; border: 1px solid #2a3245;" placeholder="Paste complete M-Pesa SMS here..."></textarea>
+                                    <textarea class="form-control mb-2" id="mpesa-message-input" rows="3" style="background:#1a110b; color:#fff; border: 1px solid #3d281a;" placeholder="Paste complete M-Pesa SMS here..."></textarea>
                                     <button class="btn btn-custom w-100" id="verify-mpesa-btn">Verify Payment & Unlock</button>
                                     <div id="mpesa-verification-result" class="mt-2 text-center" style="font-weight:bold; font-size: 0.9rem;"></div>
                                 </div>
@@ -287,7 +290,7 @@
                                 <ul class="list-group list-group-flush mb-3 rounded">
                                     <li class="list-group-item">1. <strong>Package Price:</strong> <strong id="pay-modal-amount-generic" class="text-warning"></strong></li>
                                     <li class="list-group-item">2. We accept <strong>Skrill, Binance (Crypto), Chipper Cash, and WorldRemit.</strong></li>
-                                    <li class="list-group-item" style="background: rgba(0, 230, 118, 0.15);">3. Click below to contact our 24/7 support team and request payment instructions.</li>
+                                    <li class="list-group-item" style="background: rgba(217, 119, 6, 0.18);">3. Click below to contact our 24/7 support team and request payment instructions.</li>
                                 </ul>
                                 <a id="btn-generic-wa" href="#" class="btn btn-custom w-100 mt-2" target="_blank">Chat with Support to Pay</a>
                             </div>
@@ -518,10 +521,10 @@
 
         function accentColorFor(pkgId) {
             const id = (pkgId || '').toLowerCase();
-            if (id.includes('draw')) return 'linear-gradient(135deg, #1E88E5 0%, #1565C0 100%)';
-            if (id.includes('odds') || id.includes('vip')) return 'linear-gradient(135deg, #E91E63 0%, #AD1457 100%)';
-            if (id.includes('correct') || id.includes('jackpot')) return 'linear-gradient(135deg, #FFB300 0%, #FF8F00 100%)';
-            return 'linear-gradient(135deg, #00E676 0%, #00A844 100%)';
+            if (id.includes('draw')) return 'linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%)';
+            if (id.includes('odds') || id.includes('vip')) return 'linear-gradient(135deg, #9A3412 0%, #7C2D12 100%)';
+            if (id.includes('correct') || id.includes('jackpot') || id.includes('sportpesa')) return 'linear-gradient(135deg, #D97706 0%, #78350F 100%)';
+            return 'linear-gradient(135deg, #059669 0%, #047857 100%)';
         }
 
         function renderPackages(packages) {
@@ -530,7 +533,7 @@
             
             packages.forEach(pkg => {
                 const accentGrad = accentColorFor(pkg.id);
-                const isJackpot = pkg.type === 'jackpot';
+                const isJackpot = pkg.type === 'jackpot' || pkg.id.toLowerCase().includes('jackpot');
                 let priceHtml = '', actionHtml = '';
 
                 if (isJackpot) {
@@ -540,7 +543,7 @@
                         const jackpotPkgId = `jackpot-${j.bookmaker.replace(/\s+/g, '-').toLowerCase()}`;
                         const isJkpUnlocked = unlockedPackages.includes(jackpotPkgId);
                         
-                        rows += `<div class="d-flex justify-content-between align-items-center mt-3 mb-2 p-3 rounded flex-wrap gap-2" style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border);">
+                        rows += `<div class="d-flex justify-content-between align-items-center mt-3 mb-2 p-3 rounded flex-wrap gap-2" style="background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);">
                                     <span style="font-weight:700; color:#fff; font-size:1.05rem;">${j.bookmaker}</span>
                                     ${!isJkpUnlocked ? 
                                       `<button class="btn btn-sm btn-custom" onclick="openPaymentModal('${jackpotPkgId}', '${j.bookmaker}', ${j.amount_kes})" style="white-space: nowrap;">Unlock ${formatLocalPrice(j.amount_kes)}</button>` :
@@ -563,7 +566,7 @@
 
                 container.append(`
                     <section class="card" data-pkg-id="${pkg.id}">
-                        <div class="card-header" style="background:${accentGrad}; color:${isJackpot ? '#000' : '#ffffff'};">${pkg.title}</div>
+                        <div class="card-header" style="background:${accentGrad}; color:#ffffff; font-weight: bold; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${pkg.title}</div>
                         <div class="card-body px-3 py-2">
                             ${pkg.isMostPopular ? '<div class="pkg-badge mt-2">🔥 MOST POPULAR</div>' : ''}
                             ${priceHtml}
@@ -590,7 +593,7 @@
                     (data.slips || []).forEach(slipStr => {
                         if (isUnlocked) {
                             container.append(`
-                                <div class="p-3 mb-2 rounded text-center shadow-sm slip-box" style="background: rgba(0,230,118,0.1); border: 1px solid var(--green); color: var(--green); font-size: 1.15rem;">
+                                <div class="p-3 mb-2 rounded text-center shadow-sm slip-box" style="background: rgba(0,230,118,0.12); border: 1px solid var(--green); color: var(--green); font-size: 1.15rem;">
                                     (JP#${slipStr})
                                 </div>
                             `);
@@ -723,23 +726,23 @@
                             bonus.tiers.forEach(tier => {
                                 tiersHtml += `
                                     <div class="text-center px-2">
-                                        <div style="font-size: 0.65rem; color: #a3c2ff; font-weight: bold; white-space: nowrap;">${tier.label}</div>
+                                        <div style="font-size: 0.7rem; color: #f3c299; font-weight: bold; white-space: nowrap;">${tier.label}</div>
                                         <div style="color: #FFD700; font-family: 'Paytone One', sans-serif; font-size: 1.05rem; white-space: nowrap;">KSH. ${tier.amount}</div>
                                     </div>
                                 `;
                             });
 
                             bonusHtml = `
-                                <div class="m-2 p-3 d-flex flex-column align-items-center rounded" style="background: radial-gradient(circle at center, #001f80 0%, #00092b 100%); border: 1px solid #002aa3; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+                                <div class="m-2 p-3 d-flex flex-column align-items-center rounded" style="background: radial-gradient(circle at center, #3e2415 0%, #170d07 100%); border: 1px solid #8b5a2b; box-shadow: inset 0 0 20px rgba(0,0,0,0.6);">
                                     <div class="d-flex justify-content-center align-items-baseline w-100 mb-2 gap-2 flex-wrap text-center">
-                                        <span style="color:#00d2ff; font-family:'Paytone One', sans-serif; font-size: 1.1rem; letter-spacing: 1px;">${bonus.title_1}</span>
+                                        <span style="color:#f59e0b; font-family:'Paytone One', sans-serif; font-size: 1.1rem; letter-spacing: 1px;">${bonus.title_1}</span>
                                         <span style="color:#fff; font-family:'Paytone One', sans-serif; font-size: 1.1rem; letter-spacing: 1px;">${bonus.title_2}</span>
                                         <span style="color:#FFD700; font-family:'Paytone One', sans-serif; font-size: 1.1rem; letter-spacing: 1px;">${bonus.title_3}</span>
                                     </div>
                                     <div class="d-flex justify-content-around w-100 flex-wrap gap-2 mb-3">
                                         ${tiersHtml}
                                     </div>
-                                    <div class="w-100 text-center p-2 rounded" style="background: rgba(0,255,0,0.1); border: 1px solid #00E676;">
+                                    <div class="w-100 text-center p-2 rounded" style="background: rgba(0,230,118,0.12); border: 1px solid #00E676;">
                                         <div style="color:#00E676; font-size: 0.8rem; font-weight:bold; margin-bottom: 4px;">${bonus.combo_label}</div>
                                         <div style="color:#fff; font-family:monospace; font-size: 1.1rem; letter-spacing: 3px;">${bonus.combo_string}</div>
                                     </div>
@@ -764,7 +767,7 @@
                                 <div class="card-body p-0">
                                     ${bonusHtml}
                                     <div class="p-3">
-                                        <h6 style="color:#8A94A6; font-size: 0.85rem; text-transform:uppercase;">Winning Slips</h6>
+                                        <h6 style="color:#A39489; font-size: 0.85rem; text-transform:uppercase;">Winning Slips</h6>
                                         ${matchHtml}
                                     </div>
                                 </div>
