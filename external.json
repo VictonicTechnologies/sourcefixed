@@ -180,11 +180,24 @@
     { "id": "vip1000", "title": "VIP Tips Package", "type": "flat", "price_kes": 1000, "isMostPopular": true },
     { 
       "id": "jackpot", 
-      "title": "SportPesa & Betika Jackpots", 
+      "title": "SportPesa Jackpot (13 Games)", 
       "type": "jackpot", 
       "jackpots": [
-        { "bookmaker": "SportPesa Mega", "amount_kes": 200 },
-        { "bookmaker": "Betika Midweek", "amount_kes": 150 }
+        { "bookmaker": "SportPesa Jackpot 1 SLIP", "amount_kes": 200 },
+        { "bookmaker": "SportPesa Jackpot 2 SLIPS", "amount_kes": 300 },
+        { "bookmaker": "SportPesa Jackpot 3 SLIPS", "amount_kes": 400 },
+        { "bookmaker": "SportPesa Jackpot 4 SLIPS", "amount_kes": 500 }
+      ]
+    },
+    { 
+      "id": "mega-jackpot", 
+      "title": "SportPesa Mega Jackpot (17 Games)", 
+      "type": "jackpot", 
+      "jackpots": [
+        { "bookmaker": "Mega Jackpot 1 SLIP", "amount_kes": 200 },
+        { "bookmaker": "Mega Jackpot 2 SLIPS", "amount_kes": 300 },
+        { "bookmaker": "Mega Jackpot 3 SLIPS", "amount_kes": 400 },
+        { "bookmaker": "Mega Jackpot 4 SLIPS", "amount_kes": 500 }
       ]
     }
   ],
@@ -196,8 +209,14 @@
     "odds5": [ { "teamA": "Liverpool", "teamB": "Aston Villa", "tip": "1 & GG", "odds": "2.80" }, { "teamA": "Bayern", "teamB": "Dortmund", "tip": "Over 3.5", "odds": "1.90" } ],
     "odds10": [ { "teamA": "Arsenal", "teamB": "Chelsea", "tip": "X2", "odds": "1.80" }, { "teamA": "Napoli", "teamB": "Milan", "tip": "1", "odds": "2.20" }, { "teamA": "PSG", "teamB": "Monaco", "tip": "GG & Over 2.5", "odds": "2.55" } ],
     "vip1000": [ { "teamA": "Inter", "teamB": "Juventus", "tip": "1", "odds": "2.15" }, { "teamA": "Real Sociedad", "teamB": "Athletic Bilbao", "tip": "Under 2.5", "odds": "1.65" }, { "teamA": "Benfica", "teamB": "Porto", "tip": "GG", "odds": "1.85" } ],
-    "jackpot-sportpesa-mega": [ { "teamA": "Match 1", "teamB": "Team B", "tip": "1", "odds": "-" } ],
-    "jackpot-betika-midweek": [ { "teamA": "Match 1", "teamB": "Team B", "tip": "X", "odds": "-" } ]
+    "jackpot-sportpesa-jackpot-1-slip": { "slips": ["1X21X2X1212X1"] },
+    "jackpot-sportpesa-jackpot-2-slips": { "slips": ["1X21X2X1212X1", "2X11221XX1121"] },
+    "jackpot-sportpesa-jackpot-3-slips": { "slips": ["1X21X2X1212X1", "2X11221XX1121", "111X221X2X1X2"] },
+    "jackpot-sportpesa-jackpot-4-slips": { "slips": ["1X21X2X1212X1", "2X11221XX1121", "111X221X2X1X2", "XX21X122112X1"] },
+    "jackpot-mega-jackpot-1-slip": { "slips": ["1X212X1X211X21X21"] },
+    "jackpot-mega-jackpot-2-slips": { "slips": ["1X212X1X211X21X21", "2X11221XX1121221X"] },
+    "jackpot-mega-jackpot-3-slips": { "slips": ["1X212X1X211X21X21", "2X11221XX1121221X", "111X221X2X1X2XX12"] },
+    "jackpot-mega-jackpot-4-slips": { "slips": ["1X212X1X211X21X21", "2X11221XX1121221X", "111X221X2X1X2XX12", "XX21X122112X11X22"] }
   },
   "history": [
     {
@@ -230,6 +249,48 @@
             { "country": "england", "teamA": "Man City", "teamB": "Aston Villa", "prediction": "1 & Over 2.5", "score": "3-1", "odds": "2.05", "result": "WON" },
             { "country": "germany", "teamA": "Leverkusen", "teamB": "Dortmund", "prediction": "GG & Over 2.5", "score": "2-2", "odds": "2.15", "result": "WON" }
         ]
+      }
+    },
+    {
+      "date": "Last Weekend",
+      "categories": {
+        "SportPesa Jackpot (13 Games)": {
+          "bonus": {
+            "title_1": "MIDWEEK",
+            "title_2": "JACKPOT",
+            "title_3": "BONUSES",
+            "tiers": [
+                { "label": "12/13 CORRECT", "amount": "1,069,828" },
+                { "label": "11/13 CORRECT", "amount": "81,398" },
+                { "label": "10/13 CORRECT", "amount": "10,797" }
+            ],
+            "combo_label": "WINNING COMBO",
+            "combo_string": "1,1,2,2,1,X,X,2,2,1,2,2,X"
+          },
+          "matches": [
+            { "prediction": "(JP#1X212X1X21X21)", "result": "12/13 WON (Bonus)" },
+            { "prediction": "(JP#211X221XX1121)", "result": "11/13 WON (Bonus)" }
+          ]
+        },
+        "SportPesa Mega Jackpot (17 Games)": {
+          "bonus": {
+            "title_1": "MEGA",
+            "title_2": "JACKPOT",
+            "title_3": "BONUSES",
+            "tiers": [
+                { "label": "15/17 CORRECT", "amount": "5,069,828" },
+                { "label": "14/17 CORRECT", "amount": "581,398" },
+                { "label": "13/17 CORRECT", "amount": "90,797" },
+                { "label": "12/17 CORRECT", "amount": "15,500" }
+            ],
+            "combo_label": "WINNING COMBO",
+            "combo_string": "1,X,2,1,X,2,1,2,2,1,X,2,1,1,2,X,1"
+          },
+          "matches": [
+            { "prediction": "(JP#112X21X1221X21XX1)", "result": "15/17 WON (Bonus)" },
+            { "prediction": "(JP#X2112X1121221XX21)", "result": "13/17 WON (Bonus)" }
+          ]
+        }
       }
     }
   ]
